@@ -149,6 +149,8 @@ exclude:
   - "*.gem"
   - "*.gemspec"
   - docs
+  - prompts
+  - scripts
   - tools
   - README.md
   - LICENSE
