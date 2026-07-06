@@ -2,6 +2,10 @@ import OpenAI from "openai";
 import fs from "node:fs/promises";
 import path from "node:path";
 
+const TOPICS_PATH = path.join("prompts", "tech-topics.json");
+const TOPIC_BATCH_SIZE = 30;
+const TIME_ZONE = "Asia/Seoul";
+
 const apiKey = process.env.OPENAI_API_KEY;
 
 if (!apiKey) {
@@ -11,17 +15,73 @@ if (!apiKey) {
 const client = new OpenAI({ apiKey });
 
 const today = new Date();
-const date = today.toISOString().slice(0, 10);
+const date = new Intl.DateTimeFormat("en-CA", {
+  timeZone: TIME_ZONE,
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit"
+}).format(today);
 
-const topics = [
-  "React에서 useEffect를 잘못 쓰는 대표적인 패턴과 개선 방법",
-  "TypeScript에서 any를 줄이는 실무적인 방법",
-  "React Query와 Zustand를 함께 사용할 때의 역할 분리",
-  "프론트엔드에서 API 에러 처리를 일관되게 설계하는 방법",
-  "Vite 기반 React 프로젝트의 폴더 구조 설계"
-];
+async function readTopicPool() {
+  const raw = await fs.readFile(TOPICS_PATH, "utf8");
+  const pool = JSON.parse(raw);
 
-const topic = topics[Math.floor(Math.random() * topics.length)];
+  if (!Array.isArray(pool.topics)) {
+    throw new Error(`${TOPICS_PATH} must contain a topics array.`);
+  }
+
+  return pool;
+}
+
+function parseJsonArray(text) {
+  const withoutFence = text
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "")
+    .trim();
+
+  return JSON.parse(withoutFence);
+}
+
+async function requestNewTopics(previousTopics) {
+  const response = await client.responses.create({
+    model: "gpt-5-mini",
+    input: [
+      "한국어 React/TypeScript 기술 블로그 주제 30개를 JSON 배열로만 작성해라.",
+      "각 항목은 문자열이어야 하고, 마크다운이나 설명 문장은 넣지 마라.",
+      "주제는 실무 중심이어야 하며 React, TypeScript, Frontend Architecture, Node.js, DevOps, Blogging 범위를 벗어나지 마라.",
+      "최근에 사용한 아래 주제와 의미가 겹치지 않게 작성해라.",
+      JSON.stringify(previousTopics, null, 2)
+    ].join("\n\n")
+  });
+
+  const topics = parseJsonArray(response.output_text);
+
+  if (!Array.isArray(topics) || topics.length < TOPIC_BATCH_SIZE) {
+    throw new Error("The topic refresh response must be a JSON array with at least 30 items.");
+  }
+
+  return topics.slice(0, TOPIC_BATCH_SIZE).map((title) => ({ title }));
+}
+
+async function pickTopic() {
+  const pool = await readTopicPool();
+  let topic = pool.topics.find((item) => !item.usedAt);
+
+  if (!topic) {
+    const previousTopics = pool.topics.map((item) => item.title);
+    pool.generatedAt = new Date().toISOString();
+    pool.topics = await requestNewTopics(previousTopics);
+    topic = pool.topics[0];
+  }
+
+  topic.usedAt = new Date().toISOString();
+
+  await fs.writeFile(`${TOPICS_PATH}`, `${JSON.stringify(pool, null, 2)}\n`, "utf8");
+
+  return topic.title;
+}
+
+const topic = await pickTopic();
 
 const promptTemplate = await fs.readFile(
   path.join("prompts", "tech-post.prompt.md"),
@@ -50,4 +110,5 @@ const filepath = path.join("_drafts", filename);
 await fs.mkdir("_drafts", { recursive: true });
 await fs.writeFile(filepath, content, "utf8");
 
+console.log(`Selected topic: ${topic}`);
 console.log(`Created draft: ${filepath}`);

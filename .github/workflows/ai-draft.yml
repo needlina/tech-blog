@@ -3,7 +3,8 @@ name: Generate AI Draft
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 1"
+    # GitHub Actions cron uses UTC. 00:00 and 12:00 UTC are 09:00 and 21:00 KST.
+    - cron: "0 0,12 * * *"
 
 permissions:
   contents: write
@@ -16,6 +17,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Continue existing draft branch
+        run: |
+          git fetch origin ai/generated-tech-draft || true
+          if git show-ref --verify --quiet refs/remotes/origin/ai/generated-tech-draft; then
+            git checkout -B ai/generated-tech-draft origin/ai/generated-tech-draft
+          fi
 
       - name: Setup Node
         uses: actions/setup-node@v4
