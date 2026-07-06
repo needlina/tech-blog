@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "[Blog] Github 블로그 Domain 설정 (Feat. Bluehost)"
-categories: blog github
-tags: [blog, domain, bluehost, github, githubPage, 도메인, 블로그, 블루호스트]
+title: "GitHub Pages에 Bluehost 도메인 연결하기"
+date: 2024-12-04 00:00:00 +0900
+categories: [Blogging, GitHub Pages]
+tags: [github-pages, jekyll, chirpy, bluehost, dns]
 image:
   path: https://henjini.com/assets/img/posts/blog/2024-12-04-github-pages-blue-host-domain/preview.png
   alt: ""
@@ -115,4 +116,3 @@ GithubPage주소가 아닌 IP주소가 박혀있네요,
   환율이 올라서 그런지 한화 7만원 정도가 결제됐네요. (도메인 + 도메인 보호 기능 등)   
   결제 문자 볼때마다 동기부여가 됩니다.   
   앞으로 조금 더 열심히 블로그를 해보려합니다.   
-

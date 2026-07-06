@@ -17,6 +17,7 @@
     "build": "concurrently npm:build:*",
     "build:css": "purgecss -c purgecss.config.js",
     "build:js": "rollup -c --bundleConfigAsCjs --environment BUILD:production",
+    "generate:post": "node scripts/generate-post.mjs",
     "watch:js": "rollup -c --bundleConfigAsCjs -w",
     "lint:scss": "stylelint _sass/**/*.scss",
     "lint:fix:scss": "npm run lint:scss -- --fix",
@@ -25,7 +26,8 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "openai": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

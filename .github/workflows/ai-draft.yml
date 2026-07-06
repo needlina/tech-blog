@@ -1,0 +1,47 @@
+name: Generate AI Draft
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-draft:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate AI draft
+        run: npm run generate:post
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "docs: add AI generated draft"
+          title: "AI generated tech blog draft"
+          body: |
+            AI가 생성한 기술 블로그 초안입니다.
+
+            검수 항목:
+            - 기술적으로 틀린 내용이 없는지 확인
+            - 코드 예제가 실제로 동작하는지 확인
+            - 제목과 카테고리가 적절한지 확인
+            - 필요하면 _drafts에서 _posts로 이동 후 발행
+          branch: ai/generated-tech-draft
+          delete-branch: true
