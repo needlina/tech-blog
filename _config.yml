@@ -1,6 +1,165 @@
-title: Henjini Tech
-description: React, TypeScript, Node.js
-url: "https://tech.henjini.com"
-baseurl: ""
+# The Site Configuration
+
+theme: jekyll-theme-chirpy
+
 lang: ko-KR
 timezone: Asia/Seoul
+
+title: Henjini Tech
+tagline: React · TypeScript · Frontend Architecture
+
+description: >-
+  React, TypeScript, Node.js, 프론트엔드 아키텍처와 개발 생산성을 다루는 Henjini의 기술 블로그입니다.
+
+url: "https://tech.henjini.com"
+baseurl: ""
+
+github:
+  username: needlina
+
+twitter:
+  username:
+
+social:
+  name: henjini
+  email: hyunjin.lee.2341@outlook.com
+  links:
+    - https://tech.henjini.com
+    - https://github.com/needlina
+    - https://henjini.com
+
+webmaster_verifications:
+  google:
+  bing:
+  alexa:
+  yandex:
+  baidu:
+  facebook:
+
+analytics:
+  google:
+    id:
+  goatcounter:
+    id: tech-henjini
+  umami:
+    id:
+    domain:
+  matomo:
+    id:
+    domain:
+  cloudflare:
+    id:
+  fathom:
+    id:
+
+pageviews:
+  provider: goatcounter
+
+theme_mode:
+
+cdn:
+
+avatar: "/assets/img/sites/avatar.png"
+
+social_preview_image:
+
+toc: true
+
+comments:
+  provider: disqus
+  disqus:
+    comments: true
+    shortname: 'henjini'
+  utterances:
+    repo:
+    issue_term:
+  giscus:
+    repo:
+    repo_id:
+    category:
+    category_id:
+    mapping:
+    strict:
+    input_position:
+    lang:
+    reactions_enabled:
+
+assets:
+  self_host:
+    enabled:
+    env:
+
+pwa:
+  enabled: true
+  cache:
+    enabled: true
+    deny_paths:
+
+paginate: 10
+
+kramdown:
+  footnote_backlink: "&#8617;&#xfe0e;"
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      comments: true
+      toc: true
+      permalink: /posts/:title/
+  - scope:
+      path: _drafts
+    values:
+      comments: false
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
+
+sass:
+  style: compressed
+
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  profile: false
+  blanklines: false
+  ignore:
+    envs: [development]
+
+exclude:
+  - "*.gem"
+  - "*.gemspec"
+  - docs
+  - tools
+  - README.md
+  - LICENSE
+  - "*.config.js"
+  - package*.json
+
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    tag: /tags/:name/
+    category: /categories/:name/
