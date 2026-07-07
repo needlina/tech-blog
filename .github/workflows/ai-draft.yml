@@ -3,8 +3,8 @@ name: Generate AI Draft
 on:
   workflow_dispatch:
   schedule:
-    # GitHub Actions cron uses UTC. 00:00 and 12:00 UTC are 09:00 and 21:00 KST.
-    - cron: "0 0,12 * * *"
+    # GitHub Actions cron uses UTC. These run at 09:00, 13:00, 17:00, and 21:00 KST.
+    - cron: "0 0,4,8,12 * * *"
 
 permissions:
   contents: write
@@ -45,6 +45,7 @@ jobs:
         with:
           commit-message: "docs: add AI generated draft"
           title: "AI generated tech blog draft"
+          base: ${{ github.event.repository.default_branch }}
           body: |
             AI가 생성한 기술 블로그 초안입니다.
 
