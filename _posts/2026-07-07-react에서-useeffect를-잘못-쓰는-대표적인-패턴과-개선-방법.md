@@ -44,6 +44,8 @@ function MyComponent({ userId }: { userId: string }) {
 }
 ```
 
+자주 실수하는 부분....
+
 개선
 - 의존성을 정확히 명시하거나, 의도적으로 제외할 때는 이유를 주석으로 남깁니다.
 - 복잡한 연산은 useMemo/useCallback으로 안정화합니다.
@@ -77,6 +79,8 @@ useEffect(async () => {
 
 개선
 - 내부에서 async 함수를 선언해 호출하거나, AbortController로 취소 처리를 합니다.
+
+이것도 처음에는 많이헷갈렸던 부분임.
 
 수정 예
 ```tsx
