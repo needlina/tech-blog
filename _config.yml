@@ -66,23 +66,23 @@ social_preview_image:
 toc: true
 
 comments:
-  provider: disqus
+  provider: giscus
   disqus:
-    comments: true
-    shortname: 'henjini'
+    comments:
+    shortname:
   utterances:
     repo:
     issue_term:
   giscus:
-    repo:
-    repo_id:
-    category:
-    category_id:
-    mapping:
-    strict:
-    input_position:
-    lang:
-    reactions_enabled:
+    repo: needlina/tech-blog
+    repo_id: R_kgDOTPeeiQ
+    category: Announcements
+    category_id: DIC_kwDOTPeeic4DAxkn
+    mapping: pathname
+    strict: 0
+    input_position: bottom
+    lang: ko
+    reactions_enabled: 1
 
 assets:
   self_host:

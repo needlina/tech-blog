@@ -1,7 +1,5 @@
 google.com, pub-3406214103222062, DIRECT, f08c47fec0942fa0
-disqus.com, 4958469, DIRECT
 zetaglobal.net, 100, DIRECT
-inventorypartnerdomain=disqus.com
 amxrtb.com, 105199574, DIRECT
 aps.amazon.com, 31d3a4c9-a8a6-4ae0-a5ae-d3b0de43284c, DIRECT
 aniview.com, 616704c962b31624e671e171, RESELLER, 78b21b97965ec3f8
