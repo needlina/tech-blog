@@ -18,82 +18,82 @@
       "usedAt": "2026-07-08T13:47:12.894Z"
     },
     {
-      "title": "Vite 기반 React 프로젝트의 폴더 구조 설계"
+      "title": "PostgreSQL 인덱스를 처음 설계할 때 알아야 할 기준"
     },
     {
-      "title": "React 컴포넌트를 Container와 Presentational로 나눌 때의 기준"
+      "title": "Docker Compose로 로컬 개발 환경을 안정적으로 구성하는 방법"
     },
     {
-      "title": "TypeScript union type으로 API 응답 상태를 안전하게 표현하는 방법"
+      "title": "백엔드 API에서 데이터베이스 트랜잭션을 안전하게 다루는 방법"
     },
     {
-      "title": "React Hook Form과 Zod로 폼 검증을 설계하는 실무 패턴"
+      "title": "Linux 서버에서 로그를 확인하고 장애 원인을 좁히는 기본 흐름"
     },
     {
-      "title": "프론트엔드 프로젝트에서 공통 Button 컴포넌트를 설계할 때의 기준"
+      "title": "GitHub Actions로 테스트와 배포 파이프라인을 분리하는 방법"
     },
     {
-      "title": "React에서 prop drilling을 줄이는 현실적인 선택지"
+      "title": "PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들"
     },
     {
-      "title": "Zustand store를 기능 단위로 분리하는 방법"
+      "title": "Docker 이미지 크기를 줄일 때 확인해야 할 실무 포인트"
     },
     {
-      "title": "React Query 캐시 키를 일관되게 관리하는 방법"
+      "title": "환경변수를 안전하게 관리하는 백엔드 설정 전략"
     },
     {
-      "title": "TypeScript generic을 실무 코드에 무리 없이 적용하는 방법"
+      "title": "서비스 장애를 빨리 파악하기 위한 기본 모니터링 지표"
     },
     {
-      "title": "프론트엔드에서 날짜와 시간대를 다룰 때 자주 생기는 버그"
+      "title": "Nginx 리버스 프록시를 처음 구성할 때 자주 실수하는 부분"
     },
     {
-      "title": "React Router 기반 서비스의 라우트 구조 설계"
+      "title": "데이터베이스 마이그레이션을 안전하게 배포하는 방법"
     },
     {
-      "title": "API client 계층을 fetch와 axios 중립적으로 설계하는 방법"
+      "title": "Redis 캐시를 도입하기 전에 먼저 확인해야 할 것들"
     },
     {
-      "title": "프론트엔드에서 에러 바운더리를 도입해야 하는 시점"
+      "title": "JWT 인증을 사용할 때 보안상 주의해야 할 실무 포인트"
     },
     {
-      "title": "React Suspense를 실무에서 적용할 때 확인해야 할 점"
+      "title": "API 응답 속도가 느릴 때 병목을 찾는 단계별 접근"
     },
     {
-      "title": "TypeScript strict 옵션을 점진적으로 켜는 방법"
+      "title": "PostgreSQL 백업과 복구 전략을 세울 때의 기본 원칙"
     },
     {
-      "title": "디자인 시스템 없이도 유지보수 가능한 UI 컴포넌트 규칙 만들기"
+      "title": "Docker 컨테이너 로그와 볼륨을 운영 관점에서 관리하는 방법"
     },
     {
-      "title": "프론트엔드 폴더 구조에서 features와 pages를 나누는 기준"
+      "title": "Node.js API 서버에서 에러 처리를 일관되게 설계하는 방법"
     },
     {
-      "title": "Node.js API 서버에서 환경변수를 안전하게 관리하는 방법"
+      "title": "테스트 피라미드를 기준으로 단위 테스트와 통합 테스트를 나누는 방법"
     },
     {
-      "title": "GitHub Actions로 Jekyll 블로그 배포 자동화하기"
+      "title": "클라우드 비용이 갑자기 늘었을 때 먼저 확인할 항목들"
     },
     {
-      "title": "Jekyll Chirpy 블로그에서 카테고리와 태그를 운영하는 방법"
+      "title": "기술 블로그에서 카테고리와 태그를 장기적으로 운영하는 방법"
     },
     {
       "title": "프론트엔드에서 loading, empty, error 상태를 일관되게 처리하는 방법"
     },
     {
-      "title": "React에서 memo, useMemo, useCallback을 남용하지 않는 기준"
+      "title": "TypeScript strict 옵션을 점진적으로 켜는 방법"
     },
     {
-      "title": "TypeScript에서 unknown을 활용해 안전한 에러 처리를 만드는 방법"
+      "title": "Git 브랜치 전략을 팀 규모에 맞게 선택하는 기준"
     },
     {
-      "title": "프론트엔드에서 로그인 세션 만료를 사용자 친화적으로 처리하는 방법"
+      "title": "HTTPS 인증서와 도메인 연결 문제를 점검하는 기본 절차"
     },
     {
-      "title": "React 앱에서 페이지 단위 코드 스플리팅을 적용하는 방법"
+      "title": "서버 성능 튜닝 전에 확인해야 할 CPU, 메모리, I/O 지표"
     },
     {
-      "title": "프론트엔드 테스트를 어디까지 작성해야 하는지 판단하는 기준"
+      "title": "개인 프로젝트를 운영 서비스처럼 관리하기 위한 체크리스트"
     }
   ]
 }
