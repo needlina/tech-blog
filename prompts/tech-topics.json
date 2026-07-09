@@ -21,7 +21,8 @@
       "title": "PostgreSQL 인덱스를 처음 설계할 때 알아야 할 기준"
     },
     {
-      "title": "Docker Compose로 로컬 개발 환경을 안정적으로 구성하는 방법"
+      "title": "Docker Compose로 로컬 개발 환경을 안정적으로 구성하는 방법",
+      "usedAt": "2026-07-09T07:32:02.742Z"
     },
     {
       "title": "백엔드 API에서 데이터베이스 트랜잭션을 안전하게 다루는 방법"
