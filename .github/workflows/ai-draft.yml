@@ -20,13 +20,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Continue existing draft branch
-        run: |
-          git fetch origin ai/generated-tech-draft || true
-          if git show-ref --verify --quiet refs/remotes/origin/ai/generated-tech-draft; then
-            git checkout -B ai/generated-tech-draft origin/ai/generated-tech-draft
-          fi
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -55,5 +48,5 @@ jobs:
             - 제목과 카테고리가 적절한지 확인
             - 파일명과 slug가 영어 kebab-case인지 확인
             - 필요하면 _drafts에서 _posts로 이동 후 발행
-          branch: ai/generated-tech-draft
+          branch: ai/generated-tech-draft-${{ github.run_id }}
           delete-branch: true

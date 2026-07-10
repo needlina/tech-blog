@@ -6,4 +6,4 @@ permalink: /robots.txt
 User-agent: *
 Allow: /
 
-Sitemap: https://henjini.com/sitemap.xml
+Sitemap: https://tech.henjini.com/sitemap.xml
