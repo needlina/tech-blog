@@ -11,6 +11,15 @@ tagline: React · TypeScript · Frontend Architecture
 description: >-
   React, TypeScript, Node.js, 프론트엔드 아키텍처와 개발 생산성을 다루는 Henjini의 기술 블로그입니다.
 
+seo_keywords:
+  - React
+  - TypeScript
+  - JavaScript
+  - Node.js
+  - Frontend Architecture
+  - DevOps
+  - 개발 블로그
+
 url: "https://tech.henjini.com"
 baseurl: ""
 
@@ -61,7 +70,7 @@ cdn:
 
 avatar: "/assets/img/sites/avatar.png"
 
-social_preview_image:
+social_preview_image: /assets/img/sites/avatar.png
 
 toc: true
 
@@ -119,6 +128,7 @@ defaults:
       type: posts
     values:
       layout: post
+      author: henjini
       comments: true
       toc: true
       permalink: /posts/:title/
