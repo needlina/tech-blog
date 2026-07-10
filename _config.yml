@@ -68,9 +68,9 @@ theme_mode:
 
 cdn:
 
-avatar: "/assets/img/sites/avatar.png"
+avatar: "/assets/img/sites/avatar.jpg"
 
-social_preview_image: /assets/img/sites/avatar.png
+social_preview_image: /assets/img/sites/avatar.jpg
 
 toc: true
 

@@ -5,7 +5,7 @@ date: 2024-12-04 00:00:00 +0900
 categories: [Blogging, GitHub Pages]
 tags: [github-pages, jekyll, chirpy, bluehost, dns]
 image:
-  path: https://henjini.com/assets/img/posts/blog/2024-12-04-github-pages-blue-host-domain/preview.png
+  path: /assets/img/posts/blog/2024-12-04-github-pages-blue-host-domain/preview.jpg
   alt: ""
 comments: true
 ---

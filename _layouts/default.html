@@ -74,13 +74,20 @@ layout: compress
                   crossorigin="anonymous"></script>
             <!-- 디스플레이 광고 -->
             <ins class="adsbygoogle"
-                  style="display:block"
+                  style="display:block; min-height:280px"
                   data-ad-client="ca-pub-3406214103222062"
                   data-ad-slot="8868379968"
                   data-ad-format="auto"
                   data-full-width-responsive="true"></ins>
             <script>
-                  (adsbygoogle = window.adsbygoogle || []).push({});
+                  window.addEventListener('load', function () {
+                    document.querySelectorAll('.adsbygoogle').forEach(function (slot) {
+                      if (slot.offsetWidth > 0 && !slot.dataset.adsbygoogleStatus && !slot.dataset.adPushRequested) {
+                        slot.dataset.adPushRequested = 'true';
+                        (window.adsbygoogle = window.adsbygoogle || []).push({});
+                      }
+                    });
+                  });
             </script>
 
           </div>
@@ -90,7 +97,7 @@ layout: compress
       </div>
 
       <aside aria-label="Scroll to Top">
-        <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow">
+        <button id="back-to-top" type="button" class="btn btn-lg btn-box-shadow" aria-label="Back to top">
           <i class="fas fa-angle-up"></i>
         </button>
       </aside>
