@@ -8,7 +8,9 @@ const TIME_ZONE = "Asia/Seoul";
 const POST_IMAGE_ROOT = path.join("assets", "img", "posts", "blog");
 const PUBLIC_POST_IMAGE_ROOT = "/assets/img/posts/blog";
 const REQUIRED_IMAGE_COUNT = 2;
-const IMAGE_DOWNLOAD_TIMEOUT_MS = 30000;
+const IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL ?? "gpt-image-1.5";
+const IMAGE_MARKER_PATTERN = /<!--\s*AI_IMAGE_(\d)\s*-->/g;
+const IMAGE_ALT_PATTERN = /<!--\s*AI_IMAGE_(\d)_ALT:\s*([\s\S]*?)\s*-->/g;
 
 const apiKey = process.env.OPENAI_API_KEY;
 
@@ -194,122 +196,91 @@ function upsertFrontMatterBlock(markdown, key, blockLines) {
   return `---\n${nextLines.join("\n")}\n---${markdown.slice(frontMatter[0].length)}`;
 }
 
-function markdownRemoteImages(markdown) {
-  const images = [];
-  const seenUrls = new Set();
-  const pattern = /!\[([^\]]*)\]\((https?:\/\/[^)\s]+)(?:\s+"[^"]*")?\)/g;
+function imageMarkers(markdown) {
+  return [...markdown.matchAll(IMAGE_MARKER_PATTERN)]
+    .map((match) => Number(match[1]))
+    .sort((left, right) => left - right);
+}
 
-  for (const match of markdown.matchAll(pattern)) {
-    const url = match[2];
+function imageAltTexts(markdown) {
+  const altTexts = new Map();
 
-    if (seenUrls.has(url)) {
-      continue;
-    }
-
-    seenUrls.add(url);
-    images.push({
-      full: match[0],
-      alt: match[1].trim(),
-      url
-    });
+  for (const match of markdown.matchAll(IMAGE_ALT_PATTERN)) {
+    altTexts.set(Number(match[1]), match[2].trim());
   }
 
-  return images;
+  return altTexts;
 }
 
-function imageExtensionFromContentType(contentType) {
-  const type = contentType.toLowerCase().split(";")[0].trim();
-  const extensions = new Map([
-    ["image/jpeg", ".jpg"],
-    ["image/jpg", ".jpg"],
-    ["image/png", ".png"],
-    ["image/webp", ".webp"],
-    ["image/avif", ".avif"],
-    ["image/gif", ".gif"]
-  ]);
-
-  return extensions.get(type) ?? "";
+function withoutImageAltComments(markdown) {
+  return markdown.replace(IMAGE_ALT_PATTERN, "").replace(/\n{3,}/g, "\n\n");
 }
 
-function imageExtensionFromUrl(value) {
-  try {
-    const pathname = new URL(value).pathname;
-    const extension = pathname.match(/\.(avif|gif|jpe?g|png|webp)$/i)?.[0];
-    return extension ? extension.toLowerCase().replace(".jpeg", ".jpg") : "";
-  } catch {
-    return "";
+function imagePrompt({ index, title, alt }) {
+  return [
+    "Create a clean, original technical blog illustration.",
+    `Blog topic: ${topic}`,
+    `Blog title: ${title || topic}`,
+    `Image ${index} purpose: ${alt}`,
+    "Style: realistic developer workstation or clear technical concept illustration, modern, calm, professional.",
+    "Avoid logos, brand names, copyrighted characters, UI text, watermarks, and unreadable fake code.",
+    "No text should be rendered in the image.",
+    "The image should be useful as a Korean technical blog visual."
+  ].join("\n");
+}
+
+async function generateImage({ index, title, alt, filepath }) {
+  const imageResponse = await client.images.generate({
+    model: IMAGE_MODEL,
+    prompt: imagePrompt({ index, title, alt }),
+    size: "1536x1024",
+    output_format: "png",
+    n: 1
+  });
+  const image = imageResponse.data?.[0];
+
+  if (!image?.b64_json) {
+    throw new Error(`Image ${index} generation did not return b64_json data.`);
   }
+
+  await fs.writeFile(filepath, Buffer.from(image.b64_json, "base64"));
 }
 
-async function downloadImage(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), IMAGE_DOWNLOAD_TIMEOUT_MS);
+async function generatePostImages(markdown, slug) {
+  const markers = imageMarkers(markdown);
 
-  try {
-    const response = await fetch(url, {
-      headers: {
-        "user-agent": "Mozilla/5.0 (compatible; henjini-tech-blog-generator/1.0)"
-      },
-      redirect: "follow",
-      signal: controller.signal
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
-
-    const contentType = response.headers.get("content-type") ?? "";
-
-    if (!contentType.toLowerCase().startsWith("image/")) {
-      throw new Error(`not an image content-type: ${contentType || "unknown"}`);
-    }
-
-    const buffer = Buffer.from(await response.arrayBuffer());
-
-    if (buffer.byteLength < 1024) {
-      throw new Error("downloaded image is unexpectedly small");
-    }
-
-    return { buffer, contentType };
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
-async function localizePostImages(markdown, slug) {
-  const remoteImages = markdownRemoteImages(markdown);
-
-  if (remoteImages.length !== REQUIRED_IMAGE_COUNT) {
+  if (
+    markers.length !== REQUIRED_IMAGE_COUNT ||
+    markers.some((marker, index) => marker !== index + 1)
+  ) {
     throw new Error(
-      `The generated post must include exactly ${REQUIRED_IMAGE_COUNT} remote Markdown image URLs.`
+      `The generated post must include exactly these markers: <!-- AI_IMAGE_1 --> and <!-- AI_IMAGE_2 -->.`
     );
   }
 
+  const title = frontMatterValue(markdown, "title");
+  const altTexts = imageAltTexts(markdown);
   const imageDir = path.join(POST_IMAGE_ROOT, slug);
   await fs.mkdir(imageDir, { recursive: true });
 
-  let output = markdown;
-  const localizedImages = [];
+  let output = withoutImageAltComments(markdown);
+  const generatedImages = [];
 
-  for (const [index, image] of remoteImages.entries()) {
-    const downloadedImage = await downloadImage(image.url);
-    const contentType = downloadedImage.contentType;
-    const extension =
-      imageExtensionFromContentType(contentType) || imageExtensionFromUrl(image.url) || ".jpg";
-    const filename = `image-${index + 1}${extension}`;
+  for (const index of markers) {
+    const alt = altTexts.get(index) || `${topic} 관련 기술 블로그 이미지 ${index}`;
+    const filename = `image-${index}.png`;
     const filepath = path.join(imageDir, filename);
     const publicPath = `${PUBLIC_POST_IMAGE_ROOT}/${slug}/${filename}`;
 
-    await fs.writeFile(filepath, downloadedImage.buffer);
+    await generateImage({ index, title, alt, filepath });
 
-    const alt = image.alt || `${topic} 관련 이미지 ${index + 1}`;
-    output = output.replace(image.full, `![${alt}](${publicPath})`);
-    localizedImages.push({ alt, path: publicPath });
+    output = output.replace(`<!-- AI_IMAGE_${index} -->`, `![${alt}](${publicPath})`);
+    generatedImages.push({ alt, path: publicPath });
   }
 
   return {
     markdown: output,
-    images: localizedImages
+    images: generatedImages
   };
 }
 
@@ -360,11 +331,11 @@ if (!slug) {
 
 const draft = await uniqueDraftPath(slug);
 let outputContent = upsertFrontMatterValue(content, "slug", `"${draft.slug}"`);
-const localizedImages = await localizePostImages(outputContent, draft.slug);
-outputContent = upsertFrontMatterBlock(localizedImages.markdown, "image", [
+const generatedImages = await generatePostImages(outputContent, draft.slug);
+outputContent = upsertFrontMatterBlock(generatedImages.markdown, "image", [
   "image:",
-  `  path: ${localizedImages.images[0].path}`,
-  `  alt: ${yamlDoubleQuoted(localizedImages.images[0].alt)}`
+  `  path: ${generatedImages.images[0].path}`,
+  `  alt: ${yamlDoubleQuoted(generatedImages.images[0].alt)}`
 ]);
 
 await fs.mkdir("_drafts", { recursive: true });
@@ -372,5 +343,5 @@ await fs.writeFile(draft.filepath, outputContent, "utf8");
 
 console.log(`Selected topic: ${topic}`);
 console.log(`English slug: ${draft.slug}`);
-console.log(`Downloaded images: ${localizedImages.images.length}`);
+console.log(`Generated images: ${generatedImages.images.length}`);
 console.log(`Created draft: ${draft.filepath}`);
