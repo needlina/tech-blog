@@ -5,6 +5,10 @@ import path from "node:path";
 const TOPICS_PATH = path.join("prompts", "tech-topics.json");
 const TOPIC_BATCH_SIZE = 30;
 const TIME_ZONE = "Asia/Seoul";
+const POST_IMAGE_ROOT = path.join("assets", "img", "posts", "blog");
+const PUBLIC_POST_IMAGE_ROOT = "/assets/img/posts/blog";
+const REQUIRED_IMAGE_COUNT = 2;
+const IMAGE_DOWNLOAD_TIMEOUT_MS = 30000;
 
 const apiKey = process.env.OPENAI_API_KEY;
 
@@ -155,6 +159,160 @@ function upsertFrontMatterValue(markdown, key, value) {
   return `---\n${lines.join("\n")}\n---${markdown.slice(frontMatter[0].length)}`;
 }
 
+function yamlDoubleQuoted(value) {
+  return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+}
+
+function upsertFrontMatterBlock(markdown, key, blockLines) {
+  const frontMatter = markdown.match(/^---\s*\n([\s\S]*?)\n---/);
+
+  if (!frontMatter) {
+    return markdown;
+  }
+
+  const lines = frontMatter[1].split("\n");
+  const nextLines = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    if (lines[index].startsWith(`${key}:`)) {
+      while (index + 1 < lines.length && /^\s+/.test(lines[index + 1])) {
+        index += 1;
+      }
+      continue;
+    }
+
+    nextLines.push(lines[index]);
+  }
+
+  const insertAfterKeys = ["tags:", "categories:", "date:", "slug:", "title:"];
+  const insertIndex = nextLines.findLastIndex((line) =>
+    insertAfterKeys.some((prefix) => line.startsWith(prefix))
+  );
+
+  nextLines.splice(insertIndex >= 0 ? insertIndex + 1 : 0, 0, ...blockLines);
+
+  return `---\n${nextLines.join("\n")}\n---${markdown.slice(frontMatter[0].length)}`;
+}
+
+function markdownRemoteImages(markdown) {
+  const images = [];
+  const seenUrls = new Set();
+  const pattern = /!\[([^\]]*)\]\((https?:\/\/[^)\s]+)(?:\s+"[^"]*")?\)/g;
+
+  for (const match of markdown.matchAll(pattern)) {
+    const url = match[2];
+
+    if (seenUrls.has(url)) {
+      continue;
+    }
+
+    seenUrls.add(url);
+    images.push({
+      full: match[0],
+      alt: match[1].trim(),
+      url
+    });
+  }
+
+  return images;
+}
+
+function imageExtensionFromContentType(contentType) {
+  const type = contentType.toLowerCase().split(";")[0].trim();
+  const extensions = new Map([
+    ["image/jpeg", ".jpg"],
+    ["image/jpg", ".jpg"],
+    ["image/png", ".png"],
+    ["image/webp", ".webp"],
+    ["image/avif", ".avif"],
+    ["image/gif", ".gif"]
+  ]);
+
+  return extensions.get(type) ?? "";
+}
+
+function imageExtensionFromUrl(value) {
+  try {
+    const pathname = new URL(value).pathname;
+    const extension = pathname.match(/\.(avif|gif|jpe?g|png|webp)$/i)?.[0];
+    return extension ? extension.toLowerCase().replace(".jpeg", ".jpg") : "";
+  } catch {
+    return "";
+  }
+}
+
+async function downloadImage(url) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), IMAGE_DOWNLOAD_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "user-agent": "Mozilla/5.0 (compatible; henjini-tech-blog-generator/1.0)"
+      },
+      redirect: "follow",
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const contentType = response.headers.get("content-type") ?? "";
+
+    if (!contentType.toLowerCase().startsWith("image/")) {
+      throw new Error(`not an image content-type: ${contentType || "unknown"}`);
+    }
+
+    const buffer = Buffer.from(await response.arrayBuffer());
+
+    if (buffer.byteLength < 1024) {
+      throw new Error("downloaded image is unexpectedly small");
+    }
+
+    return { buffer, contentType };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function localizePostImages(markdown, slug) {
+  const remoteImages = markdownRemoteImages(markdown);
+
+  if (remoteImages.length !== REQUIRED_IMAGE_COUNT) {
+    throw new Error(
+      `The generated post must include exactly ${REQUIRED_IMAGE_COUNT} remote Markdown image URLs.`
+    );
+  }
+
+  const imageDir = path.join(POST_IMAGE_ROOT, slug);
+  await fs.mkdir(imageDir, { recursive: true });
+
+  let output = markdown;
+  const localizedImages = [];
+
+  for (const [index, image] of remoteImages.entries()) {
+    const downloadedImage = await downloadImage(image.url);
+    const contentType = downloadedImage.contentType;
+    const extension =
+      imageExtensionFromContentType(contentType) || imageExtensionFromUrl(image.url) || ".jpg";
+    const filename = `image-${index + 1}${extension}`;
+    const filepath = path.join(imageDir, filename);
+    const publicPath = `${PUBLIC_POST_IMAGE_ROOT}/${slug}/${filename}`;
+
+    await fs.writeFile(filepath, downloadedImage.buffer);
+
+    const alt = image.alt || `${topic} 관련 이미지 ${index + 1}`;
+    output = output.replace(image.full, `![${alt}](${publicPath})`);
+    localizedImages.push({ alt, path: publicPath });
+  }
+
+  return {
+    markdown: output,
+    images: localizedImages
+  };
+}
+
 async function requestEnglishSlug(markdown) {
   const title = frontMatterValue(markdown, "title");
   const slugResponse = await client.responses.create({
@@ -201,11 +359,18 @@ if (!slug) {
 }
 
 const draft = await uniqueDraftPath(slug);
-const outputContent = upsertFrontMatterValue(content, "slug", `"${draft.slug}"`);
+let outputContent = upsertFrontMatterValue(content, "slug", `"${draft.slug}"`);
+const localizedImages = await localizePostImages(outputContent, draft.slug);
+outputContent = upsertFrontMatterBlock(localizedImages.markdown, "image", [
+  "image:",
+  `  path: ${localizedImages.images[0].path}`,
+  `  alt: ${yamlDoubleQuoted(localizedImages.images[0].alt)}`
+]);
 
 await fs.mkdir("_drafts", { recursive: true });
 await fs.writeFile(draft.filepath, outputContent, "utf8");
 
 console.log(`Selected topic: ${topic}`);
 console.log(`English slug: ${draft.slug}`);
+console.log(`Downloaded images: ${localizedImages.images.length}`);
 console.log(`Created draft: ${draft.filepath}`);
