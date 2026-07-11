@@ -18,6 +18,7 @@
     "build:css": "purgecss -c purgecss.config.js",
     "build:js": "rollup -c --bundleConfigAsCjs --environment BUILD:production",
     "generate:post": "node scripts/generate-post.mjs",
+    "verify:indexing": "node scripts/verify-indexing-readiness.mjs",
     "watch:js": "rollup -c --bundleConfigAsCjs -w",
     "lint:scss": "stylelint _sass/**/*.scss",
     "lint:fix:scss": "npm run lint:scss -- --fix",

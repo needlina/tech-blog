@@ -67,3 +67,18 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Checkout indexing automation
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify indexing readiness
+        run: node scripts/verify-indexing-readiness.mjs
+        env:
+          SITE_URL: https://tech.henjini.com
+          INDEXING_CHECK_RETRIES: 6
+          INDEXING_CHECK_DELAY_MS: 10000
