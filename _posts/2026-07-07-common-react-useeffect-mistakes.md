@@ -5,7 +5,6 @@ categories: [React, 실무패턴]
 tags: [react, typescript, frontend]
 ---
 
-오늘의 주제
 
 React에서 useEffect를 잘못 쓰는 대표적인 패턴과 개선 방법
 

@@ -5,7 +5,6 @@ categories: [React, 실무패턴]
 tags: [react, typescript, frontend]
 ---
 
-오늘의 주제
 
 Vite 기반 React 프로젝트의 폴더 구조 설계
 
