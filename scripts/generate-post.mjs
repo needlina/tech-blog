@@ -8,7 +8,11 @@ const TIME_ZONE = "Asia/Seoul";
 const POST_IMAGE_ROOT = path.join("assets", "img", "posts", "blog");
 const PUBLIC_POST_IMAGE_ROOT = "/assets/img/posts/blog";
 const REQUIRED_IMAGE_COUNT = 2;
-const IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL ?? "gpt-image-1.5";
+const IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL ?? "gpt-image-1-mini";
+const IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE ?? "1024x1024";
+const IMAGE_OUTPUT_FORMAT = process.env.OPENAI_IMAGE_FORMAT ?? "webp";
+const IMAGE_OUTPUT_COMPRESSION = Number(process.env.OPENAI_IMAGE_COMPRESSION ?? "70");
+const IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY ?? "low";
 const IMAGE_MARKER_PATTERN = /<!--\s*AI_IMAGE_(\d)\s*-->/g;
 const IMAGE_ALT_PATTERN = /<!--\s*AI_IMAGE_(\d)_ALT:\s*([\s\S]*?)\s*-->/g;
 
@@ -218,25 +222,32 @@ function withoutImageAltComments(markdown) {
 
 function imagePrompt({ index, title, alt }) {
   return [
-    "Create a clean, original technical blog illustration.",
+    "Create a simple, lightweight technical blog illustration.",
     `Blog topic: ${topic}`,
     `Blog title: ${title || topic}`,
     `Image ${index} purpose: ${alt}`,
-    "Style: realistic developer workstation or clear technical concept illustration, modern, calm, professional.",
-    "Avoid logos, brand names, copyrighted characters, UI text, watermarks, and unreadable fake code.",
-    "No text should be rendered in the image.",
-    "The image should be useful as a Korean technical blog visual."
+    "Style: minimal flat editorial illustration, few objects, simple shapes, limited colors, clean background.",
+    "Prefer an abstract technical concept over a detailed workstation scene.",
+    "Avoid photorealism, dense details, gradients, tiny UI, fake code, logos, brand names, watermarks, and text.",
+    "Optimize for small web image size and fast loading."
   ].join("\n");
 }
 
 async function generateImage({ index, title, alt, filepath }) {
-  const imageResponse = await client.images.generate({
+  const imageOptions = {
     model: IMAGE_MODEL,
     prompt: imagePrompt({ index, title, alt }),
-    size: "1536x1024",
-    output_format: "png",
+    size: IMAGE_SIZE,
+    quality: IMAGE_QUALITY,
+    output_format: IMAGE_OUTPUT_FORMAT,
     n: 1
-  });
+  };
+
+  if (IMAGE_OUTPUT_FORMAT !== "png") {
+    imageOptions.output_compression = IMAGE_OUTPUT_COMPRESSION;
+  }
+
+  const imageResponse = await client.images.generate(imageOptions);
   const image = imageResponse.data?.[0];
 
   if (!image?.b64_json) {
@@ -244,6 +255,10 @@ async function generateImage({ index, title, alt, filepath }) {
   }
 
   await fs.writeFile(filepath, Buffer.from(image.b64_json, "base64"));
+}
+
+function imageExtension() {
+  return IMAGE_OUTPUT_FORMAT === "jpeg" ? "jpg" : IMAGE_OUTPUT_FORMAT;
 }
 
 async function generatePostImages(markdown, slug) {
@@ -268,7 +283,7 @@ async function generatePostImages(markdown, slug) {
 
   for (const index of markers) {
     const alt = altTexts.get(index) || `${topic} 관련 기술 블로그 이미지 ${index}`;
-    const filename = `image-${index}.png`;
+    const filename = `image-${index}.${imageExtension()}`;
     const filepath = path.join(imageDir, filename);
     const publicPath = `${PUBLIC_POST_IMAGE_ROOT}/${slug}/${filename}`;
 
