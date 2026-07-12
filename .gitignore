@@ -13,6 +13,18 @@ _site
 # NPM dependencies
 node_modules
 
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.p8
+id_rsa*
+secrets/
+credentials/
+
 # IDE configurations
 .idea
 .vscode/*
