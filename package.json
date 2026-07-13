@@ -14,10 +14,13 @@
   },
   "homepage": "https://github.com/cotes2020/jekyll-theme-chirpy/",
   "scripts": {
+    "dev": "node ../scripts/dev-site.mjs tech-blog",
+    "dev:prod": "node ../scripts/dev-site.mjs tech-blog --prod",
     "build": "concurrently npm:build:*",
     "build:css": "purgecss -c purgecss.config.js",
     "build:js": "rollup -c --bundleConfigAsCjs --environment BUILD:production",
     "generate:post": "node scripts/generate-post.mjs",
+    "generate:thumbnail": "node scripts/generate-thumbnail.mjs",
     "verify:indexing": "node scripts/verify-indexing-readiness.mjs",
     "watch:js": "rollup -c --bundleConfigAsCjs -w",
     "lint:scss": "stylelint _sass/**/*.scss",

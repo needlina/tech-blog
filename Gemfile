@@ -11,4 +11,5 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo-data"
 end
 
-gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
+# wdm 0.1.1 does not build reliably on Ruby 3.3 UCRT.
+# Use Jekyll's polling watcher in local dev instead.

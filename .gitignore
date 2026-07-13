@@ -1,5 +1,7 @@
 # Bundler cache
 .bundle
+.bundle-home
+.gem-home
 vendor
 
 # Jekyll cache
@@ -12,6 +14,7 @@ _site
 
 # NPM dependencies
 node_modules
+.npm-cache
 
 # Local secrets and credentials
 .env

@@ -1,117 +1,245 @@
 {
-  "generatedAt": "2026-07-07T00:00:00.000+09:00",
+  "generatedAt": "2026-07-13T23:20:00.000+09:00",
   "topics": [
     {
-      "title": "React에서 useEffect를 잘못 쓰는 대표적인 패턴과 개선 방법",
-      "usedAt": "2026-07-07T04:13:30.872Z"
+      "title": "클라우드 비용이 갑자기 늘었을 때 먼저 확인할 항목들",
+      "slug": "cloud-cost-spike-checklist",
+      "thumbnail": {
+        "title": "클라우드 비용이 갑자기 늘었을 때 확인할 것",
+        "subtitle": "청구서가 커졌을 때 먼저 볼 지표들"
+      }
     },
     {
-      "title": "TypeScript에서 any를 줄이는 실무적인 방법",
-      "usedAt": "2026-07-08T10:10:01.078Z"
+      "title": "API 중복 요청을 막기 위해 멱등성 키를 설계하는 방법",
+      "slug": "api-idempotency-key-design",
+      "thumbnail": {
+        "title": "중복 요청을 막는 멱등성 키",
+        "subtitle": "결제와 주문 API에서 특히 중요한 기준"
+      }
     },
     {
-      "title": "React Query와 Zustand를 함께 사용할 때의 역할 분리",
-      "usedAt": "2026-07-08T06:22:53.307Z"
+      "title": "메시지 큐에서 재시도와 데드레터 큐를 나누는 기준",
+      "slug": "message-queue-retry-dead-letter-queue",
+      "thumbnail": {
+        "title": "재시도와 DLQ 나누기",
+        "subtitle": "실패한 메시지를 잃지 않는 구조"
+      }
     },
     {
-      "title": "프론트엔드에서 API 에러 처리를 일관되게 설계하는 방법",
-      "usedAt": "2026-07-08T13:47:12.894Z"
+      "title": "OAuth 리다이렉트 URI 설정에서 자주 생기는 보안 실수",
+      "slug": "oauth-redirect-uri-security-mistakes",
+      "thumbnail": {
+        "title": "OAuth 리다이렉트 URI 점검",
+        "subtitle": "허용 범위를 넓히기 전에 볼 것들"
+      }
     },
     {
-      "title": "PostgreSQL 인덱스를 처음 설계할 때 알아야 할 기준",
-      "usedAt": "2026-07-10T10:46:33.720Z"
+      "title": "CORS 프리플라이트 요청이 실패할 때 원인을 찾는 순서",
+      "slug": "cors-preflight-troubleshooting",
+      "thumbnail": {
+        "title": "CORS 프리플라이트 오류",
+        "subtitle": "브라우저가 막기 전에 서버가 놓친 것"
+      }
     },
     {
-      "title": "Docker Compose로 로컬 개발 환경을 안정적으로 구성하는 방법",
-      "usedAt": "2026-07-09T07:32:02.742Z"
+      "title": "PostgreSQL 데드락이 발생했을 때 로그로 원인을 좁히는 방법",
+      "slug": "postgresql-deadlock-log-troubleshooting",
+      "thumbnail": {
+        "title": "PostgreSQL 데드락 분석",
+        "subtitle": "락 순서와 트랜잭션 범위 확인하기"
+      }
     },
     {
-      "title": "백엔드 API에서 데이터베이스 트랜잭션을 안전하게 다루는 방법",
-      "usedAt": "2026-07-09T14:38:15.012Z"
+      "title": "PostgreSQL autovacuum을 이해하고 테이블 부하를 줄이는 기본 원리",
+      "slug": "postgresql-autovacuum-basics",
+      "thumbnail": {
+        "title": "PostgreSQL autovacuum 이해하기",
+        "subtitle": "테이블 부하와 bloat를 줄이는 기본 원리"
+      }
     },
     {
-      "title": "Linux 서버에서 로그를 확인하고 장애 원인을 좁히는 기본 흐름",
-      "usedAt": "2026-07-10T14:05:12.076Z"
+      "title": "페이지네이션에서 offset 방식과 cursor 방식을 선택하는 기준",
+      "slug": "pagination-offset-vs-cursor",
+      "thumbnail": {
+        "title": "offset과 cursor 페이지네이션",
+        "subtitle": "데이터가 많아질 때 달라지는 선택"
+      }
     },
     {
-      "title": "GitHub Actions로 테스트와 배포 파이프라인을 분리하는 방법",
-      "usedAt": "2026-07-11T01:56:36.811Z"
+      "title": "API 버전 관리를 시작할 때 URL과 헤더 방식 중 선택하는 기준",
+      "slug": "api-versioning-url-vs-header",
+      "thumbnail": {
+        "title": "API 버전 관리 시작하기",
+        "subtitle": "URL과 헤더 방식의 현실적인 차이"
+      }
     },
     {
-      "title": "PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들",
-      "usedAt": "2026-07-11T03:38:18.354Z"
+      "title": "레이트 리미팅을 적용할 때 사용자 단위와 IP 단위를 나누는 방법",
+      "slug": "rate-limiting-user-vs-ip",
+      "thumbnail": {
+        "title": "레이트 리미팅 기준 정하기",
+        "subtitle": "사용자와 IP를 함께 봐야 하는 이유"
+      }
     },
     {
-      "title": "Docker 이미지 크기를 줄일 때 확인해야 할 실무 포인트",
-      "usedAt": "2026-07-11T06:07:55.627Z"
+      "title": "기능 플래그를 배포와 분리해서 운영하는 방법",
+      "slug": "feature-flag-release-operations",
+      "thumbnail": {
+        "title": "기능 플래그로 배포 분리하기",
+        "subtitle": "코드 배포와 기능 공개를 나누는 법"
+      }
     },
     {
-      "title": "환경변수를 안전하게 관리하는 백엔드 설정 전략",
-      "usedAt": "2026-07-11T09:20:11.866Z"
+      "title": "시크릿 키를 교체할 때 서비스 중단 없이 진행하는 절차",
+      "slug": "secret-rotation-without-downtime",
+      "thumbnail": {
+        "title": "시크릿 키 무중단 교체",
+        "subtitle": "새 키와 옛 키가 공존하는 전환 절차"
+      }
     },
     {
-      "title": "서비스 장애를 빨리 파악하기 위한 기본 모니터링 지표",
-      "usedAt": "2026-07-11T13:01:15.073Z"
+      "title": "S3 같은 객체 스토리지에서 수명 주기 정책을 설계하는 방법",
+      "slug": "object-storage-lifecycle-policy",
+      "thumbnail": {
+        "title": "객체 스토리지 수명 주기",
+        "subtitle": "오래된 파일을 안전하게 정리하는 기준"
+      }
     },
     {
-      "title": "Nginx 리버스 프록시를 처음 구성할 때 자주 실수하는 부분",
-      "usedAt": "2026-07-11T13:44:10.586Z"
+      "title": "CDN 캐시를 무효화할 때 전체 purge를 피하는 방법",
+      "slug": "cdn-cache-invalidation-strategy",
+      "thumbnail": {
+        "title": "CDN 캐시 무효화 전략",
+        "subtitle": "전체 purge 전에 선택할 수 있는 방법"
+      }
     },
     {
-      "title": "데이터베이스 마이그레이션을 안전하게 배포하는 방법",
-      "usedAt": "2026-07-12T02:00:19.550Z"
+      "title": "브라우저 저장소에 토큰을 저장할 때 localStorage와 쿠키를 비교하는 기준",
+      "slug": "browser-token-storage-localstorage-cookie",
+      "thumbnail": {
+        "title": "토큰을 어디에 저장할까",
+        "subtitle": "localStorage와 쿠키의 보안 차이"
+      }
     },
     {
-      "title": "Redis 캐시를 도입하기 전에 먼저 확인해야 할 것들",
-      "usedAt": "2026-07-12T04:09:45.159Z"
+      "title": "프론트엔드 번들 크기가 커졌을 때 먼저 분석할 항목",
+      "slug": "frontend-bundle-size-analysis",
+      "thumbnail": {
+        "title": "번들 크기가 커졌을 때",
+        "subtitle": "분석 도구로 먼저 확인할 항목"
+      }
     },
     {
-      "title": "JWT 인증을 사용할 때 보안상 주의해야 할 실무 포인트",
-      "usedAt": "2026-07-12T06:27:13.324Z"
+      "title": "Core Web Vitals에서 LCP가 나빠졌을 때 개선하는 순서",
+      "slug": "core-web-vitals-lcp-improvement",
+      "thumbnail": {
+        "title": "LCP가 느려졌을 때",
+        "subtitle": "이미지와 서버 응답부터 줄이기"
+      }
     },
     {
-      "title": "API 응답 속도가 느릴 때 병목을 찾는 단계별 접근",
-      "usedAt": "2026-07-12T09:44:58.260Z"
+      "title": "서비스 워커 캐시 때문에 새 배포가 반영되지 않을 때 해결하는 방법",
+      "slug": "service-worker-cache-update-strategy",
+      "thumbnail": {
+        "title": "서비스 워커 캐시 갱신",
+        "subtitle": "새 배포가 보이지 않을 때의 해결 순서"
+      }
     },
     {
-      "title": "PostgreSQL 백업과 복구 전략을 세울 때의 기본 원칙",
-      "usedAt": "2026-07-12T13:02:05.641Z"
+      "title": "백엔드에서 시간대 버그를 줄이기 위해 UTC와 로컬 시간을 나누는 방법",
+      "slug": "backend-timezone-utc-local-time",
+      "thumbnail": {
+        "title": "시간대 버그 줄이기",
+        "subtitle": "UTC 저장과 로컬 표시를 나누는 기준"
+      }
     },
     {
-      "title": "Docker 컨테이너 로그와 볼륨을 운영 관점에서 관리하는 방법",
-      "usedAt": "2026-07-13T02:01:53.204Z"
+      "title": "예약 작업이 중복 실행되지 않도록 락을 설계하는 방법",
+      "slug": "scheduled-job-distributed-lock",
+      "thumbnail": {
+        "title": "예약 작업 중복 실행 막기",
+        "subtitle": "분산 락과 재시도 기준 잡기"
+      }
     },
     {
-      "title": "Node.js API 서버에서 에러 처리를 일관되게 설계하는 방법",
-      "usedAt": "2026-07-13T06:47:12.718Z"
+      "title": "이메일 발송 기능을 큐 기반으로 분리할 때 고려할 점",
+      "slug": "email-sending-queue-design",
+      "thumbnail": {
+        "title": "이메일 발송을 큐로 분리하기",
+        "subtitle": "실패와 재시도를 다루는 구조"
+      }
     },
     {
-      "title": "테스트 피라미드를 기준으로 단위 테스트와 통합 테스트를 나누는 방법",
-      "usedAt": "2026-07-13T10:52:37.862Z"
+      "title": "파일 업로드 기능에서 확장자와 MIME 타입을 함께 검증하는 이유",
+      "slug": "file-upload-extension-mime-validation",
+      "thumbnail": {
+        "title": "파일 업로드 검증하기",
+        "subtitle": "확장자와 MIME 타입을 함께 보는 이유"
+      }
     },
     {
-      "title": "클라우드 비용이 갑자기 늘었을 때 먼저 확인할 항목들"
+      "title": "알림 피로를 줄이기 위해 모니터링 경보를 정리하는 방법",
+      "slug": "monitoring-alert-fatigue-reduction",
+      "thumbnail": {
+        "title": "알림 피로 줄이기",
+        "subtitle": "진짜 대응할 경보만 남기는 법"
+      }
     },
     {
-      "title": "기술 블로그에서 카테고리와 태그를 장기적으로 운영하는 방법"
+      "title": "장애 회고 문서를 처음 작성할 때 포함해야 할 항목",
+      "slug": "incident-postmortem-template-basics",
+      "thumbnail": {
+        "title": "장애 회고 문서 작성하기",
+        "subtitle": "책임 추궁보다 재발 방지에 집중하기"
+      }
     },
     {
-      "title": "프론트엔드에서 loading, empty, error 상태를 일관되게 처리하는 방법"
+      "title": "Renovate로 의존성 업데이트 PR을 자동화할 때 설정할 기준",
+      "slug": "renovate-dependency-update-rules",
+      "thumbnail": {
+        "title": "Renovate PR 자동화",
+        "subtitle": "업데이트를 안전하게 나누는 기준"
+      }
     },
     {
-      "title": "TypeScript strict 옵션을 점진적으로 켜는 방법"
+      "title": "모노레포에서 패키지 경계를 정할 때 의존성 방향을 관리하는 방법",
+      "slug": "monorepo-package-boundary-dependencies",
+      "thumbnail": {
+        "title": "모노레포 패키지 경계",
+        "subtitle": "의존성 방향이 무너지지 않게 관리하기"
+      }
     },
     {
-      "title": "Git 브랜치 전략을 팀 규모에 맞게 선택하는 기준"
+      "title": "GraphQL API에서 N+1 문제를 발견하고 줄이는 기본 방법",
+      "slug": "graphql-n-plus-one-basic-fix",
+      "thumbnail": {
+        "title": "GraphQL N+1 문제 줄이기",
+        "subtitle": "필드 해석과 배치 로딩 점검"
+      }
     },
     {
-      "title": "HTTPS 인증서와 도메인 연결 문제를 점검하는 기본 절차"
+      "title": "검색 기능을 만들 때 DB LIKE 검색과 전문 검색을 나누는 기준",
+      "slug": "database-like-vs-fulltext-search",
+      "thumbnail": {
+        "title": "LIKE와 전문 검색 비교",
+        "subtitle": "검색 품질과 성능의 선택 기준"
+      }
     },
     {
-      "title": "서버 성능 튜닝 전에 확인해야 할 CPU, 메모리, I/O 지표"
+      "title": "웹훅 수신 서버에서 서명 검증과 재처리를 설계하는 방법",
+      "slug": "webhook-signature-retry-design",
+      "thumbnail": {
+        "title": "웹훅 수신 안정화",
+        "subtitle": "서명 검증과 재처리를 함께 설계하기"
+      }
     },
     {
-      "title": "개인 프로젝트를 운영 서비스처럼 관리하기 위한 체크리스트"
+      "title": "운영 DB에서 직접 데이터를 수정해야 할 때 안전하게 진행하는 절차",
+      "slug": "production-database-manual-data-fix",
+      "thumbnail": {
+        "title": "운영 DB 수동 수정 절차",
+        "subtitle": "백업과 검증 없이 바로 수정하지 않기"
+      }
     }
   ]
 }
