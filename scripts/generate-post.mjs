@@ -1,10 +1,14 @@
 import OpenAI from "openai";
 import fs from "node:fs/promises";
 import path from "node:path";
+import os from "node:os";
+import { spawn } from "node:child_process";
 
 const TOPICS_PATH = path.join("prompts", "tech-topics.json");
 const TOPIC_BATCH_SIZE = 30;
 const TIME_ZONE = "Asia/Seoul";
+const PUBLIC_POST_IMAGE_ROOT = "/assets/img/posts/blog";
+const THUMBNAIL_OUTPUT_NAME = "preview.png";
 
 const apiKey = process.env.OPENAI_API_KEY;
 
@@ -55,8 +59,10 @@ async function requestNewTopics(previousTopics) {
     model: "gpt-5-mini",
     input: [
       "한국어 실무 IT 기술 블로그 주제 30개를 JSON 배열로만 작성해라.",
-      "각 항목은 반드시 객체여야 하며, title, slug 키를 포함해라.",
+      "각 항목은 반드시 객체여야 하며, title, slug, thumbnail 키를 포함해라.",
+      "thumbnail은 title과 subtitle 키를 가진 객체여야 한다.",
       "slug는 lowercase ASCII kebab-case로 작성하고 80자 이하로 유지해라.",
+      "thumbnail.title은 썸네일에 들어갈 짧은 한국어 제목, thumbnail.subtitle은 썸네일에 들어갈 짧은 한국어 부제목으로 작성해라.",
       "마크다운이나 설명 문장은 넣지 마라.",
       "주제는 실무 중심이어야 하며 특정 프레임워크에 치우치지 않게 다양하게 구성해라.",
       "반드시 Backend, Database, PostgreSQL, Docker, Linux, DevOps, Cloud, Security, Testing, Observability, Frontend, Architecture, Blogging 주제를 고르게 섞어라.",
@@ -79,7 +85,11 @@ async function requestNewTopics(previousTopics) {
 
     return {
       title: String(item.title ?? item.topic ?? "").trim(),
-      slug: String(item.slug ?? "").trim()
+      slug: String(item.slug ?? "").trim(),
+      thumbnail: {
+        title: String(item.thumbnail?.title ?? item.thumbnailTitle ?? "").trim(),
+        subtitle: String(item.thumbnail?.subtitle ?? item.subtitle ?? "").trim()
+      }
     };
   });
 }
@@ -175,6 +185,41 @@ function upsertFrontMatterValue(markdown, key, value) {
   return `---\n${lines.join("\n")}\n---${markdown.slice(frontMatter[0].length)}`;
 }
 
+function yamlDoubleQuoted(value) {
+  return `"${String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+}
+
+function upsertFrontMatterBlock(markdown, key, blockLines) {
+  const frontMatter = markdown.match(/^---\s*\n([\s\S]*?)\n---/);
+
+  if (!frontMatter) {
+    return markdown;
+  }
+
+  const lines = frontMatter[1].split("\n");
+  const nextLines = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    if (lines[index].startsWith(`${key}:`)) {
+      while (index + 1 < lines.length && /^\s+/.test(lines[index + 1])) {
+        index += 1;
+      }
+      continue;
+    }
+
+    nextLines.push(lines[index]);
+  }
+
+  const insertAfterKeys = ["tags:", "categories:", "date:", "slug:", "title:"];
+  const insertIndex = nextLines.findLastIndex((line) =>
+    insertAfterKeys.some((prefix) => line.startsWith(prefix))
+  );
+
+  nextLines.splice(insertIndex >= 0 ? insertIndex + 1 : 0, 0, ...blockLines);
+
+  return `---\n${nextLines.join("\n")}\n---${markdown.slice(frontMatter[0].length)}`;
+}
+
 async function requestEnglishSlug(markdown) {
   const title = frontMatterValue(markdown, "title");
   const slugResponse = await client.responses.create({
@@ -208,6 +253,81 @@ async function uniqueDraftPath(baseSlug) {
 
     suffix += 1;
   }
+}
+
+function run(command, commandArgs) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, commandArgs, {
+      stdio: ["ignore", "pipe", "pipe"]
+    });
+
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk;
+    });
+
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk;
+    });
+
+    child.on("error", reject);
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolve({ stdout, stderr });
+        return;
+      }
+
+      reject(
+        new Error(
+          `${command} ${commandArgs.join(" ")} failed with exit code ${code}\n${stderr || stdout}`
+        )
+      );
+    });
+  });
+}
+
+async function generateThumbnail({ slug, title, subtitle }) {
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), "tech-blog-thumbnail-input-"));
+  const inputPath = path.join(tempDir, "thumbnail-input.json");
+
+  try {
+    await fs.writeFile(
+      inputPath,
+      `${JSON.stringify({ slug, title, subtitle }, null, 2)}\n`,
+      "utf8"
+    );
+
+    await run(process.execPath, [
+      path.join("scripts", "generate-thumbnail.mjs"),
+      "--input",
+      inputPath,
+      "--output-name",
+      THUMBNAIL_OUTPUT_NAME
+    ]);
+  } finally {
+    await fs.rm(tempDir, { recursive: true, force: true });
+  }
+
+  return `${PUBLIC_POST_IMAGE_ROOT}/${slug}/${THUMBNAIL_OUTPUT_NAME}`;
+}
+
+async function generatePostThumbnail({ markdown, slug }) {
+  const thumbnail = selectedTopic.thumbnail ?? {};
+  const subtitle = String(thumbnail.subtitle ?? selectedTopic.subtitle ?? "").trim();
+
+  if (!subtitle) {
+    return null;
+  }
+
+  const title = String(thumbnail.title ?? frontMatterValue(markdown, "title") ?? topic).trim();
+  const path = await generateThumbnail({ slug, title, subtitle });
+
+  return {
+    path,
+    alt: `${title} 썸네일`
+  };
 }
 
 function plainTextSummary(markdown) {
@@ -262,12 +382,25 @@ if (!slug) {
 
 const draft = await uniqueDraftPath(slug);
 let outputContent = upsertFrontMatterValue(content, "slug", `"${draft.slug}"`);
+const generatedThumbnail = await generatePostThumbnail({
+  markdown: outputContent,
+  slug: draft.slug
+});
+
+if (generatedThumbnail) {
+  outputContent = upsertFrontMatterBlock(outputContent, "image", [
+    "image:",
+    `  path: ${generatedThumbnail.path}`,
+    `  alt: ${yamlDoubleQuoted(generatedThumbnail.alt)}`
+  ]);
+}
 
 await fs.mkdir("_drafts", { recursive: true });
 await fs.writeFile(draft.filepath, outputContent, "utf8");
 
 console.log(`Selected topic: ${topic}`);
 console.log(`English slug: ${draft.slug}`);
+console.log(`Generated thumbnail: ${generatedThumbnail ? generatedThumbnail.path : "skipped"}`);
 console.log(`Created draft: ${draft.filepath}`);
 
 await writeGitHubOutputs({
