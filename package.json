@@ -21,6 +21,7 @@
     "build:js": "rollup -c --bundleConfigAsCjs --environment BUILD:production",
     "generate:post": "node scripts/generate-post.mjs",
     "generate:topic-candidates": "node scripts/generate-topic-candidates.mjs",
+    "generate:new-trend-candidates": "node scripts/generate-topic-candidates.mjs -- --kind new-trend",
     "generate:thumbnail": "node scripts/generate-thumbnail.mjs",
     "verify:indexing": "node scripts/verify-indexing-readiness.mjs",
     "watch:js": "rollup -c --bundleConfigAsCjs -w",
