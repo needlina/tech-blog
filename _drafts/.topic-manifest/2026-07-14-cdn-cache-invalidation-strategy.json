@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-14T13:48:01.467Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29337780558",
+    "runAttempt": "1"
+  },
+  "topic": "CDN 캐시를 무효화할 때 전체 purge를 피하는 방법",
+  "topicTitle": "CDN 캐시를 무효화할 때 전체 purge를 피하는 방법",
+  "topicSlug": "cdn-cache-invalidation-strategy",
+  "topicIdentifiers": [
+    "slug:cdn-cache-invalidation-strategy",
+    "title:CDN 캐시를 무효화할 때 전체 purge를 피하는 방법"
+  ],
+  "post": {
+    "title": "CDN 캐시 무효화: 전체 purge를 피하는 방법과 실무 체크리스트",
+    "slug": "cdn-cache-invalidation-strategy",
+    "draftPath": "_drafts/2026-07-14-cdn-cache-invalidation-strategy.md",
+    "thumbnailPath": "/assets/img/posts/blog/cdn-cache-invalidation-strategy/preview.png"
+  }
+}
