@@ -52,7 +52,8 @@
       "thumbnail": {
         "title": "PostgreSQL 데드락 분석",
         "subtitle": "락 순서와 트랜잭션 범위 확인하기"
-      }
+      },
+      "usedAt": "2026-07-14T13:16:17.336Z"
     },
     {
       "title": "PostgreSQL autovacuum을 이해하고 테이블 부하를 줄이는 기본 원리",
