@@ -154,6 +154,7 @@ jobs:
             - 후보 PR: #${{ github.event.issue.number }}
             - 선택 번호: ${{ matrix.index }}
             - 후보 파일: ${{ needs.parse-comment.outputs.candidate_file }}
+            - 후보 종류: ${{ steps.draft.outputs.candidate_kind }}
 
             작성된 글:
             - 제목: ${{ steps.draft.outputs.title }}
