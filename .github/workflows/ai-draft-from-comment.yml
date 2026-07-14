@@ -1,0 +1,177 @@
+name: Generate AI Draft From Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: ai-draft-from-comment-tech-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  parse-comment:
+    if: github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.parse.outputs.should_run }}
+      picks: ${{ steps.parse.outputs.picks }}
+      candidate_file: ${{ steps.parse.outputs.candidate_file }}
+      candidate_ref: ${{ steps.parse.outputs.candidate_ref }}
+
+    steps:
+      - name: Parse pick comment
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const allowed = new Set(["OWNER", "MEMBER", "COLLABORATOR"]);
+            const body = context.payload.comment.body.trim();
+            const match = body.match(/^pick\s+([0-9][0-9,\s]*)$/i);
+
+            if (!match) {
+              core.setOutput("should_run", "false");
+              return;
+            }
+
+            if (!allowed.has(context.payload.comment.author_association)) {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: context.issue.number,
+                body: "이 저장소 권한이 있는 사용자만 `pick` 명령으로 초안 생성을 요청할 수 있습니다."
+              });
+              core.setOutput("should_run", "false");
+              return;
+            }
+
+            const picks = [...new Set(
+              match[1]
+                .split(/[,\s]+/)
+                .filter(Boolean)
+                .map((value) => Number.parseInt(value, 10))
+                .filter((value) => Number.isInteger(value) && value > 0)
+            )];
+
+            if (!picks.length) {
+              core.setOutput("should_run", "false");
+              return;
+            }
+
+            const { data: pull } = await github.rest.pulls.get({
+              ...context.repo,
+              pull_number: context.issue.number
+            });
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              ...context.repo,
+              pull_number: context.issue.number
+            });
+            const candidateFiles = files
+              .filter((file) => file.status !== "removed")
+              .map((file) => file.filename)
+              .filter((filename) => /^candidate-topics\/.*\.json$/.test(filename));
+
+            if (candidateFiles.length !== 1) {
+              throw new Error(`Expected exactly one candidate JSON file, found ${candidateFiles.length}.`);
+            }
+
+            core.setOutput("should_run", "true");
+            core.setOutput("picks", JSON.stringify(picks));
+            core.setOutput("candidate_file", candidateFiles[0]);
+            core.setOutput("candidate_ref", pull.head.sha);
+
+  generate-drafts:
+    needs: parse-comment
+    if: needs.parse-comment.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        index: ${{ fromJson(needs.parse-comment.outputs.picks) }}
+
+    steps:
+      - name: Checkout default branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install thumbnail renderer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libreoffice fonts-noto-cjk
+
+      - name: Download candidate file
+        uses: actions/github-script@v7
+        env:
+          CANDIDATE_FILE: ${{ needs.parse-comment.outputs.candidate_file }}
+          CANDIDATE_REF: ${{ needs.parse-comment.outputs.candidate_ref }}
+        with:
+          script: |
+            const fs = require("fs");
+            const path = require("path");
+            const { data } = await github.rest.repos.getContent({
+              ...context.repo,
+              path: process.env.CANDIDATE_FILE,
+              ref: process.env.CANDIDATE_REF
+            });
+
+            if (Array.isArray(data) || !data.content) {
+              throw new Error(`Candidate file not found: ${process.env.CANDIDATE_FILE}`);
+            }
+
+            fs.mkdirSync(path.dirname(process.env.CANDIDATE_FILE), { recursive: true });
+            fs.writeFileSync(
+              process.env.CANDIDATE_FILE,
+              Buffer.from(data.content, "base64").toString("utf8")
+            );
+
+      - name: Generate AI draft
+        id: draft
+        run: npm run generate:post -- --topic-file "${{ needs.parse-comment.outputs.candidate_file }}" --topic-index "${{ matrix.index }}"
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "docs: add selected AI draft"
+          title: "AI tech blog draft: ${{ steps.draft.outputs.title }}"
+          base: ${{ github.event.repository.default_branch }}
+          body: |
+            댓글 선택으로 생성한 기술 블로그 초안입니다.
+
+            선택 정보:
+            - 후보 PR: #${{ github.event.issue.number }}
+            - 선택 번호: ${{ matrix.index }}
+            - 후보 파일: ${{ needs.parse-comment.outputs.candidate_file }}
+
+            작성된 글:
+            - 제목: ${{ steps.draft.outputs.title }}
+            - 주제: ${{ steps.draft.outputs.topic }}
+            - 요약: ${{ steps.draft.outputs.summary }}
+            - slug: ${{ steps.draft.outputs.slug }}
+            - 초안 파일: ${{ steps.draft.outputs.draft_path }}
+            - 주제 manifest: ${{ steps.draft.outputs.manifest_path }}
+          branch: ai/selected-tech-draft-${{ github.event.comment.id }}-${{ matrix.index }}
+          delete-branch: true
+
+      - name: Comment result
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = "${{ steps.cpr.outputs.pull-request-url }}";
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: `선택 번호 ${{ matrix.index }} 초안 PR을 생성했습니다: ${url}`
+            });
