@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-07-14T14:11:52.572Z",
+  "blog": "tech-blog",
+  "kind": "new-trend",
+  "source": "openai-new-trend-candidates",
+  "candidates": [
+    {
+      "index": 1,
+      "title": "CI/CD 파이프라인에 SBOM·공급망 증명(attestation) 도입 체크리스트",
+      "slug": "ci-cd-sbom-attestation-checklist",
+      "thumbnail": {
+        "title": "SBOM과 공급망 증명",
+        "subtitle": "빌드 산출물의 신뢰성을 자동으로 증명하는 현실적 단계"
+      },
+      "reason": "공급망 보안 규제·고객 요구와 함께 SBOM과 빌드/배포 증명이 실무에서 검증 요건으로 빠르게 도입되고 있어 우선 점검이 필요하기 때문이다.",
+      "searchIntent": "내 조직의 CI/CD에 SBOM 생성과 서명(또는 attestation)을 어떻게 통합하고 검증할지 알고 싶다.",
+      "practicalValue": "빌드 파이프라인에 SBOM 생성, 서명 저장, 레지스트리·레거시 도구 연계 방법을 제시해 릴리스 신뢰성을 높일 수 있다.",
+      "freshnessReason": "최근 몇몇 클라우드·플랫폼 제공자가 SBOM/attestation 연동 기능과 정책 지원을 발표하며 도입 비용과 검증 방법이 바뀌고 있다.",
+      "sourceHint": "공식 문서, 릴리즈 노트, 벤더 블로그, 표준 문서 (SPDX/SLSA) 및 보안 권고",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 2,
+      "title": "클라우드에서 WASM 기반 서버리스 런타임 도입 시점과 마이그레이션 고려사항",
+      "slug": "wasm-serverless-runtime-adoption",
+      "thumbnail": {
+        "title": "WASM 서버리스 도입",
+        "subtitle": "기존 서버리스/컨테이너 워크로드를 WASM으로 옮길 때 체크포인트"
+      },
+      "reason": "경량 실행, 빠른 콜드 스타트, 안전 격리 등으로 WASM 런타임이 클라우드 서버리스 옵션으로 자리잡기 시작해 실무 영향이 커지고 있다.",
+      "searchIntent": "내 서비스의 성능·보안·개발 비용 측면에서 어떤 워크로드를 WASM으로 바꿔야 하는지 알고 싶다.",
+      "practicalValue": "호환성, 이미지·패키징 방식, 디버깅·모니터링 도구 통합과 성능 벤치마크로 실제 마이그레이션 위험을 줄일 수 있다.",
+      "freshnessReason": "주요 클라우드·플랫폼들이 WASM 런타임·정책을 갱신하거나 관리형 서비스를 확장하면서 적용 시점과 운영 방식이 변하고 있다.",
+      "sourceHint": "공식 문서, 런타임 릴리즈 노트, 벤더 블로그, 표준(Wasmtime/WASI) 문서",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 3,
+      "title": "OCI 이미지와 레지스트리 프로토콜 변경이 레지스트리·빌드 파이프라인에 미치는 영향",
+      "slug": "oci-image-registry-protocol-changes",
+      "thumbnail": {
+        "title": "OCI 이미지·레지스트리 변화",
+        "subtitle": "매니페스트, 멀티플랫폼, 레이어 암호화 호환성 점검"
+      },
+      "reason": "OCI 규격과 레지스트리 구현의 사소한 변경이 멀티플랫폼 이미지 배포·캐싱·보안에 실무적 문제를 일으킬 수 있어 사전 점검이 필요하다.",
+      "searchIntent": "최근 OCI 매니페스트/분배 규격 변화가 내 빌드·배포·캐시 전략에 어떤 호환성 이슈를 만드는지 알고 싶다.",
+      "practicalValue": "레지스트리 호환성 테스트, 이미지 서명·암호화 정책 적용, 빌드 파이프라인 수정 포인트를 우선순위별로 정할 수 있다.",
+      "freshnessReason": "OCI/레지스트리 구현들이 플랫폼 매니페스트 처리·암호화 지원을 갱신하면서 기존 레지스트리·CD 설정이 깨질 가능성이 증가하고 있다.",
+      "sourceHint": "OCI 표준 문서, 레지스트리 및 컨테이너 런타임 릴리즈 노트, 벤더 문서",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 4,
+      "title": "dockerd 중심 워크플로 축소에 따른 containerd/nerdctl 전환 실전 가이드",
+      "slug": "containerd-nerdctl-adoption-over-dockerd",
+      "thumbnail": {
+        "title": "dockerd에서 containerd로",
+        "subtitle": "도커 엔진 의존도를 줄일 때 실제 변경 항목과 테스트 시나리오"
+      },
+      "reason": "보안·경량화·쿠버네티스 친화성 때문에 도커 엔진 기반 워크플로의 전환 수요가 늘어나며 마이그레이션 전략이 당장 필요하다.",
+      "searchIntent": "현재 도커 중심 개발·빌드·배포 파이프라인을 containerd/nerdctl로 옮기려면 무엇을 바꿔야 하는지 단계별로 알고 싶다.",
+      "practicalValue": "로컬 개발, CI 빌드 이미지 생성, 레거시 스크립트 대체 방법과 주의점으로 전환 시간을 단축하고 운영 리스크를 줄일 수 있다.",
+      "freshnessReason": "여러 툴체인이 dockerd 의존도를 낮추는 업데이트를 내놓으면서 호환성 및 운영 절차를 지금 점검해야 전환 비용을 줄일 수 있다.",
+      "sourceHint": "런타임 공식 문서, 릴리즈 노트, 벤더 마이그레이션 가이드",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 5,
+      "title": "CI/CD·클라우드 권한 부여에 OIDC 단기 토큰 도입이 의미하는 변화와 대응책",
+      "slug": "oidc-short-lived-tokens-for-ci-deployments",
+      "thumbnail": {
+        "title": "OIDC 단기 토큰 전환",
+        "subtitle": "배포·시크릿 관리에서 긴 수명 토큰을 대체할 때의 보안·실무 영향"
+      },
+      "reason": "장기적 배포 키·시크릿 사용을 줄이고 OIDC 기반 단기 토큰을 채택하는 조직이 늘어나며 접근 제어와 비밀 관리 방식에 변화가 생기고 있다.",
+      "searchIntent": "CI/CD 파이프라인에서 기존 배포 키를 OIDC/short-lived 토큰으로 바꿀 때 구성·롤백·권한 모델은 어떻게 설계해야 하는가?",
+      "practicalValue": "권한 최소화, 토큰 수명·재발급 정책, 레거시 툴과의 호환성 체크리스트로 보안 사고 위험을 낮출 수 있다.",
+      "freshnessReason": "여러 클라우드·CI 제공자가 OIDC 통합과 토큰 정책을 갱신하면서 즉시 적용해야 할 설정·권장사항이 변경되고 있다.",
+      "sourceHint": "공식 문서, 릴리즈 노트, 벤더 블로그, 보안 권고",
+      "source": "openai-new-trend-candidates"
+    }
+  ]
+}
