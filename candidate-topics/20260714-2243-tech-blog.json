@@ -1,0 +1,117 @@
+{
+  "generatedAt": "2026-07-14T13:43:17.778Z",
+  "blog": "tech-blog",
+  "source": "prompts/tech-topics.json",
+  "candidates": [
+    {
+      "index": 1,
+      "title": "PostgreSQL 데드락이 발생했을 때 로그로 원인을 좁히는 방법",
+      "slug": "postgresql-deadlock-log-troubleshooting",
+      "thumbnail": {
+        "title": "PostgreSQL 데드락 분석",
+        "subtitle": "락 순서와 트랜잭션 범위 확인하기"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 2,
+      "title": "PostgreSQL autovacuum을 이해하고 테이블 부하를 줄이는 기본 원리",
+      "slug": "postgresql-autovacuum-basics",
+      "thumbnail": {
+        "title": "PostgreSQL autovacuum 이해하기",
+        "subtitle": "테이블 부하와 bloat를 줄이는 기본 원리"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 3,
+      "title": "페이지네이션에서 offset 방식과 cursor 방식을 선택하는 기준",
+      "slug": "pagination-offset-vs-cursor",
+      "thumbnail": {
+        "title": "offset과 cursor 페이지네이션",
+        "subtitle": "데이터가 많아질 때 달라지는 선택"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 4,
+      "title": "API 버전 관리를 시작할 때 URL과 헤더 방식 중 선택하는 기준",
+      "slug": "api-versioning-url-vs-header",
+      "thumbnail": {
+        "title": "API 버전 관리 시작하기",
+        "subtitle": "URL과 헤더 방식의 현실적인 차이"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 5,
+      "title": "레이트 리미팅을 적용할 때 사용자 단위와 IP 단위를 나누는 방법",
+      "slug": "rate-limiting-user-vs-ip",
+      "thumbnail": {
+        "title": "레이트 리미팅 기준 정하기",
+        "subtitle": "사용자와 IP를 함께 봐야 하는 이유"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 6,
+      "title": "기능 플래그를 배포와 분리해서 운영하는 방법",
+      "slug": "feature-flag-release-operations",
+      "thumbnail": {
+        "title": "기능 플래그로 배포 분리하기",
+        "subtitle": "코드 배포와 기능 공개를 나누는 법"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 7,
+      "title": "시크릿 키를 교체할 때 서비스 중단 없이 진행하는 절차",
+      "slug": "secret-rotation-without-downtime",
+      "thumbnail": {
+        "title": "시크릿 키 무중단 교체",
+        "subtitle": "새 키와 옛 키가 공존하는 전환 절차"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 8,
+      "title": "S3 같은 객체 스토리지에서 수명 주기 정책을 설계하는 방법",
+      "slug": "object-storage-lifecycle-policy",
+      "thumbnail": {
+        "title": "객체 스토리지 수명 주기",
+        "subtitle": "오래된 파일을 안전하게 정리하는 기준"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 9,
+      "title": "CDN 캐시를 무효화할 때 전체 purge를 피하는 방법",
+      "slug": "cdn-cache-invalidation-strategy",
+      "thumbnail": {
+        "title": "CDN 캐시 무효화 전략",
+        "subtitle": "전체 purge 전에 선택할 수 있는 방법"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    },
+    {
+      "index": 10,
+      "title": "브라우저 저장소에 토큰을 저장할 때 localStorage와 쿠키를 비교하는 기준",
+      "slug": "browser-token-storage-localstorage-cookie",
+      "thumbnail": {
+        "title": "토큰을 어디에 저장할까",
+        "subtitle": "localStorage와 쿠키의 보안 차이"
+      },
+      "reason": "기존 기술 블로그 주제 큐의 미사용 후보입니다.",
+      "source": "prompts/tech-topics.json"
+    }
+  ]
+}
