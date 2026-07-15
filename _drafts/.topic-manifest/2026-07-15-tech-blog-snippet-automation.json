@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-15T00:34:15.315Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29379308661",
+    "runAttempt": "1"
+  },
+  "candidateKind": "topic",
+  "topic": "기술 블로그 코드 스니펫을 실행 가능하게 유지하는 자동화 전략",
+  "topicTitle": "기술 블로그 코드 스니펫을 실행 가능하게 유지하는 자동화 전략",
+  "topicSlug": "tech-blog-snippet-automation",
+  "topicIdentifiers": [
+    "slug:tech-blog-snippet-automation",
+    "title:기술 블로그 코드 스니펫을 실행 가능하게 유지하는 자동화 전략"
+  ],
+  "post": {
+    "title": "기술 블로그 코드 스니펫을 항상 실행 가능하게 유지하는 자동화 전략",
+    "slug": "tech-blog-snippet-automation",
+    "draftPath": "_drafts/2026-07-15-tech-blog-snippet-automation.md",
+    "thumbnailPath": "/assets/img/posts/blog/tech-blog-snippet-automation/preview.png"
+  }
+}
