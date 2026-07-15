@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-15T02:51:43.208Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29385031105",
+    "runAttempt": "1"
+  },
+  "candidateKind": "new-trend",
+  "topic": "클라우드 네이티브 환경에서 WebAssembly(Wasm) 런타임 도입 가속화",
+  "topicTitle": "클라우드 네이티브 환경에서 WebAssembly(Wasm) 런타임 도입 가속화",
+  "topicSlug": "wasm-cloud-native-runtime-adoption",
+  "topicIdentifiers": [
+    "slug:wasm-cloud-native-runtime-adoption",
+    "title:클라우드 네이티브 환경에서 WebAssembly(Wasm) 런타임 도입 가속화"
+  ],
+  "post": {
+    "title": "클라우드 네이티브에서 WebAssembly(Wasm) 런타임 도입 가속화 방법",
+    "slug": "wasm-cloud-native-runtime-adoption",
+    "draftPath": "_drafts/2026-07-15-wasm-cloud-native-runtime-adoption.md",
+    "thumbnailPath": "/assets/img/posts/blog/wasm-cloud-native-runtime-adoption/preview.png"
+  }
+}
