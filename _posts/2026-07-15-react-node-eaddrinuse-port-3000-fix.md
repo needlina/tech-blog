@@ -48,7 +48,7 @@ Error: listen EADDRINUSE: address already in use :::3000
 
 또 하나 알게 된 점은 운영체제마다 포트를 확인하는 명령어가 다르다는 것입니다. Windows에서는 `netstat` 또는 PowerShell의 `Get-NetTCPConnection`을 쓰고, macOS/Linux에서는 `lsof`나 `ss`를 많이 씁니다. 그래서 팀 문서에는 OS별 명령어를 함께 적어두는 편이 좋겠다고 느꼈습니다.
 
-![여러 개발 서버가 하나의 3000번 포트를 두고 충돌하는 모습을 단순하게 표현한 기술 일러스트](/assets/img/posts/blog/react-node-eaddrinuse-port-3000-fix./image-1.webp)
+![여러 개발 서버가 하나의 3000번 포트를 두고 충돌하는 모습을 단순하게 표현한 기술 일러스트](/assets/img/posts/blog/react-node-eaddrinuse-port-3000-fix/image-1.webp)
 이미지 출처: AI 생성 이미지
 
 ## 1단계: 어떤 포트가 충돌했는지 확인
@@ -234,7 +234,7 @@ mock-server: 4010
 
 이런 규칙이 없으면 새로 합류한 사람이 매번 같은 에러를 만날 수 있습니다.
 
-![포트 확인, PID 조회, 프로세스 종료, 재실행으로 이어지는 문제 해결 흐름도](/assets/img/posts/blog/react-node-eaddrinuse-port-3000-fix./image-2.webp)
+![포트 확인, PID 조회, 프로세스 종료, 재실행으로 이어지는 문제 해결 흐름도](/assets/img/posts/blog/react-node-eaddrinuse-port-3000-fix/image-2.webp)
 이미지 출처: AI 생성 이미지
 
 ## 처음에는 헷갈렸던 부분
