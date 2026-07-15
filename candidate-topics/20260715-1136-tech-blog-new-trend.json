@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-07-15T02:36:30.948Z",
+  "blog": "tech-blog",
+  "kind": "new-trend",
+  "source": "openai-new-trend-candidates",
+  "candidates": [
+    {
+      "index": 1,
+      "title": "클라우드 네이티브 환경에서 WebAssembly(Wasm) 런타임 도입 가속화",
+      "slug": "wasm-cloud-native-runtime-adoption",
+      "thumbnail": {
+        "title": "Wasm × 클라우드 네이티브",
+        "subtitle": "경량 런타임과 인프라 통합 현황"
+      },
+      "reason": "경량·언어 중립 실행 모델로서 Wasm 런타임이 쿠버네티스, 서비스 메시, 엣지 플랫폼에 빠르게 통합되고 있어 실무적 영향 분석이 필요하기 때문이다.",
+      "searchIntent": "어떤 Wasm 런타임을 선택해야 하고, 배포·디버깅·보안·성능 측면에서 기존 컨테이너 흐름과 어떻게 다른지 알고 싶다.",
+      "practicalValue": "실제 서비스에 Wasm을 도입할 때 런타임 선택 기준, CI/CD 통합, 런타임 보안정책 적용 방법을 제시해 PoC·마이그레이션 결정을 돕는다.",
+      "freshnessReason": "최근 Wasm 런타임(Wasmtime, WasmEdge 등)과 쿠버네티스/엔터프라이즈 툴의 통합 기능이 확장되며 실무 적용 가능성이 급증하고 있다.",
+      "sourceHint": "벤더 블로그, 런타임 릴리즈 노트, 쿠버네티스/공식 문서",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 2,
+      "title": "소프트웨어 공급망 보안: SBOM·SLSA 채택과 CI 연동 실무 점검",
+      "slug": "sbom-slsa-ci-integration-checklist",
+      "thumbnail": {
+        "title": "SBOM·SLSA 실무 점검",
+        "subtitle": "빌드 파이프라인에서 증명과 메타데이터 확보하기"
+      },
+      "reason": "규제·구매자 요구와 함께 SBOM과 빌드 증명(SLSA 등)의 도입이 늘어나며 기존 CI 파이프라인과의 연동이 실무 과제로 떠오르고 있기 때문이다.",
+      "searchIntent": "SBOM 생성 형식과 도구(CycloneDX/SPDX), SLSA 증명 생성·검증을 CI에 통합하는 방법을 알고 싶다.",
+      "practicalValue": "빌드 파이프라인에서 자동으로 SBOM과 증명을 생성·검증하고 공급망 정책을 적용하는 절차를 제시해 취약점·컴플라이언스 대응을 단순화한다.",
+      "freshnessReason": "시장·규제 측면에서 SBOM/SLSA 요구가 강화되고 도구 생태계(스캐너·증명자)가 최근 몇 년 사이 빠르게 성숙하고 있다.",
+      "sourceHint": "표준 문서(SPDX/CycloneDX), SLSA 가이드라인, 보안 권고, 벤더 문서",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 3,
+      "title": "실무자를 위한 양자내성 암호(PQC) 혼합 모드 TLS 준비",
+      "slug": "pqc-hybrid-tls-migration-prep",
+      "thumbnail": {
+        "title": "PQC 혼합 모드 TLS",
+        "subtitle": "NIST 표준 이후 라이브러리 적용 전략"
+      },
+      "reason": "NIST의 양자내성 알고리즘 선정 이후 OpenSSL 등 주요 라이브러리에 하이브리드(PQC+ECC) TLS 지원이 추가되면서 준비 필요성이 커졌다.",
+      "searchIntent": "어떤 PQC 알고리즘을 우선 테스트해야 하고 라이브러리 호환성·성능·인증서/키 관리에 어떤 변화가 생기는지 알고 싶다.",
+      "practicalValue": "테스트 환경에서 하이브리드 TLS 설정, 성능 영향 측정, 인증서 발급·키 교체 전략을 검증해 단계적 전환 계획을 수립할 수 있다.",
+      "freshnessReason": "암호 라이브러리들이 PQC 기능을 릴리스하고 상호운용성 테스트가 진행 중이어서 지금 점검해야 실무 위험을 줄일 수 있다.",
+      "sourceHint": "NIST 표준 문서, OpenSSL(및 기타 라이브러리) 릴리즈 노트, 벤더 보안 블로그",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 4,
+      "title": "클라우드 IAM의 변화: Continuous Access Evaluation(CAE)와 세션 즉시 차단 모델",
+      "slug": "cloud-iam-continuous-access-evaluation-cae",
+      "thumbnail": {
+        "title": "CAE와 실시간 권한 반영",
+        "subtitle": "세션·토큰 철회가 달라진다"
+      },
+      "reason": "권한 변경이나 계정 탈취 상황에서 즉시 접근 차단이 가능해지면서 인증·세션·토큰 모델을 재설계해야 할 필요성이 커졌다.",
+      "searchIntent": "CAE가 실제로 어떻게 동작하고 토큰 유효성 검사·세션 만료·정책 적용에 어떤 영향을 주는지 알고 싶다.",
+      "practicalValue": "CAE를 도입하거나 대비하면 권한 변경 시 빠른 접근 차단이 가능해 내부자 위협과 규정 준수 리스크를 줄일 수 있다.",
+      "freshnessReason": "여러 클라우드 제공자가 CAE 관련 기능을 단계적으로 출시·확장하고 있어 지금 아키텍처 영향을 점검할 시점이다.",
+      "sourceHint": "클라우드 벤더 문서, 보안 권고, 공식 기술 문서",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 5,
+      "title": "멀티테넌트 쿠버네티스에서 경량 샌드박스(gVisor/Kata/Firecracker) 적용 가이드",
+      "slug": "kubernetes-lightweight-sandboxes-multi-tenant",
+      "thumbnail": {
+        "title": "클러스터 샌드박스 전략",
+        "subtitle": "gVisor·Kata·Firecracker 비교와 운영 팁"
+      },
+      "reason": "멀티테넌트 환경 보안을 위해 전통적 컨테이너 격리 외에 경량 VM/샌드박스 도입 검토 수요가 늘고 있어 비교·적용 방법을 제시할 필요가 있다.",
+      "searchIntent": "각 샌드박스 기술의 보안·성능·운영 비용 차이와 쿠버네티스 통합 시 고려사항을 알고 싶다.",
+      "practicalValue": "샌드박스별 장단점, 스케줄링/노드 운영·이미지 빌드 변경점과 모니터링·디버깅 팁을 제공해 도입 결정·PoC 설계에 실무적 도움을 준다.",
+      "freshnessReason": "런타임 프로젝트들의 쿠버네티스 통합 기능과 운영 툴 지원이 최근 강화되며 멀티테넌트 보안 전략으로 재검토되고 있다.",
+      "sourceHint": "런타임 릴리즈 노트, 벤더 블로그, 쿠버네티스 통합 문서",
+      "source": "openai-new-trend-candidates"
+    }
+  ]
+}
