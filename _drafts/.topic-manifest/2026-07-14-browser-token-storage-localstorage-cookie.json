@@ -1,0 +1,21 @@
+{
+  "generatedAt": "2026-07-14T13:46:24.689Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29337780558",
+    "runAttempt": "1"
+  },
+  "topic": "브라우저 저장소에 토큰을 저장할 때 localStorage와 쿠키를 비교하는 기준",
+  "topicTitle": "브라우저 저장소에 토큰을 저장할 때 localStorage와 쿠키를 비교하는 기준",
+  "topicSlug": "browser-token-storage-localstorage-cookie",
+  "topicIdentifiers": [
+    "slug:browser-token-storage-localstorage-cookie",
+    "title:브라우저 저장소에 토큰을 저장할 때 localStorage와 쿠키를 비교하는 기준"
+  ],
+  "post": {
+    "title": "브라우저 토큰 저장 비교: localStorage vs Cookies — 실무에서 확인할 포인트",
+    "slug": "browser-token-storage-localstorage-cookie",
+    "draftPath": "_drafts/2026-07-14-browser-token-storage-localstorage-cookie.md",
+    "thumbnailPath": "/assets/img/posts/blog/browser-token-storage-localstorage-cookie/preview.png"
+  }
+}
