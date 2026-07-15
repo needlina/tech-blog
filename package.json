@@ -23,6 +23,7 @@
     "generate:topic-candidates": "node scripts/generate-topic-candidates.mjs",
     "generate:new-trend-candidates": "node scripts/generate-topic-candidates.mjs -- --kind new-trend",
     "generate:thumbnail": "node scripts/generate-thumbnail.mjs",
+    "generate:thumbnail:manual": "node scripts/generate-thumbnail-manual.mjs",
     "verify:indexing": "node scripts/verify-indexing-readiness.mjs",
     "watch:js": "rollup -c --bundleConfigAsCjs -w",
     "lint:scss": "stylelint _sass/**/*.scss",
