@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T03:13:51.977Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29468413446",
+    "runAttempt": "1"
+  },
+  "candidateKind": "new-trend",
+  "topic": "Terraform 공급자와 lockfile 변화 따라가기: 설치·의존성 해결의 실무 영향",
+  "topicTitle": "Terraform 공급자와 lockfile 변화 따라가기: 설치·의존성 해결의 실무 영향",
+  "topicSlug": "terraform-provider-lockfile-changes",
+  "topicIdentifiers": [
+    "slug:terraform-provider-lockfile-changes",
+    "title:Terraform 공급자와 lockfile 변화 따라가기: 설치·의존성 해결의 실무 영향"
+  ],
+  "post": {
+    "title": "Terraform 공급자(lockfile) 변화 따라가기: 설치·의존성 해결이 실무에 미치는 영향",
+    "slug": "terraform-provider-lockfile-changes",
+    "draftPath": "_drafts/2026-07-16-terraform-provider-lockfile-changes.md",
+    "thumbnailPath": "/assets/img/posts/blog/terraform-provider-lockfile-changes/preview.png"
+  }
+}
