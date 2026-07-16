@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T03:13:22.852Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29468389886",
+    "runAttempt": "1"
+  },
+  "candidateKind": "new-trend",
+  "topic": "OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검",
+  "topicTitle": "OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검",
+  "topicSlug": "openssl-crypto-advisory-compatibility-check",
+  "topicIdentifiers": [
+    "slug:openssl-crypto-advisory-compatibility-check",
+    "title:OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검"
+  ],
+  "post": {
+    "title": "OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검 가이드",
+    "slug": "openssl-crypto-advisory-compatibility-check",
+    "draftPath": "_drafts/2026-07-16-openssl-crypto-advisory-compatibility-check.md",
+    "thumbnailPath": "/assets/img/posts/blog/openssl-crypto-advisory-compatibility-check/preview.png"
+  }
+}
