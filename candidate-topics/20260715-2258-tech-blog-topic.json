@@ -1,0 +1,158 @@
+{
+  "generatedAt": "2026-07-15T13:58:37.847Z",
+  "blog": "tech-blog",
+  "kind": "topic",
+  "source": "openai-topic-candidates",
+  "candidates": [
+    {
+      "index": 1,
+      "title": "PostgreSQL 연결 수 과부하를 방지하기 위한 커넥션 풀 설정과 모니터링",
+      "slug": "postgresql-connection-pooling-tuning-monitoring",
+      "thumbnail": {
+        "title": "PostgreSQL 커넥션 풀 튜닝",
+        "subtitle": "설정·풀러·모니터링으로 DB 과부하 예방"
+      },
+      "reason": "운영 중인 서비스에서 DB 연결 과다로 성능 저하나 장애가 자주 발생하므로 실무에서 바로 적용 가능한 풀링 전략과 모니터링이 필요하다.",
+      "searchIntent": "적절한 커넥션 풀러 선택과 설정값, 애플리케이션별 커넥션 관리, 모니터링 지표 및 경고 기준을 알고 싶다.",
+      "practicalValue": "연결 에러와 대기 시간 감소, 자원 활용 효율화, DB 비용 절감으로 즉시 운영 안정성 개선이 가능하다.",
+      "freshnessReason": "PostgreSQL과 풀러(pgbouncer/pgpool) 버전별 동작과 모니터링 툴의 권장 지표가 자주 변경되므로 최신 문서 확인이 필요하다.",
+      "sourceHint": "PostgreSQL 공식 문서, PgBouncer/pgpool-II 문서, RDS/Aurora 등 DBaaS 벤더 문서, 모니터링 툴 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 2,
+      "title": "무중단으로 데이터베이스 스키마 마이그레이션 롤아웃과 안전한 롤백 전략",
+      "slug": "zero-downtime-db-migrations-rollout-rollback",
+      "thumbnail": {
+        "title": "무중단 DB 마이그레이션",
+        "subtitle": "롤아웃 절차와 안전한 롤백 패턴"
+      },
+      "reason": "스키마 변경이 서비스 중단이나 데이터 불일치를 초래하지 않도록 단계적 배포와 되돌림 방법을 정립해야 하기 때문이다.",
+      "searchIntent": "후방호환성 유지, 온라인 마이그레이션 도구 활용, 롤아웃 단계와 신속한 롤백 절차를 알고 싶다.",
+      "practicalValue": "배포 리스크를 줄여 가동중지 없이 스키마 변경을 수행하고 문제가 생겼을 때 빠르게 원상복구할 수 있다.",
+      "freshnessReason": "온라인 마이그레이션 도구와 DB의 기능(예: 병렬 인덱스 생성, 관찰 가능한 잠금 정책)이 지속 업데이트되므로 최신 권장 방식을 확인해야 한다.",
+      "sourceHint": "gh-ost/pt-online-schema-change 등의 도구 문서, 각 DB 벤더 마이그레이션 가이드, CI/CD 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 3,
+      "title": "대형 레포에서 Docker 이미지 용량을 레이어별로 실전 최적화하는 방법",
+      "slug": "docker-image-layer-optimization",
+      "thumbnail": {
+        "title": "Docker 이미지 레이어 최적화",
+        "subtitle": "레이어 분석으로 빌드·배포 비용 줄이기"
+      },
+      "reason": "이미지 크기와 빌드 시간이 CI/CD 비용과 배포 지연에 직접적인 영향을 주므로 실무에서 레이어 단위로 최적화하는 방법이 필요하다.",
+      "searchIntent": "레이어 분석 도구 사용법, 멀티스테이지 빌드 적용, 캐시 효율화와 불필요한 파일 제거 전략을 알고 싶다.",
+      "practicalValue": "CI 속도 향상, 저장소 및 전송 비용 감소, 공격 표면 축소로 보안·운영 이점이 즉시 발생한다.",
+      "freshnessReason": "BuildKit, base image 변경 정책, 보안 취약점 패치가 자주 업데이트되어 최적화 권장사항이 변할 수 있다.",
+      "sourceHint": "Docker 공식 문서, BuildKit 가이드, 베이스 이미지(예: distroless) 릴리즈 노트, 컨테이너 보안 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 4,
+      "title": "Linux에서 파일 디스크립터 누수( FD leak )를 탐지하고 우선 해결하는 순서",
+      "slug": "linux-fd-leak-detection-resolution",
+      "thumbnail": {
+        "title": "FD 누수 탐지 및 해결",
+        "subtitle": "lsof/ss/strace로 원인 찾아 복구하기"
+      },
+      "reason": "파일 디스크립터 누수는 프로세스 죽음이나 서비스 중단으로 이어지므로 빠르게 원인을 찾아야 하기 때문이다.",
+      "searchIntent": "어떤 명령과 지표로 FD 누수를 탐지하고 프로세스별로 원인을 좁혀 복구하는지 단계별로 알고 싶다.",
+      "practicalValue": "실시간 장애 대응 시 루트 원인을 빠르게 진단해 서비스 안정성을 회복하고 재발을 방지할 수 있다.",
+      "freshnessReason": "커널, systemd, 네트워크 스택의 동작이 배포판과 커널 버전에 따라 달라질 수 있어 최신 도구 사용법을 확인해야 한다.",
+      "sourceHint": "Linux 커널 문서, lsof/ss/strace/man 페이지, systemd 운영 가이드, 배포판(예: Ubuntu, RHEL) 벤더 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 5,
+      "title": "CI/CD에서 시크릿을 안전하게 주입하고 로그 노출을 방지하는 실무 가이드",
+      "slug": "ci-secrets-safe-injection-and-no-log-leak",
+      "thumbnail": {
+        "title": "CI 시크릿 안전 주입",
+        "subtitle": "마스킹·회전·권한 최소화 전략"
+      },
+      "reason": "빌드와 배포 과정에서 시크릿 유출 사고는 심각한 보안 사건으로 이어지므로 표준화된 주입·검증 절차가 필요하다.",
+      "searchIntent": "CI 플랫폼에서 시크릿을 안전하게 전달하는 방법, 로그 마스킹, 임시 토큰 사용과 회전 정책을 알고 싶다.",
+      "practicalValue": "시크릿 유출 위험을 낮추고 감사·규정 준수를 충족시키며 복구 시간을 단축할 수 있다.",
+      "freshnessReason": "CI 제공자와 시크릿 관리 도구의 통합 기능 및 마스킹 동작이 지속적으로 개선되므로 최신 기능을 확인해야 한다.",
+      "sourceHint": "GitHub Actions/GitLab CI/Jenkins 공식 보안 문서, HashiCorp Vault 및 기타 비밀관리자 가이드, CI 벤더 보안 권고",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 6,
+      "title": "TLS 인증서 체인 문제로 클라이언트 연결이 실패할 때 빠르게 진단하는 체크리스트",
+      "slug": "tls-certificate-chain-troubleshoot-checklist",
+      "thumbnail": {
+        "title": "TLS 체인 문제 진단",
+        "subtitle": "체인·SNI·인증서 유효성 빠르게 점검"
+      },
+      "reason": "인증서 체인 오류 하나로 서비스 접속 불가가 발생하므로 운영자가 신속히 원인을 찾아야 한다.",
+      "searchIntent": "체인 구성, 루트·중간 인증서 누락, SNI/OCSP/CRL 문제 등 클라이언트 연결 실패 원인을 단계별로 점검하는 방법을 알고 싶다.",
+      "practicalValue": "SSL/TLS 연결 문제를 신속히 복구해 사용자 영향 시간을 줄이고 보안 문제를 예방할 수 있다.",
+      "freshnessReason": "CA/B 포럼 정책, 브라우저 및 TLS 라이브러리의 기본 설정이 변경되어 검증 기준이 달라질 수 있다.",
+      "sourceHint": "RFC 및 TLS 표준 문서, OpenSSL/LibreSSL 매뉴얼, 웹서버(nginx, Apache) 문서, CA 벤더 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 7,
+      "title": "대규모 트래픽 환경에서 로그·지연 영향 없이 분산 트레이싱 샘플링 정책 설계하기",
+      "slug": "distributed-tracing-sampling-policy-high-traffic",
+      "thumbnail": {
+        "title": "분산 트레이싱 샘플링",
+        "subtitle": "가치 중심 샘플링으로 비용·성능 균형 잡기"
+      },
+      "reason": "전체 추적 수집은 비용과 성능 부담을 주므로 실무에서 리스크를 줄이는 샘플링 정책이 필요하다.",
+      "searchIntent": "샘플링 비율 결정, 헤더 기반 바이어스, 동적 샘플링, 중요 트랜잭션 우선 수집 방법을 알고 싶다.",
+      "practicalValue": "중요한 성능 문제를 놓치지 않으면서 관찰 비용을 제어해 운영 효율을 높일 수 있다.",
+      "freshnessReason": "오픈텔레메트리 및 수집기, 스토리지의 신기능과 가격 모델이 자주 업데이트되어 샘플링 전략에 영향이 있다.",
+      "sourceHint": "OpenTelemetry 사양, Jaeger/Zipkin/OTel 컬렉터 문서, 클라우드 관찰성 벤더 가이드, 스토리지 비용 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 8,
+      "title": "프론트엔드에서 서드파티 스크립트가 렌더링 성능을 망칠 때 단계별 격리 및 로드 전략",
+      "slug": "frontend-third-party-script-isolation-loading-strategy",
+      "thumbnail": {
+        "title": "서드파티 스크립트 격리",
+        "subtitle": "비동기·샌드박스·지연 로드로 성능 보호"
+      },
+      "reason": "광고·분석·위젯 등 서드파티 스크립트는 페이지 성능과 안정성을 저해하므로 격리·로드 전략이 필요하다.",
+      "searchIntent": "비동기 로드, 샌드박스 iframe, 리소스 우선순위, 실패 격리 패턴을 적용하는 구체적 방법을 알고 싶다.",
+      "practicalValue": "LCP/CLS 등 핵심 성능 지표 개선과 사용자 경험 저하 방지로 직접적인 사용자 영향 완화가 가능하다.",
+      "freshnessReason": "브라우저 로딩 API와 CSP, 정책이 계속 발전하므로 최신 브라우저 동작을 확인해야 한다.",
+      "sourceHint": "MDN/브라우저 벤더 문서, Content Security Policy(CSP) 문서, 타사 스크립트 공급자 가이드, 웹 성능 도구 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 9,
+      "title": "멀티-테넌트 서비스에서 리소스 격리와 비용 할당을 위한 아키텍처 패턴",
+      "slug": "multitenant-resource-isolation-cost-allocation-patterns",
+      "thumbnail": {
+        "title": "멀티테넌시와 비용 분리",
+        "subtitle": "격리·쿼터·태깅으로 과금과 안정성 관리"
+      },
+      "reason": "테넌트 간 간섭과 비용 불균형을 막기 위해 운영 환경에 맞는 격리·할당 전략이 필요하다.",
+      "searchIntent": "네임스페이스·계정·논리 격리, 쿼터·리미트 설정, 비용 태깅 및 청구 매핑 패턴을 알고 싶다.",
+      "practicalValue": "노이즈이웃 방지, 정확한 비용 청구, 확장성 확보로 비즈니스 운영 신뢰도를 높일 수 있다.",
+      "freshnessReason": "클라우드 제공자와 오케스트레이션 플랫폼의 멀티테넌시 기능 및 비용 API가 빈번히 업데이트된다.",
+      "sourceHint": "AWS/Azure/GCP 아키텍처 문서, Kubernetes 멀티테넌시 가이드, FinOps/비용관리 지침, 클라우드 벤더 청구 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 10,
+      "title": "테스트 인프라에서 플래키 테스트를 체계적으로 식별하고 우선순위로 제거하는 워크플로",
+      "slug": "flaky-tests-identify-prioritize-fix-workflow",
+      "thumbnail": {
+        "title": "플레이키 테스트 제거 워크플로",
+        "subtitle": "검출·우선순위·영구 해결 프로세스"
+      },
+      "reason": "불안정한 테스트는 배포 신뢰도를 떨어뜨리고 개발 속도를 저해하므로 체계적 관리가 필요하다.",
+      "searchIntent": "플레이키 테스트 자동 검출 방법, 재현률 측정, 우선순위 지정 기준과 임시 완화·영구 해결 전략을 알고 싶다.",
+      "practicalValue": "CI 신뢰성 향상, 디버깅 시간 단축, 릴리스 주기 단축으로 개발 생산성이 개선된다.",
+      "freshnessReason": "테스트 프레임워크와 CI 플랫폼의 병렬 실행·재시도 기능이 업데이트되며 신규 도구가 지속 등장한다.",
+      "sourceHint": "JUnit/pytest/Jest 등 테스트 프레임워크 문서, CI 제공자 문서, flaky-test 탐지 도구 가이드",
+      "source": "openai-topic-candidates"
+    }
+  ]
+}
