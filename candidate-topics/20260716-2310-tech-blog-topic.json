@@ -1,0 +1,158 @@
+{
+  "generatedAt": "2026-07-16T14:10:13.692Z",
+  "blog": "tech-blog",
+  "kind": "topic",
+  "source": "openai-topic-candidates",
+  "candidates": [
+    {
+      "index": 1,
+      "title": "PostgreSQL에서 대량 삭제 시 롱락과 테이블 부풀림을 최소화하는 실무 절차",
+      "slug": "postgresql-bulk-delete-minimize-locks-and-bloat",
+      "thumbnail": {
+        "title": "대량 삭제 안전하게",
+        "subtitle": "락, bloat, 성능 관점에서 단계별 접근"
+      },
+      "reason": "대량 삭제로 인한 서비스 지연과 테이블 bloat 문제는 운영 중인 DB에서 자주 발생하므로 안전한 절차가 필요하다.",
+      "searchIntent": "운영 중인 PostgreSQL에서 대량 삭제를 수행할 때 롱락과 bloat를 피하는 구체적 방법과 단계별 명령어를 알고 싶다.",
+      "practicalValue": "서비스 중단 없이 삭제 작업을 분할/백그라운드화하고 VACUUM/REINDEX 전략을 적용해 실무에서 즉시 적용 가능한 절차를 제공한다.",
+      "freshnessReason": "PostgreSQL 버전별 개선된 병렬 처리와 VACUUM 동작 차이가 결과에 영향을 줄 수 있어 현재 사용 중인 버전 문서 확인이 필요하다.",
+      "sourceHint": "PostgreSQL 공식 문서, 버전별 릴리스 노트, 운영 DB 벤더 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 2,
+      "title": "CI 파이프라인에서 Docker 이미지 빌드 캐시를 효율적으로 활용해 빌드 시간을 단축하는 방법",
+      "slug": "optimize-docker-build-cache-ci",
+      "thumbnail": {
+        "title": "빌드 캐시 최적화",
+        "subtitle": "CI마다 빠른 이미지 빌드를 위한 설정과 패턴"
+      },
+      "reason": "빈번한 CI 빌드로 인한 불필요한 시간과 비용을 줄이려면 Docker 레이어와 캐시 전략을 잘 설계해야 한다.",
+      "searchIntent": "CI 환경에서 Docker 빌드 캐시를 재사용하고 멀티스테이지, 캐시 키 설계로 빌드 시간을 줄이는 방법을 알고 싶다.",
+      "practicalValue": "캐시 히트율을 높이고 네트워크/스토리지 비용을 절감해 개발 피드백 루프를 빠르게 만든다.",
+      "freshnessReason": "Docker 빌드킷, BuildKit, 레지스트리 기능은 빠르게 발전하므로 CI 제공자별 최신 캐시 인터페이스 확인이 필요하다.",
+      "sourceHint": "Docker 공식 문서(BuildKit 포함), CI 공급자 문서, 컨테이너 레지스트리 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 3,
+      "title": "Linux 시스템에서 디스크 사용량이 갑자기 늘었을 때 원인을 빠르게 진단하는 체크리스트",
+      "slug": "linux-disk-usage-spike-diagnosis",
+      "thumbnail": {
+        "title": "디스크 스파이크 진단",
+        "subtitle": "로그, 열린 파일, 삭제된 파일 확인 순서"
+      },
+      "reason": "운영 서버의 디스크 부족은 즉시 서비스 장애로 이어지므로 빠르게 원인을 좁히는 절차가 필요하다.",
+      "searchIntent": "디스크 사용량이 급증했을 때 어떤 명령과 로그를 우선 확인하고 어떤 조치를 취해야 하는지 단계별로 알고 싶다.",
+      "practicalValue": "실무에서 빠르게 루트 원인을 찾고 임시 조치(로그 회전, 파일 삭제, inode 점검)를 통해 서비스 복구를 가능하게 한다.",
+      "freshnessReason": "파일시스템별(overlay, ext4, xfs) 동작과 시스템 유틸리티 버전 차이가 진단 결과에 영향을 줄 수 있어 환경별 문서 확인이 필요하다.",
+      "sourceHint": "Linux man 페이지, systemd 로그 문서, 파일시스템 및 배포판 운영 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 4,
+      "title": "CI에서 비결정적(Flaky) 테스트를 식별하고 우선순위를 매겨 안정화하는 단계",
+      "slug": "detect-and-fix-flaky-tests-ci",
+      "thumbnail": {
+        "title": "플래키 테스트 제거",
+        "subtitle": "재현, 분리, 분류, 해결의 실무 흐름"
+      },
+      "reason": "플래키 테스트는 CI 신뢰도를 떨어뜨려 배포 지연과 디버깅 비용을 발생시키므로 체계적 대응이 필요하다.",
+      "searchIntent": "플래키 테스트를 자동으로 감지하고 재실행 정책, 분류 방법, 격리 전략으로 안정화하는 방법을 알고 싶다.",
+      "practicalValue": "테스트 신뢰성을 높여 CI 속도와 개발자 효율을 개선하고 릴리즈 위험을 줄이는 실무적 방법을 제공한다.",
+      "freshnessReason": "테스트 프레임워크와 CI 도구의 재시도/플러그인 기능이 지속 업데이트되므로 도구별 최신 권고사항 확인이 필요하다.",
+      "sourceHint": "테스트 프레임워크 문서(Jest, PyTest 등), CI 공급자 문서, 테스트 격리/모킹 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 5,
+      "title": "무중단으로 데이터베이스 스키마를 변경하고 롤백 계획을 세우는 실무 가이드",
+      "slug": "zero-downtime-db-schema-migration-and-rollback",
+      "thumbnail": {
+        "title": "무중단 스키마 변경",
+        "subtitle": "호환성 전략, 백필, 점진적 전환, 안전한 롤백"
+      },
+      "reason": "스키마 변경은 서비스 가용성에 직접 영향을 주므로 안전한 전환과 실패 시 롤백 절차가 필수적이다.",
+      "searchIntent": "운영 중인 DB에서 무중단으로 컬럼 추가/타입 변경/인덱스 생성 등을 수행하고 문제가 생길 때 롤백하는 구체적 단계가 궁금하다.",
+      "practicalValue": "피쳐 플래그, 양방향 호환 쿼리, 백필 작업, 모니터링을 결합한 실무 절차로 배포 리스크를 낮춘다.",
+      "freshnessReason": "마이그레이션 도구와 DB 엔진의 온라인 DDL 지원 수준이 버전별로 달라 최신 문서 확인이 필요하다.",
+      "sourceHint": "사용 중인 DB 공식 문서(PostgreSQL, MySQL), 마이그레이션 툴 문서(Flyway, Liquibase), 운영 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 6,
+      "title": "서비스 간 인증을 mTLS로 전환할 때 단계별 설정과 인증서 회전 전략",
+      "slug": "migrate-to-mtls-service-to-service-auth",
+      "thumbnail": {
+        "title": "mTLS 전환 가이드",
+        "subtitle": "인증서 발급, 롤아웃, 자동 회전 전략"
+      },
+      "reason": "내부 서비스 트래픽도 강력한 인증이 필요해지며 mTLS는 안전한 선택이지만 적용 절차가 번거롭다.",
+      "searchIntent": "기존 토큰/헤더 방식에서 mTLS로 전환할 때 필요한 설정, 테스트, 점진적 롤아웃 및 인증서 관리 방법을 알고 싶다.",
+      "practicalValue": "보안 강화와 무단 접근 방지 효과를 실무에서 얻을 수 있도록 자동화된 인증서 배포와 회전 절차를 제공한다.",
+      "freshnessReason": "TLS 라이브러리와 CA 자동화 도구의 기능이 계속 발전하므로 현재 사용 환경에 맞는 구현 세부사항 확인이 필요하다.",
+      "sourceHint": "TLS 표준 문서( RFCs ), 내부 PKI/ACME 문서, 클라우드 벤더 및 서비스 메쉬 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 7,
+      "title": "분산 추적 샘플링을 서비스별로 조정해 비용 대비 관측 가능성을 최적화하는 방법",
+      "slug": "service-specific-trace-sampling-optimization",
+      "thumbnail": {
+        "title": "추적 샘플링 최적화",
+        "subtitle": "서비스별 중요도에 따른 샘플링 전략 설계"
+      },
+      "reason": "모든 트레이스를 수집하면 비용이 급증하므로 서비스 중요도에 따른 샘플링 설계가 필요하다.",
+      "searchIntent": "분산 트레이스 샘플링을 서비스별 트래픽/중요도에 따라 조정하는 규칙과 구현 방법을 알고 싶다.",
+      "practicalValue": "관찰 비용을 줄이면서 핵심 서비스의 트레이스 해상도를 유지해 문제 탐지 속도를 높일 수 있다.",
+      "freshnessReason": "오픈소스 및 상용 APM의 샘플링 API와 요금 정책이 수시로 바뀌므로 관련 도구 문서를 확인해야 한다.",
+      "sourceHint": "OpenTelemetry 문서, APM 벤더 가이드, 분산 트레이싱 표준 문서",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 8,
+      "title": "SPA 초기에 발생하는 폰트 렌더 지연(FOIT/FOUT)을 줄이는 실무 전략",
+      "slug": "reduce-font-loading-latency-spa",
+      "thumbnail": {
+        "title": "폰트 렌더 최적화",
+        "subtitle": "선택적 로딩, 서브셋, 폰트-디스플레이 전략"
+      },
+      "reason": "웹 앱 초기 로드에서 폰트로 인한 렌더 지연은 사용자 경험에 직접적인 악영향을 미치므로 빠르게 개선할 수 있다.",
+      "searchIntent": "SPA에서 커스텀 폰트가 렌더를 지연시키는 문제를 해결하기 위한 서브셋, preload, font-display 설정 등의 구체적 적용법을 알고 싶다.",
+      "practicalValue": "실제 사용자 측 퍼포먼스를 개선해 LCP/CLS와 같은 핵심 웹 바이탈을 향상시킬 수 있다.",
+      "freshnessReason": "브라우저별 폰트 로딩 정책과 CSS 규칙이 업데이트될 수 있어 최신 브라우저 문서 확인이 필요하다.",
+      "sourceHint": "브라우저 벤더 문서(Chrome, Firefox), W3C/CSS 폰트 문서, 웹 성능 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 9,
+      "title": "개발자 블로그 글을 검색엔진과 개발자 독자 모두 만족시키도록 구조화하는 실무 체크리스트",
+      "slug": "dev-blog-post-structure-for-seo-and-readability",
+      "thumbnail": {
+        "title": "기술 블로그 구조화",
+        "subtitle": "검색친화적이며 실무전달력 높은 글 작성 체크리스트"
+      },
+      "reason": "기술 블로그는 발견성과 전달력이 중요하므로 구조화된 포맷이 글의 가치를 크게 높인다.",
+      "searchIntent": "기술 블로그를 쓸 때 제목, 요약, 코드/예제 배치, 메타데이터 등 검색엔진과 개발자 독자에 효과적인 구성 방법을 알고 싶다.",
+      "practicalValue": "작성 시간을 단축하면서 검색 유입과 독자 이해도를 높여 실무 지식 공유 효과를 극대화한다.",
+      "freshnessReason": "검색 엔진 최적화 권장사항과 마크업 표준이 진화하므로 현재 권장 메타/구조화 방식 확인이 필요하다.",
+      "sourceHint": "검색엔진 가이드(구글 서치 센터 등), 웹 표준 문서, 콘텐츠 전략 가이드",
+      "source": "openai-topic-candidates"
+    },
+    {
+      "index": 10,
+      "title": "클라우드 IAM 권한을 최소 권한 원칙으로 분할하고 변경을 안전하게 테스트하는 단계",
+      "slug": "split-and-test-iam-least-privilege",
+      "thumbnail": {
+        "title": "IAM 최소 권한 적용",
+        "subtitle": "권한 분할, 정책 버전 관리, 테스트 방법"
+      },
+      "reason": "클라우드 권한 과잉은 보안 사고 위험을 높이므로 점진적으로 최소 권한을 적용하는 방법이 필요하다.",
+      "searchIntent": "기존 권한을 분석해 역할/정책을 분할하고 안전하게 적용 및 검증하는 절차와 테스트 방법을 알고 싶다.",
+      "practicalValue": "권한 축소를 통해 보안 리스크를 낮추고 권한 변경에 따른 서비스 영향도를 사전에 검증할 수 있다.",
+      "freshnessReason": "클라우드 제공자의 IAM 기능과 정책 문법이 자주 업데이트되므로 최신 벤더 문서 확인이 필요하다.",
+      "sourceHint": "클라우드 공급자 IAM 문서(AWS, GCP, Azure), 보안 표준 및 벤더 베스트 프랙티스",
+      "source": "openai-topic-candidates"
+    }
+  ]
+}
