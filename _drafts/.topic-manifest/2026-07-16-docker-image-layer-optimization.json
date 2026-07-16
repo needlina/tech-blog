@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T03:12:45.423Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29468366103",
+    "runAttempt": "1"
+  },
+  "candidateKind": "topic",
+  "topic": "대형 레포에서 Docker 이미지 용량을 레이어별로 실전 최적화하는 방법",
+  "topicTitle": "대형 레포에서 Docker 이미지 용량을 레이어별로 실전 최적화하는 방법",
+  "topicSlug": "docker-image-layer-optimization",
+  "topicIdentifiers": [
+    "slug:docker-image-layer-optimization",
+    "title:대형 레포에서 Docker 이미지 용량을 레이어별로 실전 최적화하는 방법"
+  ],
+  "post": {
+    "title": "대형 레포에서 Docker 이미지 용량을 레이어별로 실전 최적화하는 방법",
+    "slug": "docker-image-layer-optimization",
+    "draftPath": "_drafts/2026-07-16-docker-image-layer-optimization.md",
+    "thumbnailPath": "/assets/img/posts/blog/docker-image-layer-optimization/preview.png"
+  }
+}
