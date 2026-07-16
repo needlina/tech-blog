@@ -11,6 +11,10 @@ image:
 
 오늘은 Terraform에서 공급자(provider) 설치 방식과 .terraform.lock.hcl(이하 lockfile) 관련 변화가 실무에 어떤 영향을 줄 수 있는지 정리해봤다. 최근 Terraform CLI와 생태계에서 공급자 배포/검증/캐시 관련 옵션들이 자주 바뀌는 편이라, 공부하면서 정리한 내용을 공유하는 느낌으로 적었다. 완벽하게 정리된 건 아니고 제가 확인한 범위 안에서 조심스럽게 정리한 내용이니, 실제 환경에서는 추가로 문서를 확인해 보시길 권한다.
 
+
+![Terraform 아이콘 옆에 작은 락(lock) 기호와 파일(.terraform.lock.hcl)을 표현한 단순한 일러스트](/assets/img/posts/blog/terraform-provider-lockfile-changes/image-1.webp)
+이미지 출처: AI 생성 이미지
+
 공부하면서 알게 된 점
 - Terraform은 provider 바이너리를 설치할 때 레지스트리(기본), 파일시스템 미러, 네트워크 미러 등을 사용할 수 있다. 이 동작을 제어하는 설정은 CLI 설정 파일(~/.terraformrc 또는 CLI config 경로)에 들어간다.
 - .terraform.lock.hcl 파일은 공급자 바이너리의 checksum(해시) 정보를 포함해 같은 구성을 여러 환경에서 재현하도록 돕는다. CI/CD나 팀 환경에서는 이 파일을 소스관리(Git)에 포함시키는 경우가 많다.
@@ -112,9 +116,8 @@ provider_installation {
 마무리 소감
 제가 공부하면서 느낀 건, Terraform 공급자와 lockfile 관련 작업은 작은 설정 하나가 배포 파이프라인 전체에 영향을 줄 수 있다는 점입니다. 그래서 “작은 환경에서 먼저 확인하고, CI에 적용하고, 문서와 체크리스트로 보완”하는 방식이 가장 안전하다고 생각합니다. 이 글은 제가 정리한 초안이라 틀린 부분이 있을 수 있어요 — 사용하시는 Terraform 버전의 공식 문서를 참고하시고, 궁금한 부분이 있으면 함께 찾아보면 좋겠습니다.
 
-## 관련 이미지 주제
-1. Terraform 아이콘 옆에 작은 락(lock) 기호와 파일(.terraform.lock.hcl)을 표현한 단순한 일러스트
-2. "provider 설치 흐름"을 화살표로 나타낸 다이어그램(레지스트리 → 미러 → 로컬 캐시) 형태의 단순한 도식
+![provider 설치 흐름을 화살표로 나타낸 다이어그램(레지스트리 → 미러 → 로컬 캐시) 형태의 단순한 도식](/assets/img/posts/blog/terraform-provider-lockfile-changes/image-2.webp)
+이미지 출처: AI 생성 이미지
 
 실무 체크리스트
 - [.terraform.lock.hcl] 파일이 Git에 포함되어 있는지 확인했다.

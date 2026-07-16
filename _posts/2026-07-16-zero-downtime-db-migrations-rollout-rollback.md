@@ -152,6 +152,10 @@ Docker 환경에서 PostgreSQL 접속 예시
   ```
   - CONCURRENTLY 옵션을 사용하면 잠금 영향이 적습니다.
 
+
+![데이터베이스 테이블에 새 컬럼을 단계적으로 추가하는 순서를 화살표로 보여주는 단순 다이어그램](/assets/img/posts/blog/zero-downtime-db-migrations-rollout-rollback/image-1.webp)
+이미지 출처: AI 생성 이미지
+
 공부하면서 알게 된 점 / 처음에 헷갈렸던 부분
 - CONCURRENTLY는 트랜잭션 블록 내부에서 실행될 수 없다는 점을 처음에 놓쳤습니다. psql에서 BEGIN; CREATE INDEX CONCURRENTLY ...; COMMIT; 처럼 하면 에러가 납니다.
 - ALTER TABLE로 컬럼 추가할 때 'DEFAULT'를 동시에 주면 PostgreSQL 버전에 따라 전체 테이블을 쓰기 작업(write)으로 다시 쓰게 되어 오래 걸릴 수 있다는 것을 알게 됐습니다. 그래서 NULL로 먼저 추가하고 나중에 default와 not null을 적용하는 패턴을 배웠습니다.
@@ -173,6 +177,10 @@ Docker 환경에서 PostgreSQL 접속 예시
 - 실행 후:
   - 쿼리 플랜(EXPLAIN ANALYZE)으로 새 인덱스/스키마가 실제로 성능에 도움이 되었는지 확인
   - 일정 기간 모니터링 후 레거시 컬럼 제거 결정
+
+
+![마이그레이션 단계(prepare → backfill → switch → cleanup)와 각 단계의 체크포인트를 아이콘으로 나열한 개념 일러스트](/assets/img/posts/blog/zero-downtime-db-migrations-rollout-rollback/image-2.webp)
+이미지 출처: AI 생성 이미지
 
 실무 체크리스트
 - 마이그레이션 전에:
@@ -196,7 +204,3 @@ Docker 환경에서 PostgreSQL 접속 예시
 - 스키마 변경은 기술적으로 복잡하지만, 일련의 안전한 패턴을 따르면 위험을 많이 줄일 수 있다는 것을 배웠습니다.
 - 특히 "단계적으로 바꾸고(prepare → backfill → switch → cleanup), 애플리케이션을 먼저 적응시키고(또는 롤백은 코드부터)", 그리고 "항상 백업과 모니터링"이라는 원칙이 실무에서 가장 실용적이라는 느낌을 받았습니다.
 - 제가 틀렸거나 더 좋은 방법을 아시는 분은 조언해주시면 감사하겠습니다. 다음에는 실제 예제를 더 작게 분할해서 테스트용 스크립트도 정리해보려고 합니다.
-
-## 관련 이미지 주제
-1. 데이터베이스 테이블에 새 컬럼을 단계적으로 추가하는 순서를 화살표로 보여주는 단순 다이어그램
-2. 마이그레이션 단계(prepare → backfill → switch → cleanup)와 각 단계의 체크포인트를 아이콘으로 나열한 개념 일러스트

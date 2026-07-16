@@ -15,7 +15,11 @@ image:
 들어가며
 : 소프트웨어 공급망 보안이 점점 중요해지면서 빌드 산출물(바이너리, 컨테이너 이미지 등)에 서명해 진위와 무결성을 검증하려는 요구가 늘고 있습니다. Sigstore는 이 흐름에서 주목받는 오픈소스 프로젝트로, cosign(서명/검증), fulcio(인증서 발급), rekor(투명성 로그)를 축으로 합니다. 저는 최근 CI 파이프라인에 cosign을 적용해보면서 실무에서 체크하면 유용한 포인트들을 모았습니다. 아래는 공부하면서 알게 된 점, 처음 헷갈렸던 부분, 그리고 실무에서 확인하면 좋을 것들을 중심으로 정리한 초안입니다.
 
+![Sigstore의 세 구성요소(cosign, fulcio, rekor)를 심플 아이콘으로 연결한 일러스트.](/assets/img/posts/blog/sigstore-cosign-code-signing-pipeline/image-1.webp)
+이미지 출처: AI 생성 이미지
+
 공부하면서 알게 된 점
+
 - Sigstore 구성요소 간 역할 구분이 비교적 명확하다.
   - cosign: 실제로 서명(sign)하고 검증(verify)하는 도구입니다. 컨테이너 이미지나 임의의 바이너리(블롭)도 서명할 수 있습니다.
   - fulcio: 서명할 때 키를 직접 관리하지 않는 "keyless" 흐름에서 인증서를 발급해 주는 CA 역할을 합니다. OIDC 토큰을 바탕으로 인증서를 발급합니다.
@@ -25,6 +29,7 @@ image:
 - 실무에서는 "서명만 한다"로 끝나지 않고, 배포 시점에 검증(예: k8s Admission, 배포 스크립트, CI 검증 단계 등)까지 자동화해야 의미가 있다는 점을 느꼈습니다.
 
 처음에는 헷갈렸던 부분
+
 - keyless vs key-based
   - 처음에는 keyless와 전통적 키쌍(개인키/공개키)을 혼동했습니다. keyless는 개발자가 개인키를 직접 관리하지 않고 OIDC 토큰으로 임시 인증서를 발급받아 서명하는 방식입니다. 반면에 키 기반은 cosign으로 키 쌍을 생성하고 개인키를 안전하게 보관한 뒤 CI에서 그 키로 서명합니다.
 - Rekor 로그 확인 흐름
@@ -33,6 +38,7 @@ image:
   - 이미지 태그는 mutable하기 때문에 서명은 가능하면 이미지의 digest(예: sha256:...) 단위로 하는 것이 안전합니다. 태그로만 서명하면 태그가 바뀌었을 때 진위를 잃을 수 있습니다.
 
 기본 명령어와 예제
+
 - 키 기반 서명 (로컬 키 생성 후 서명)
   - 키 생성
     ```
@@ -58,6 +64,7 @@ image:
     cosign verify --keyless ghcr.io/myorg/myimage@sha256:<digest>
     ```
 - 바이너리(블롭) 서명/검증
+
   ```
   # 서명
   cosign sign-blob --keyless ./artifact.jar > artifact.sig
@@ -67,7 +74,9 @@ image:
   ```
 
 CI 파이프라인 적용 예시 (GitHub Actions)
+
 - 간단한 예시: 빌드 → 푸시 → 서명(키리스)
+
   ```
   name: Build and Sign
 
@@ -96,9 +105,11 @@ CI 파이프라인 적용 예시 (GitHub Actions)
           run: |
             cosign sign --keyless ghcr.io/myorg/myimage:1.0.0
   ```
+
   위 예시는 GitHub Actions의 OIDC 지원을 이용해 keyless로 서명하는 흐름입니다. CI 런너가 적절한 권한을 갖고 OIDC 토큰을 얻을 수 있어야 합니다.
 
 실무에서는 이렇게 확인하면 좋겠다
+
 - 서명 존재 여부 + Rekor 로그 확인
   - cosign verify --keyless 또는 cosign verify --key <pubkey>로 기본 검증을 실행합니다. 이 때 재현 가능한(deterministic) digest로 검증하는 게 중요합니다.
   - Rekor 엔트리가 실제로 남았는지 재확인합니다. cosign verify는 기본적으로 rekor 확인을 시도하지만, 별도 rekor 서버를 쓰는 경우 해당 서버 접근을 확인해야 합니다.
@@ -114,6 +125,7 @@ CI 파이프라인 적용 예시 (GitHub Actions)
   - 단, admission 정책 도입 시 성능과 실패 모드를 고려해 테스트 환경에서 충분히 검증하세요.
 
 설정/점검 절차 예시 (배포 전/후)
+
 - 배포 전
   1. 이미지가 서명되었는지 cosign verify로 확인
   2. rekor에 엔트리가 존재하는지 확인(로그 ID나 리소스 해시)
@@ -127,6 +139,7 @@ CI 파이프라인 적용 예시 (GitHub Actions)
   2. 운영 중 재검증 로그 보관(검증 실패 경보 설정)
 
 주의할 점들(제가 공부하면서 조심스럽게 느낀 것들)
+
 - Keyless가 완전 무관리 솔루션은 아니다
   - 운영 입장에서는 OIDC 공급자(예: GitHub, GCP, Azure) 설정, CI 서비스의 id-token 권한, fulcio 신뢰 루트 등 다양한 요소가 보안에 영향을 줍니다.
 - Rekor 단일 의존성
@@ -135,6 +148,7 @@ CI 파이프라인 적용 예시 (GitHub Actions)
   - 자동 차단, 경고 후 수동 승인 등 운영 정책을 사전에 정의해야 합니다. 서명 검증 실패가 빈번하면 배포 파이프라인이 멈출 위험이 있습니다.
 
 실습용 체크 명령 모음(요약)
+
 - 서명(로컬 키)
   ```
   cosign generate-key-pair
@@ -154,15 +168,14 @@ CI 파이프라인 적용 예시 (GitHub Actions)
   # rekor 서버 URL을 지정해 검증 시도
   cosign verify --rekor-server https://rekor.example.org --keyless ghcr.io/myorg/myimage@sha256:<digest>
   ```
+  마무리(조심스러운 권고)
+  : Sigstore와 cosign은 비교적 사용성이 좋아 빠르게 도입할 수 있지만, "서명"은 단순한 기술 적용을 넘어 조직의 인증/권한 모델, 키관리 정책, CI 플레이스홀더, 런타임 검증까지 함께 설계되어야 합니다. 저는 아직 배우는 중이라 더 공부할 점이 많고, 이 글은 실무 도입을 위한 출발점으로 보시면 좋겠습니다.
 
-관련 이미지 주제
-1. Sigstore의 세 구성요소(cosign, fulcio, rekor)를 심플 아이콘으로 연결한 일러스트.
-2. CI 파이프라인에서 이미지 빌드 → 푸시 → 서명 → 검증 흐름을 화살표로 표현한 단순 다이어그램.
-
-마무리(조심스러운 권고)
-: Sigstore와 cosign은 비교적 사용성이 좋아 빠르게 도입할 수 있지만, "서명"은 단순한 기술 적용을 넘어 조직의 인증/권한 모델, 키관리 정책, CI 플레이스홀더, 런타임 검증까지 함께 설계되어야 합니다. 저는 아직 배우는 중이라 더 공부할 점이 많고, 이 글은 실무 도입을 위한 출발점으로 보시면 좋겠습니다.
+![CI 파이프라인에서 이미지 빌드 → 푸시 → 서명 → 검증 흐름을 화살표로 표현한 단순 다이어그램.](/assets/img/posts/blog/sigstore-cosign-code-signing-pipeline/image-2.webp)
+이미지 출처: AI 생성 이미지
 
 실무 체크리스트
+
 - [ ] 어떤 서명 방식(keyless / key-based)을 채택할지 결정했는가?
 - [ ] CI에서 OIDC 토큰 발급과 권한(scope)을 안전하게 설정했는가?
 - [ ] 서명된 아티팩트가 rekor에 기록되는지 확인하는 절차가 있는가?

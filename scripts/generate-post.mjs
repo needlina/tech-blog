@@ -553,6 +553,45 @@ function plainTextSummary(markdown) {
   return (firstParagraph || topic).slice(0, 280);
 }
 
+function normalizeInlinePostImages(markdown, slug) {
+  const lines = markdown.split("\n");
+  const nextLines = [];
+  let imageCount = 0;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const imageMatch = lines[index].match(/^\s*(?:[-*]\s*)?!\[([^\]]+)\]\([^)]+\)\s*$/);
+
+    if (!imageMatch) {
+      nextLines.push(lines[index]);
+      continue;
+    }
+
+    imageCount += 1;
+
+    if (imageCount > 2) {
+      nextLines.push(lines[index]);
+      continue;
+    }
+
+    const alt = imageMatch[1].trim();
+
+    if (!alt) {
+      nextLines.push(lines[index]);
+      continue;
+    }
+
+    nextLines.push(`![${alt}](${PUBLIC_POST_IMAGE_ROOT}/${slug}/image-${imageCount}.webp)`);
+
+    if (/^\s*이미지 출처:\s*AI 생성 이미지\s*$/.test(lines[index + 1] ?? "")) {
+      index += 1;
+    }
+
+    nextLines.push("이미지 출처: AI 생성 이미지");
+  }
+
+  return nextLines.join("\n");
+}
+
 async function writeGitHubOutputs(outputs) {
   if (!process.env.GITHUB_OUTPUT) {
     return;
@@ -618,6 +657,7 @@ let outputContent = upsertFrontMatterValue(content, "slug", `"${draft.slug}"`);
 outputContent = normalizeFrontMatterStringList(outputContent, "categories");
 outputContent = normalizeFrontMatterStringList(outputContent, "tags");
 outputContent = enforceCandidateKindFrontMatter(outputContent);
+outputContent = normalizeInlinePostImages(outputContent, draft.slug);
 const generatedThumbnail = await generatePostThumbnail({
   markdown: outputContent,
   slug: draft.slug
