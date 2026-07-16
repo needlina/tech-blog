@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T03:12:45.898Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29468366103",
+    "runAttempt": "1"
+  },
+  "candidateKind": "topic",
+  "topic": "프론트엔드에서 서드파티 스크립트가 렌더링 성능을 망칠 때 단계별 격리 및 로드 전략",
+  "topicTitle": "프론트엔드에서 서드파티 스크립트가 렌더링 성능을 망칠 때 단계별 격리 및 로드 전략",
+  "topicSlug": "frontend-third-party-script-isolation-loading-strategy",
+  "topicIdentifiers": [
+    "slug:frontend-third-party-script-isolation-loading-strategy",
+    "title:프론트엔드에서 서드파티 스크립트가 렌더링 성능을 망칠 때 단계별 격리 및 로드 전략"
+  ],
+  "post": {
+    "title": "프론트엔드 서드파티 스크립트 최적화: 격리와 로드 전략으로 렌더링 성능 개선하기",
+    "slug": "frontend-third-party-script-isolation-loading-strategy",
+    "draftPath": "_drafts/2026-07-16-frontend-third-party-script-isolation-loading-strategy.md",
+    "thumbnailPath": "/assets/img/posts/blog/frontend-third-party-script-isolation-loading-strategy/preview.png"
+  }
+}
