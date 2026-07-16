@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T03:12:50.233Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29468366103",
+    "runAttempt": "1"
+  },
+  "candidateKind": "topic",
+  "topic": "대규모 트래픽 환경에서 로그·지연 영향 없이 분산 트레이싱 샘플링 정책 설계하기",
+  "topicTitle": "대규모 트래픽 환경에서 로그·지연 영향 없이 분산 트레이싱 샘플링 정책 설계하기",
+  "topicSlug": "distributed-tracing-sampling-policy-high-traffic",
+  "topicIdentifiers": [
+    "slug:distributed-tracing-sampling-policy-high-traffic",
+    "title:대규모 트래픽 환경에서 로그·지연 영향 없이 분산 트레이싱 샘플링 정책 설계하기"
+  ],
+  "post": {
+    "title": "대규모 트래픽 환경에서 분산 트레이싱 샘플링 정책 설계하기",
+    "slug": "distributed-tracing-sampling-policy-high-traffic",
+    "draftPath": "_drafts/2026-07-16-distributed-tracing-sampling-policy-high-traffic.md",
+    "thumbnailPath": "/assets/img/posts/blog/distributed-tracing-sampling-policy-high-traffic/preview.png"
+  }
+}
