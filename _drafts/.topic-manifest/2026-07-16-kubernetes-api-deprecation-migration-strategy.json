@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T03:14:15.819Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29468413446",
+    "runAttempt": "1"
+  },
+  "candidateKind": "new-trend",
+  "topic": "쿠버네티스 API·기능 폐기 주기 점검과 마이그레이션 전략",
+  "topicTitle": "쿠버네티스 API·기능 폐기 주기 점검과 마이그레이션 전략",
+  "topicSlug": "kubernetes-api-deprecation-migration-strategy",
+  "topicIdentifiers": [
+    "slug:kubernetes-api-deprecation-migration-strategy",
+    "title:쿠버네티스 API·기능 폐기 주기 점검과 마이그레이션 전략"
+  ],
+  "post": {
+    "title": "쿠버네티스 API 폐기 주기 점검과 실제 마이그레이션 전략 정리",
+    "slug": "kubernetes-api-deprecation-migration-strategy",
+    "draftPath": "_drafts/2026-07-16-kubernetes-api-deprecation-migration-strategy.md",
+    "thumbnailPath": "/assets/img/posts/blog/kubernetes-api-deprecation-migration-strategy/preview.png"
+  }
+}
