@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-07-16T03:13:37.638Z",
+  "source": {
+    "workflow": "Generate AI Draft From Comment",
+    "runId": "29468389886",
+    "runAttempt": "1"
+  },
+  "candidateKind": "new-trend",
+  "topic": "패키지 매니저 락파일 포맷 변경과 CI 캐시 전략: npm/pnpm/yarn 대응 가이드",
+  "topicTitle": "패키지 매니저 락파일 포맷 변경과 CI 캐시 전략: npm/pnpm/yarn 대응 가이드",
+  "topicSlug": "lockfile-format-ci-cache-strategy",
+  "topicIdentifiers": [
+    "slug:lockfile-format-ci-cache-strategy",
+    "title:패키지 매니저 락파일 포맷 변경과 CI 캐시 전략: npm/pnpm/yarn 대응 가이드"
+  ],
+  "post": {
+    "title": "패키지 매니저 락파일 포맷 변경과 CI 캐시 전략 — npm·pnpm·yarn 대응 가이드",
+    "slug": "lockfile-format-ci-cache-strategy",
+    "draftPath": "_drafts/2026-07-16-lockfile-format-ci-cache-strategy.md",
+    "thumbnailPath": "/assets/img/posts/blog/lockfile-format-ci-cache-strategy/preview.png"
+  }
+}

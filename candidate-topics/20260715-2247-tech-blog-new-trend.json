@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-07-15T13:47:34.391Z",
+  "blog": "tech-blog",
+  "kind": "new-trend",
+  "source": "openai-new-trend-candidates",
+  "candidates": [
+    {
+      "index": 1,
+      "title": "SBOM 의무화 흐름과 CI 통합: CycloneDX/SPDX 생성·검증 체크리스트",
+      "slug": "sbom-ci-integration-checklist",
+      "thumbnail": {
+        "title": "SBOM 통합",
+        "subtitle": "CI 파이프라인에서 자동 생성·검증하기"
+      },
+      "reason": "규제·고객 요구로 SBOM 제출과 자동 검증 수요가 늘어 최근 파이프라인 통합 방법을 정리할 필요가 있다.",
+      "searchIntent": "SBOM을 CI에 자동으로 생성하고 검증하는 방법과 도구(CycloneDX/SPDX, 정책 검증)를 알고 싶다.",
+      "practicalValue": "빌드 중 SBOM 생성·서명·정책검증을 자동화하고 배포 전 위반을 차단하는 실무 절차를 제공한다.",
+      "freshnessReason": "최근 규제 권고와 공급망 보안 툴(SLSA/스캐너) 지원이 강화되어 당장 파이프라인 점검이 필요하다.",
+      "sourceHint": "SLSA 문서, CycloneDX/SPDX 사양, CI 도구 릴리즈 노트, 보안 권고",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 2,
+      "title": "Kubernetes 보안 진입점 변경 대응: PodSecurity, seccomp, 런타임 구성 점검 리스트",
+      "slug": "k8s-podsecurity-seccomp-runtime-checklist",
+      "thumbnail": {
+        "title": "Kubernetes 보안 변경",
+        "subtitle": "PodSecurity와 런타임 기본값 업데이트 대비"
+      },
+      "reason": "최근 K8s 릴리즈에서 보안 관련 기본 동작과 권고가 바뀌는 경우가 잦아 클러스터 정책을 재검토해야 한다.",
+      "searchIntent": "새로운 K8s 릴리즈에서 PodSecurity admission, seccomp/defaultRuntimeClass 변경이 서비스에 미치는 영향을 알고 싶다.",
+      "practicalValue": "롤아웃 시 정책 미스매치로 인한 배포 실패나 권한 과다 문제를 미리 방지하는 체크리스트를 제공한다.",
+      "freshnessReason": "최근 릴리즈에서 관련 기능이 기본값으로 활성화되거나 권고가 업데이트되어 즉시 정책 점검이 필요하다.",
+      "sourceHint": "Kubernetes 릴리즈 노트, SIG 보안 문서, 런타임(컨테이너d/gVisor/Kata) 벤더 블로그",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 3,
+      "title": "패키지 매니저 락파일 포맷 변경과 CI 캐시 전략: npm/pnpm/yarn 대응 가이드",
+      "slug": "lockfile-format-ci-cache-strategy",
+      "thumbnail": {
+        "title": "락파일 & 캐시",
+        "subtitle": "포맷 변경에 따른 CI 캐시·병합 전략"
+      },
+      "reason": "패키지 매니저가 락파일 포맷을 바꾸거나 서브패키지 무결성 정책을 강화하면 빌드 불일치와 캐시 실패가 발생하기 쉽다.",
+      "searchIntent": "새 락파일 포맷이 CI 캐시, monorepo 배포, 의존성 일관성에 어떤 영향을 주는지 알고 싶다.",
+      "practicalValue": "CI 캐시 키 설계, 마이그레이션 단계, 롤백 절차를 통해 빌드 재현성과 속도를 유지하는 실무 팁을 제공한다.",
+      "freshnessReason": "최근 여러 패키지 매니저가 포맷·무결성 검증을 업데이트해 즉시 CI·배포 파이프라인을 점검해야 한다.",
+      "sourceHint": "npm/pnpm/yarn 릴리즈 노트, 공식 블로그, 패키지 매니저 문서",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 4,
+      "title": "OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검",
+      "slug": "openssl-crypto-advisory-compatibility-check",
+      "thumbnail": {
+        "title": "암호화 라이브러리 권고",
+        "subtitle": "CVE·패치와 링커/빌드 호환성 확인법"
+      },
+      "reason": "OS·언어 런타임이 OpenSSL 버전이나 FIPS/공개키 정책을 변경하면 서비스 연결성이나 성능 이슈가 발생할 수 있다.",
+      "searchIntent": "OpenSSL 보안 권고가 나오면 어떤 패키지와 바이너리를 점검하고 빌드·배포를 어떻게 대응해야 하는지 알고 싶다.",
+      "practicalValue": "라이브러리 교체나 패치 후 TLS 핸드셰이크 실패, 바이너리 불일치, 성능 회귀를 빠르게 진단·완화하는 절차를 제공한다.",
+      "freshnessReason": "새로운 CVE·취약점 패치가 잇따르고 배포판 기본 OpenSSL 버전이 바뀌며 즉시 호환성 점검이 필요하다.",
+      "sourceHint": "OpenSSL 보안 권고, 배포판 릴리즈 노트, 벤더 보안 블로그, CVE 데이터베이스",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 5,
+      "title": "CI에서 OIDC로 클라우드 자격증명 발급할 때 권한·만료 정책 설계하기",
+      "slug": "ci-oidc-cloud-credentials-design",
+      "thumbnail": {
+        "title": "OIDC 기반 인증",
+        "subtitle": "CI → 클라우드 임시자격증명 안전 설계"
+      },
+      "reason": "GitHub Actions/GitLab 등에서 OIDC를 통한 임시 자격증명 사용이 늘면서 권한 범위·토큰 만료 실수가 보안 사고로 이어진다.",
+      "searchIntent": "OIDC를 통해 CI가 AWS/GCP/Azure 역할을 교환할 때 권한 축소와 만료·재발급을 어떻게 설계해야 안전한지 알고 싶다.",
+      "practicalValue": "역할별 최소 권한, 토큰 만료, 바인딩 조건(리포지토리·환경) 설정으로 CI 도구에서 클라우드 권한을 안전하게 발급하는 방법을 제공한다.",
+      "freshnessReason": "클라우드 벤더와 CI 플랫폼이 OIDC 통합 기능을 확장하고 기본 정책을 변경해 즉시 정책 재검토가 필요하다.",
+      "sourceHint": "GitHub/GitLab/Azure/AWS/GCP 공식 문서, 보안 권고, 벤더 블로그",
+      "source": "openai-new-trend-candidates"
+    }
+  ]
+}
