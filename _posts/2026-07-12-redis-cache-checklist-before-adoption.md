@@ -1,5 +1,6 @@
 ---
 title: "Redis 캐시 도입 전 체크리스트: 성능·일관성·운영 관점에서 확인할 것들"
+description: "Redis 캐시를 도입하기 전에 먼저 확인해야 할 것들 서두 최근 프로젝트에서 Redis를 캐시 레이어로 고려하면서 공부한 내용을 정리해봅니다"
 slug: "redis-cache-checklist-before-adoption"
 date: 2026-07-12 09:00:00 +0900
 categories: [Database, DevOps]
@@ -9,7 +10,8 @@ image:
   alt: "단순한 Redis 캐시 개념을 나타내는 일러스트"
 ---
 
-오늘의 주제
+Redis 캐시를 도입하기 전에 먼저 확인해야 할 것들 서두 최근 프로젝트에서 Redis를 캐시 레이어로 고려하면서 공부한 내용을 정리해봅니다
+
 
 Redis 캐시를 도입하기 전에 먼저 확인해야 할 것들
 

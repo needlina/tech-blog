@@ -1,5 +1,6 @@
 ---
 title: "Vite + React + TypeScript: 실무에 맞는 폴더 구조 설계 가이드"
+description: "소개 --- Vite + React + TypeScript 조합은 빠른 개발 경험과 타입 안정성을 제공해서 최근 프론트엔드에서 널리 쓰입니다. 프로젝트가 커지면 폴더 구조가 유지보수성과 생산성에 큰 영향을 미치는데, 이 글에서는 실무에서 자주 마주치는 요구(협업, 코드"
 date: 2026-07-06 10:00:00 +0900
 categories: [React, 실무패턴]
 tags: [react, typescript, frontend]

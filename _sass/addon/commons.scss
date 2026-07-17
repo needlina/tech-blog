@@ -1,5 +1,10 @@
 /* The common styles */
 
+@use '../colors/typography-light' as *;
+@use '../colors/typography-dark' as *;
+@use 'variables' as *;
+@use 'module' as *;
+
 html {
   font-size: 16px;
 

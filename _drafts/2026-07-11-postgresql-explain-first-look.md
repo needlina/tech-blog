@@ -1,5 +1,6 @@
 ---
 title: "PostgreSQL EXPLAIN 읽기: 먼저 보는 항목들과 실무 체크포인트"
+description: "PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들"
 slug: "postgresql-explain-first-look"
 date: 2026-07-11 10:00:00 +0900
 categories: [Database, PostgreSQL]
@@ -9,7 +10,8 @@ image:
   alt: "PostgreSQL EXPLAIN 출력의 요약과 주요 항목을 도식화한 이미지"
 ---
 
-오늘의 주제
+PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들
+
 
 PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들
 

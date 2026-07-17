@@ -1,5 +1,6 @@
 ---
 title: "백엔드 환경변수 안전하게 관리하는 방법: Docker · Kubernetes · Vault 실무 가이드"
+description: "들어가며 — 왜 환경변수 관리는 중요할까 제가 백엔드 운영과 배포를 공부하면서 가장 자주 마주친 주제 중 하나가 바로 '환경변수(env vars)와 비밀값(secrets) 관리'였습니다"
 slug: "env-management-backend-secrets"
 date: 2026-07-11 10:00:00 +0900
 categories: [Backend, DevOps]
@@ -147,6 +148,7 @@ $ aws secretsmanager create-secret --name myapp/db --secret-string '{"username":
 
 CI/CD(예: GitHub Actions)에서의 시크릿
 - GitHub Actions에서는 저장소/조직 수준의 secrets에 값을 저장하고 워크플로에서 env로 주입:
+{% raw %}
 ```
 jobs:
   deploy:
@@ -157,6 +159,7 @@ jobs:
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./deploy.sh
 ```
+{% endraw %}
 - 체크 포인트:
   - 워크플로 로그에 민감값이 노출되지 않는지 확인 (echo 사용 금지)
   - PR 빌드에서 외부 컨트리뷰터의 코드가 시크릿에 접근하지 않도록 보호 설정(PR 보호 설정)

@@ -1,5 +1,6 @@
 ---
 title: "OAuth 리다이렉트 URI 설정 시 흔한 보안 실수와 실무 점검 가이드"
+description: "OAuth 리다이렉트 URI 설정에서 자주 생기는 보안 실수 들어가며 제가 OAuth를 처음 공부할 때 가장 헷갈렸던 부분 중 하나가 리다이렉트(redirect) URI였습니다"
 slug: "oauth-redirect-uri-security-mistakes"
 date: 2026-07-14 10:00:00 +0900
 categories: [Security, Backend]
@@ -9,7 +10,8 @@ image:
   alt: "OAuth 리다이렉트 URI 점검 썸네일"
 ---
 
-오늘의 주제
+OAuth 리다이렉트 URI 설정에서 자주 생기는 보안 실수 들어가며 제가 OAuth를 처음 공부할 때 가장 헷갈렸던 부분 중 하나가 리다이렉트(redirect) URI였습니다
+
 
 OAuth 리다이렉트 URI 설정에서 자주 생기는 보안 실수
 

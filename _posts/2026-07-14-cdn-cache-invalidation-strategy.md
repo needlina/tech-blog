@@ -1,5 +1,6 @@
 ---
 title: "CDN 캐시 무효화: 전체 purge를 피하는 방법과 실무 체크리스트"
+description: "CDN 캐시를 무효화할 때 전체 purge를 피하는 방법 서론 — 왜 전체 퍼지(purge)가 문제인가 제가 처음 CDN을 운영할 때, 릴리스 중에 \"전체 캐시 무효화(전체 purge)\"를 습관적으로 사용하곤 했습니다"
 slug: "cdn-cache-invalidation-strategy"
 date: 2026-07-14 10:00:00 +0900
 categories: [DevOps, Cloud]
@@ -9,7 +10,8 @@ image:
   alt: "CDN 캐시 무효화 전략 썸네일"
 ---
 
-오늘의 주제
+CDN 캐시를 무효화할 때 전체 purge를 피하는 방법 서론 — 왜 전체 퍼지(purge)가 문제인가 제가 처음 CDN을 운영할 때, 릴리스 중에 "전체 캐시 무효화(전체 purge)"를 습관적으로 사용하곤 했습니다
+
 
 CDN 캐시를 무효화할 때 전체 purge를 피하는 방법
 

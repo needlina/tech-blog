@@ -1,5 +1,6 @@
 ---
 title: "Docker Compose로 안정적인 로컬 개발 환경 구성하기"
+description: "로컬에서 여러 서비스(웹앱, 데이터베이스, 캐시 등)를 함께 띄워 개발할 때 Docker Compose를 쓰면 편리합니다. 제가 공부하면서 직접 적용해본 경험을 정리해보면, 단순히 컨테이너를 띄우는 것을 넘어서 \"안정적이고 재현 가능한\" 개발 환경을 만드는 데 신경 써야 할"
 slug: "docker-compose-local-development-setup"
 date: 2026-07-09 10:00:00 +0900
 categories: [Docker, DevOps]

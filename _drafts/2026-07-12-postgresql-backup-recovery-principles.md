@@ -1,5 +1,6 @@
 ---
 title: "PostgreSQL 백업과 복구 전략의 기본 원칙 정리"
+description: "오늘은 PostgreSQL 백업과 복구 전략을 공부하면서 정리한 내용을 기록하려고 합니다. 저는 아직 초보 개발자라서 이 주제를 하나씩 배우며 이해한 점들을 차근차근 정리하려고 해요"
 slug: "postgresql-backup-recovery-principles"
 date: 2026-07-12 09:00:00 +0900
 categories: [Database, PostgreSQL]

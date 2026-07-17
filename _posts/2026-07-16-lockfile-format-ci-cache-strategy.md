@@ -1,5 +1,6 @@
 ---
 title: "패키지 매니저 락파일 포맷 변경과 CI 캐시 전략 — npm·pnpm·yarn 대응 가이드"
+description: "오늘은 패키지 매니저 락파일(lockfile) 포맷 변경이 CI 캐시 전략에 어떤 영향을 주는지 공부한 내용을 정리합니다. 저는 초보 개발자 관점에서 직접 실습하고 문서를 찾아가며 이해한 것을 차근차근 적어보려 합니다"
 slug: "lockfile-format-ci-cache-strategy"
 date: 2026-07-16 10:00:00 +0900
 categories: ["DevOps", "Frontend"]
@@ -141,7 +142,7 @@ CI 캐시 키 설계 예시 (GitHub Actions)
               .pnpm-store
               .yarn/cache
               node_modules
-            key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ steps.lockhash.outputs.hash }}
+            key: {% raw %}${{ runner.os }}-node-${{ matrix.node-version }}-${{ steps.lockhash.outputs.hash }}{% endraw %}
 
         - name: Install dependencies
           run: |

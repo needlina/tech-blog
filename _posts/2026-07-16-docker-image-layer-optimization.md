@@ -1,5 +1,6 @@
 ---
 title: "대형 레포에서 Docker 이미지 용량을 레이어별로 실전 최적화하는 방법"
+description: "오늘은 대형 레포(여러 서비스/마이크로서비스가 모여 있는 저장소)에서 Docker 이미지 용량을 레이어별로 분석하고 실전에서 줄이는 방법을 정리해봤습니다"
 slug: "docker-image-layer-optimization"
 date: 2026-07-16 10:00:00 +0900
 categories: ["Docker", "DevOps"]
@@ -41,15 +42,19 @@ image:
    - 전체 디스크 사용량 확인
      docker system df
    - 특정 이미지의 레이어별 정보 확인
+     {% raw %}
      docker history --no-trunc --format "{{.ID}}\t{{.Size}}\t{{.CreatedBy}}" 이미지:태그
+     {% endraw %}
 
    예시:
 
+   {% raw %}
    ```
    docker image ls myorg/service-a
    docker system df -v
    docker history --no-trunc --format "{{.ID}}\t{{.Size}}\t{{.CreatedBy}}" myorg/service-a:latest
    ```
+   {% endraw %}
 
 2. 레이어 상세 분석
    - dive(https://github.com/wagoodman/dive) 같은 툴로 레이어 내부 파일 구성을 시각적으로 확인하면 원인 파악이 빠릅니다.
@@ -142,9 +147,11 @@ COPY --from=builder /app/dist /app
 레이어별 용량을 스크립트로 빠르게 확인해보기
 아래는 docker history 출력에서 레이어 크기와 명령어를 간단히 확인하는 예시 (환경에 따라 포맷 차이 있음):
 
+{% raw %}
 ```
 docker history --no-trunc --format "{{.Size}}\t{{.CreatedBy}}" myorg/service-a:latest | nl -ba
 ```
+{% endraw %}
 
 또는 보다 정교하게 파싱해 상위 N개 레이어를 추려볼 수 있습니다(awk, sort 활용).
 
@@ -167,7 +174,9 @@ CI/빌드 파이프라인에서 확인할 포인트(실무)
 1. 이미지 사이즈 확인
    docker image ls myorg/service-a
 2. 레이어별 확인
+   {% raw %}
    docker history --no-trunc --format "{{.ID}}\t{{.Size}}\t{{.CreatedBy}}" myorg/service-a:latest
+   {% endraw %}
 3. 불필요 이미지 정리(로컬)
    docker image prune -f
    docker system prune -af --volumes

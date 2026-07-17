@@ -1,5 +1,6 @@
 ---
 title: "브라우저 토큰 저장 비교: localStorage vs Cookies — 실무에서 확인할 포인트"
+description: "오늘은 브라우저에서 인증 토큰을 어디에 저장할지 고민하면서 정리한 내용을 공유하려고 합니다. 제가 이 주제를 처음 접했을 때는 \"localStorage는 무조건 안 되고, 쿠키는 무조건 좋다\" 같은 단순한 이야기만 들었는데, 공부하면서 보니 상황에 따라 장단점이 있고"
 slug: "browser-token-storage-localstorage-cookie"
 date: 2026-07-14 10:00:00 +0900
 categories: [Frontend, Security]

@@ -1,5 +1,6 @@
 ---
 title: "안전한 데이터베이스 마이그레이션 배포 가이드: 실무 중심 체크포인트"
+description: "오늘은 데이터베이스 마이그레이션을 \"가능한 한 안전하게\" 배포하는 방법을 정리해봤습니다. 초보 개발자로서 여러 자료를 찾아가며 실무에서 확인해볼 포인트들을 중심으로 정리한 내용이라, 완전한 정답이라기보다 제가 공부하면서 정리한 체크리스트와 예시라고 보시면 좋겠습니다"
 slug: "safe-database-migration-deployment"
 date: 2026-07-12 10:00:00 +0900
 categories: [Database, DevOps]
@@ -125,6 +126,7 @@ alembic upgrade head
 ```
 
 GitHub Actions 예 (간단 흐름):
+{% raw %}
 ```
 jobs:
   migrate:
@@ -137,6 +139,7 @@ jobs:
         run: |
           docker run --rm -e DATABASE_URL=${DATABASE_URL} myapp:latest ./scripts/run-migrations.sh
 ```
+{% endraw %}
 가장 중요한 점은 "migration이 실행되기 전에 백업이 자동으로 만들어지는가"와 "실패 시 알림 및 차단 로직이 있는가" 입니다.
 
 롤백과 복구 전략

@@ -1,5 +1,6 @@
 ---
 title: "React/Node.js 실행 오류 listen EADDRINUSE address already in use 3000 해결 방법"
+description: "React나 Node.js 개발 서버에서 listen EADDRINUSE address already in use 3000 오류가 날 때 포트 점유 프로세스를 찾고 정리하는 방법을 정리했습니다."
 slug: "react-node-eaddrinuse-port-3000-fix"
 date: 2026-07-15 11:10:00 +0900
 categories: [Frontend, Backend]
@@ -9,7 +10,7 @@ image:
   alt: "React/Node.js 실행 오류 listen EADDRINUSE address already in use 3000 해결 방법 썸네일"
 ---
 
-## 오늘의 주제
+React나 Node.js 개발 서버에서 `listen EADDRINUSE: address already in use :::3000` 오류가 나면 대부분 이미 같은 포트를 쓰는 프로세스가 있다는 뜻입니다. 이 글은 포트를 확인하고 안전하게 정리하는 순서를 정리합니다.
 
 React나 Node.js 개발 서버 실행 중 `listen EADDRINUSE: address already in use :::3000` 에러가 날 때 포트를 확인하고 정리하는 방법
 

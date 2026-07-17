@@ -1,11 +1,13 @@
 ---
 title: "React Query와 Zustand로 상태를 나누는 실무 가이드 (TypeScript 예제)"
+description: "React Query와 Zustand를 함께 사용할 때의 역할 분리"
 date: 2026-07-08 09:00:00 +0900
 categories: [React, 실무패턴]
 tags: [react, typescript, frontend]
 ---
 
-오늘의 주제
+React Query와 Zustand를 함께 사용할 때의 역할 분리
+
 
 React Query와 Zustand를 함께 사용할 때의 역할 분리
 

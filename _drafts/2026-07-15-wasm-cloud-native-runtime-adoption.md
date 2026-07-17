@@ -1,5 +1,6 @@
 ---
 title: "클라우드 네이티브에서 WebAssembly(Wasm) 런타임 도입 가속화 방법"
+description: "오늘은 클라우드 네이티브 환경에서 WebAssembly(Wasm) 런타임을 도입하면서 제가 공부한 내용을 정리하려 합니다. 초보 개발자 입장에서 하나씩 확인해가며 적는 개인적인 메모이자, 실무에서 빠르게 확인하면 좋을 포인트 위주로 정리합니다"
 slug: "wasm-cloud-native-runtime-adoption"
 date: 2026-07-15 10:00:00 +0900
 categories: ["Cloud", "DevOps"]

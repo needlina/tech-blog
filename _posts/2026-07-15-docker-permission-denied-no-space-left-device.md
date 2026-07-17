@@ -1,5 +1,6 @@
 ---
 title: "Docker 컨테이너 실행 오류 Permission Denied와 No space left on device 해결 방법"
+description: "Docker 컨테이너 실행 중 permission denied 또는 No space left on device 에러가 날 때 권한과 디스크 용량을 순서대로 확인하는 방법을 정리했습니다."
 slug: "docker-permission-denied-no-space-left-device"
 date: 2026-07-15 11:20:00 +0900
 categories: [Docker, DevOps]
@@ -9,7 +10,7 @@ image:
   alt: "Docker 컨테이너 실행 오류 Permission Denied와 No space left on device 해결 방법 썸네일"
 ---
 
-## 오늘의 주제
+Docker 컨테이너 실행 중 `permission denied` 또는 `No space left on device` 에러가 날 때는 권한과 디스크 용량을 함께 확인해야 합니다. 이 글은 원인을 나눠 보고 빠르게 점검하는 순서를 정리합니다.
 
 Docker 컨테이너 실행 중 `permission denied` 또는 `No space left on device` 에러가 날 때 권한과 디스크 용량을 순서대로 확인하는 방법
 
@@ -297,10 +298,12 @@ docker volume inspect <volume-name>
 
 컨테이너 로그 크기 확인:
 
+{% raw %}
 ```bash
 docker inspect <container-name> --format='{{.LogPath}}'
 sudo du -h <log-path>
 ```
+{% endraw %}
 
 로그 회전을 설정하지 않으면 json-file 로그가 매우 커질 수 있습니다. Docker daemon 설정에서 제한을 둘 수 있습니다.
 

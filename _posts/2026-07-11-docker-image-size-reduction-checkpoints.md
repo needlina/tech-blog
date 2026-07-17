@@ -1,5 +1,6 @@
 ---
 title: "Docker 이미지 크기 줄이기: 실무에서 확인해야 할 점들"
+description: "Docker 이미지 크기를 줄일 때 실무에서 확인하면 도움이 되는 포인트들을 정리해봤습니다. 개인적으로 프로젝트를 운영하면서 이미지가 커져서 빌드·배포 시간이 늘어나고 레지스트리 비용이 올라가는 문제를 겪었는데, 그 과정에서 공부한 내용을 초보자의 관점에서 차근차근 적어보려"
 slug: "docker-image-size-reduction-checkpoints"
 date: 2026-07-11 09:00:00 +0900
 categories: [Docker, DevOps]
@@ -26,11 +27,13 @@ Docker 이미지 크기를 줄일 때 실무에서 확인하면 도움이 되는
 실무에서는 이렇게 확인하면 좋겠다 (절차 중심)
 1. 현재 상태 파악
    - 이미지 목록과 크기 확인:
+     {% raw %}
      ```
      docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"
      docker image inspect --format='{{.Size}}' my-image:tag
      docker system df
      ```
+     {% endraw %}
    - 레이어별 크기와 파일 변화를 확인:
      ```
      docker history --no-trunc my-image:tag
@@ -112,10 +115,12 @@ Docker 이미지 크기를 줄일 때 실무에서 확인하면 도움이 되는
 
 실무 팁: 구체적인 명령과 점검 절차 예시
 - 이미지 크기 빠르게 비교하기:
+  {% raw %}
   ```
   # 최근 10개 이미지 크기 확인
   docker images --format "{{.Repository}}:{{.Tag}}\t{{.Size}}" | head -n 10
   ```
+  {% endraw %}
 - 레이어별 분석:
   ```
   docker history --no-trunc my-image:tag
@@ -128,6 +133,7 @@ Docker 이미지 크기를 줄일 때 실무에서 확인하면 도움이 되는
   docker system prune -a --volumes
   ```
 - CI에서 사이즈 체크 예시 (GitHub Actions 간단 스크립트):
+  {% raw %}
   ```
   - name: Build image
     run: docker build -t my-image:${{ github.sha }} .
@@ -142,6 +148,7 @@ Docker 이미지 크기를 줄일 때 실무에서 확인하면 도움이 되는
         exit 1
       fi
   ```
+  {% endraw %}
 - 레지스트리 정책: 오래된 태그 자동 삭제 및 스토리지 사용량 모니터링 (예: Harbor, ECR 라이프사이클 규칙 등).
 
 공부하면서 정리한 작은 체크리스트 (개념용)

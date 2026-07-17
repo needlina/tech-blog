@@ -1,5 +1,6 @@
 ---
 title: "GitHub Actions Self-hosted 러너: 토큰·시크릿 노출 대응 실무 가이드"
+description: "오늘은 GitHub Actions의 self-hosted 러너를 운영하면서 토큰이나 시크릿이 노출되었을 때 실무에서 어떻게 대응할지, 그리고 평소 어떤 점을 점검하면 위험을 줄일 수 있는지 정리해봤습니다"
 slug: "github-actions-self-hosted-runner-secrets-hardening"
 date: 2026-07-16 12:00:00 +0900
 categories: ["DevOps", "Security", "GitHub Actions"]

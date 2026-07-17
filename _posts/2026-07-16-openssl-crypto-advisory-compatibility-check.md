@@ -1,5 +1,6 @@
 ---
 title: "OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검 가이드"
+description: "OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검"
 slug: "openssl-crypto-advisory-compatibility-check"
 date: 2026-07-16 12:00:00 +0900
 categories: ["Security", "DevOps"]
@@ -9,7 +10,8 @@ image:
   alt: "암호화 라이브러리 권고 썸네일"
 ---
 
-오늘의 주제
+OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검
+
 
 OpenSSL/crypto 라이브러리 보안 권고 대응과 런타임 호환성 점검
 

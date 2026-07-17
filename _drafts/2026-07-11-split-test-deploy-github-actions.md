@@ -1,5 +1,6 @@
 ---
 title: "GitHub Actions로 테스트와 배포 파이프라인을 분리하는 방법: 안전하고 실무적인 접근"
+description: "오늘은 GitHub Actions를 사용하면서 제가 공부한 내용을 정리해보려고 합니다. 주제는 \"테스트와 배포 파이프라인을 분리하는 방법\"입니다"
 slug: "split-test-deploy-github-actions"
 date: 2026-07-11 10:00:00 +0900
 categories: [DevOps, GitHub Actions]
@@ -83,6 +84,7 @@ jobs:
 
 방법 A: 태그 푸시로 배포
 
+{% raw %}
 ```yaml
 # .github/workflows/deploy-tag.yml
 name: CD - Deploy on Tag
@@ -114,9 +116,11 @@ jobs:
           kubectl set image deployment/myapp myapp=ghcr.io/${{ github.repository_owner }}/myapp:${{ github.sha }}
           kubectl rollout status deployment/myapp -n my-namespace
 ```
+{% endraw %}
 
 방법 B: workflow_run 트리거로 배포 (테스트 성공 후)
 
+{% raw %}
 ```yaml
 # .github/workflows/deploy-after-tests.yml
 name: CD - Deploy after CI
@@ -144,6 +148,7 @@ jobs:
       - name: Deploy step (예시)
         run: echo "여기에 배포 스크립트를 넣습니다."
 ```
+{% endraw %}
 
 주의 및 권한 관련 팁
 - workflow_run으로 배포를 트리거할 때, 배포 워크플로우에서 environment protection(예: required reviewers)와 시크릿 접근 동작이 어떻게 되는지 GitHub 문서로 꼭 확인하세요. (제가 적용할 때는 경우에 따라 수동 승인이 필요했고, 어떤 상황에서는 GITHUB_TOKEN 권한이 제한되는 느낌이 있어 문서 확인이 필요했습니다.)

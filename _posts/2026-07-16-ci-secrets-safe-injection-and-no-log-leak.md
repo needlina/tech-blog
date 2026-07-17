@@ -1,5 +1,6 @@
 ---
 title: "CI/CD에서 시크릿 안전하게 주입하고 로그 노출 방지하기: 실무 가이드"
+description: "오늘은 CI/CD 파이프라인에서 시크릿을 안전하게 다루는 방법을 정리해 봤습니다. 저는 최근에 팀에서 파이프라인 보완 작업을 하면서 여러 문서와 도구를 살펴봤고, 공부한 내용을 초보자 관점에서 차근차근 정리하려 합니다"
 slug: "ci-secrets-safe-injection-and-no-log-leak"
 date: 2026-07-16 09:00:00 +0900
 categories: ["DevOps", "Security"]
@@ -55,11 +56,12 @@ image:
 
 ### 1) GitHub Actions: 시크릿 사용과 로그 마스킹
 
-- GitHub 저장소 Settings > Secrets에 시크릿을 등록하고, 워크플로에서 ${{ secrets.MY_SECRET }}로 사용합니다.
+- GitHub 저장소 Settings > Secrets에 시크릿을 등록하고, 워크플로에서 {% raw %}${{ secrets.MY_SECRET }}{% endraw %}로 사용합니다.
 - 로그에서 노출 방지를 위해 가능하면 GitHub Actions Toolkit의 core.setSecret 또는 workflow 명령어를 사용해 추가 마스킹합니다.
 
 예:
 
+{% raw %}
 ```yaml
 # .github/workflows/ci.yml
 name: CI
@@ -82,6 +84,7 @@ jobs:
           # 예: API 호출 시 curl에 헤더로 전달
           curl -H "Authorization: Bearer ${{ secrets.MY_SECRET }}" https://example.com/api
 ```
+{% endraw %}
 
 참고: "::add-mask::" 명령으로 마스킹을 요청할 수 있으나, 모든 로그 경로를 완벽히 가리지는 못할 수 있으니 주의합니다.
 

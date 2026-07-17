@@ -1,5 +1,6 @@
 ---
 title: "Kubernetes 1.36 업데이트 후 Kubelet 메모리 누수 의심 증상 해결 가이드"
+description: "Kubernetes 1.36 환경에서 kubelet 메모리 증가나 cgroup 관련 로그가 보일 때 버전, 런타임, 노드 상태를 순서대로 확인하는 방법을 정리했습니다."
 slug: "kubernetes-136-kubelet-memory-leak-guide"
 date: 2026-07-15 11:00:00 +0900
 categories: [DevOps, Kubernetes]
@@ -9,7 +10,7 @@ image:
   alt: "Kubernetes 1.36 업데이트 후 Kubelet 메모리 누수 의심 증상 해결 가이드 썸네일"
 ---
 
-## 오늘의 주제
+Kubernetes 1.36 환경에서 kubelet 메모리 사용량이 계속 늘거나 cgroup 관련 로그가 보인다면 단정하기 전에 버전, 런타임, 노드 상태를 나눠 확인해야 합니다. 이 글은 의심 증상을 좁혀 가는 점검 순서를 정리합니다.
 
 Kubernetes 1.36 환경에서 kubelet 메모리 사용량이 계속 증가하거나 `failed to release memory charge` 같은 cgroup 관련 메시지가 보일 때 확인하는 순서
 

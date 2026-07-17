@@ -1,5 +1,6 @@
 ---
 title: "백엔드 API에서 데이터베이스 트랜잭션 안전하게 다루기"
+description: "요즘 백엔드 API를 다루며 데이터 무결성과 동시성 문제를 안전하게 처리하려고 트랜잭션을 더 자세히 공부했습니다. 아직 초보라서 완전히 정답을 말하긴 어렵지만, 공부하면서 정리한 내용을 제 관점에서 정리해봅니다"
 slug: "safe-database-transactions-backend-api"
 date: 2026-07-09 09:00:00 +0900
 categories: [Backend, Database]

@@ -1,5 +1,6 @@
 ---
 title: "패키지 레지스트리 인증·권한 강화: npm과 PyPI의 2FA·토큰 정책 실무 점검"
+description: "오늘은 패키지 레지스트리(특히 npm과 PyPI)의 인증·권한 강화와 관련해 공부한 내용을 정리하려고 합니다. 패키지 공급망 공격이 계속 이슈가 되고 있어서 개인 계정의 2FA 설정, CI용 토큰 정책, 토큰 회전과 최소 권한 원칙 등 점검 포인트를 중심으로 실무에서 확인하면"
 slug: "npm-pypi-2fa-token-policies"
 date: 2026-07-16 12:00:00 +0900
 categories: ["DevOps", "Security"]
@@ -72,12 +73,14 @@ image:
   - GitHub Actions에서:
     - Repository secrets에 NPM_TOKEN 추가
     - workflow 예시 (간략)
+      {% raw %}
       ```yaml
       - name: Publish to npm
         run: npm publish --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       ```
+      {% endraw %}
   - 실무 팁: publish 단계를 보호 브랜치나 수동 승인(job approval)으로 감싸면 리스크를 줄일 수 있습니다.
 
 2. PyPI 관련 점검

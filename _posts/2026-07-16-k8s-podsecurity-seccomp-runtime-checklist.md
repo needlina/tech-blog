@@ -1,5 +1,6 @@
 ---
 title: "Kubernetes 보안 진입점 변경 대응: PodSecurity와 seccomp 점검 가이드"
+description: "오늘은 Kubernetes에서 보안 관련 정책이나 런타임 보안 설정(특히 PodSecurity 및 seccomp)으로 인해 애플리케이션이 동작하지 않거나 문제가 발생했을 때 어떤 점들을 확인하면 좋을지, 제가 공부하면서 정리한 내용을 공유하려고 합니다"
 slug: "k8s-podsecurity-seccomp-runtime-checklist"
 date: 2026-07-16 12:00:00 +0900
 categories: ["DevOps", "Security"]

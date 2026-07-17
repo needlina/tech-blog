@@ -1,5 +1,6 @@
 ---
 title: "서비스 장애를 빠르게 발견하는 기본 모니터링 지표와 실무 점검법"
+description: "서투른 초보 개발자로서 관측(Observability)과 모니터링을 공부하면서, \"어떤 지표를 먼저 봐야 빠르게 이상을 감지할 수 있을까\" 하는 질문이 자주 들었습니다"
 slug: "basic-monitoring-metrics-for-quick-incident-detection"
 date: 2026-07-11 10:00:00 +0900
 categories: [Observability, DevOps]
@@ -9,7 +10,8 @@ image:
   alt: "서비스 장애로 로그와 모니터링 대시보드를 확인하는 화면의 개념도"
 ---
 
-오늘의 주제
+서투른 초보 개발자로서 관측(Observability)과 모니터링을 공부하면서, "어떤 지표를 먼저 봐야 빠르게 이상을 감지할 수 있을까" 하는 질문이 자주 들었습니다
+
 
 서비스 장애를 빨리 파악하기 위한 기본 모니터링 지표
 
@@ -83,11 +85,13 @@ image:
      ```
 
    - Docker 환경
+     {% raw %}
      ```bash
      docker ps
      docker stats --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"
      docker logs --tail 200 mycontainer
      ```
+     {% endraw %}
    - Kubernetes 환경
      ```bash
      kubectl get pods -n mynamespace
@@ -129,6 +133,7 @@ image:
 
 알림(Alert) 설계 예시(간단)
 - 짧은 순간의 spike로 인한 불필요 알람을 줄이기 위해 연속 조건과 복수 샘플을 사용합니다. 예시 Prometheus alert rule:
+  {% raw %}
   ```yaml
   groups:
   - name: app.rules
@@ -144,6 +149,7 @@ image:
         summary: "High error rate for my-service ({{ $labels.job }})"
         description: "Error rate > 2% for more than 10 minutes"
   ```
+  {% endraw %}
 - 실무 포인트: severity를 나누고(정보/warn/page), 알람 수신 채널별로 라우팅하는 것이 좋습니다.
 
 ![대시보드의 주요 지표(latency, error rate, cpu, db connections)를 확인하는 흐름도](/assets/img/posts/blog/basic-monitoring-metrics-for-quick-incident-detection/image-2.png)

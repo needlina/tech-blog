@@ -1,5 +1,6 @@
 ---
 title: "Terraform 공급자(lockfile) 변화 따라가기: 설치·의존성 해결이 실무에 미치는 영향"
+description: "오늘은 Terraform에서 공급자(provider) 설치 방식과 .terraform.lock.hcl(이하 lockfile) 관련 변화가 실무에 어떤 영향을 줄 수 있는지 정리해봤다"
 slug: "terraform-provider-lockfile-changes"
 date: 2026-07-16 09:00:00 +0900
 categories: ["DevOps", "Cloud"]

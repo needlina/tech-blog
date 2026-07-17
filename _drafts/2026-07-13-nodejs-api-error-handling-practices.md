@@ -1,5 +1,6 @@
 ---
 title: "Node.js API 에러 처리 설계 가이드: 실무에서 확인할 포인트"
+description: "오늘은 Node.js 기반 API 서버에서 에러 처리를 어떻게 일관되게 설계하고, 실무에서 어떤 점을 확인하면 좋은지 정리해봤습니다. 저는 아직 초보 개발자라 모든 방식이 정답이라고 말하긴 어렵지만, 공부하면서 정리한 내용을 최대한 실무 지향적으로 정리해 보았습니다"
 slug: "nodejs-api-error-handling-practices"
 date: 2026-07-13 10:00:00 +0900
 categories: [Backend, Observability]
@@ -147,8 +148,8 @@ A. 프로세스/컨테이너 상태 점검
 - Docker
   - 현재 컨테이너 확인: docker ps --filter "name=my-app"
   - 로그 확인: docker logs -f my-app-container
-  - 종료 코드 확인: docker inspect --format='{{.State.ExitCode}}' my-app-container
-  - 재시작 정책 확인: docker inspect --format='{{.HostConfig.RestartPolicy.Name}}' my-app-container
+  - 종료 코드 확인: {% raw %}docker inspect --format='{{.State.ExitCode}}' my-app-container{% endraw %}
+  - 재시작 정책 확인: {% raw %}docker inspect --format='{{.HostConfig.RestartPolicy.Name}}' my-app-container{% endraw %}
 
 - Kubernetes
   - 파드 상태: kubectl get pods -n myns

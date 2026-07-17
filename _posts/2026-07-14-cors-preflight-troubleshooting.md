@@ -1,5 +1,6 @@
 ---
 title: "CORS 프리플라이트 요청 실패 원인 찾는 순서와 실무 점검법"
+description: "오늘은 CORS(Cross-Origin Resource Sharing) 프리플라이트(preflight) 요청이 실패할 때 원인을 찾아가는 순서를 정리해봤습니다"
 slug: "cors-preflight-troubleshooting"
 date: 2026-07-14 10:00:00 +0900
 categories: [Backend, Security]

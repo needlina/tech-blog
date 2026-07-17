@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "GitHub Pages에 Bluehost 도메인 연결하기"
+description: "[Blog] Github 블로그 Domain 설정 (Feat. Bluehost) Github 블로그를 도메인 구입 후 적용해보았습니다. 블루호스트라는 서비스를 이용했고요, 매년 자동결제로 진행하고 있습니다"
 date: 2024-12-04 00:00:00 +0900
 categories: [Blogging, GitHub Pages]
 tags: [github-pages, jekyll, chirpy, bluehost, dns]

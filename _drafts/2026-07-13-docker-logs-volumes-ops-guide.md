@@ -1,5 +1,6 @@
 ---
 title: "Docker 로그와 볼륨 운영 가이드: 로그 관리와 볼륨 점검 포인트"
+description: "오늘은 Docker 컨테이너 로그와 볼륨을 운영 관점에서 어떻게 관리하면 좋을지, 제가 공부하면서 정리한 내용을 차근차근 적어보려고 합니다. 아직 초보라 실무에서 바로 적용하기 전에 팀과 상의해야 할 부분도 있고, 제 정리가 틀렸을 가능성도 있으니 참고 정도로 봐주시면"
 slug: "docker-logs-volumes-ops-guide"
 date: 2026-07-13 10:00:00 +0900
 categories: [Docker, DevOps]
@@ -40,7 +41,7 @@ image:
   - docker logs --since 1h --tail 200 -f <container>
   - 로그에 타임스탬프가 필요하면 docker logs --timestamps
 - 각 컨테이너의 로그 파일 위치 확인 (json-file 사용 시)
-  - docker inspect --format='{{.LogPath}}' <container>
+  - {% raw %}docker inspect --format='{{.LogPath}}' <container>{% endraw %}
 - 데몬 레벨 로그 설정 확인
   - /etc/docker/daemon.json 파일 확인
   - 예: cat /etc/docker/daemon.json
@@ -109,7 +110,7 @@ docker run --rm -v my_volume:/data alpine sh -c "chown -R 1000:1000 /data && ls 
 1. df -h로 디스크 여유 확인
 2. docker system df와 du로 도커 내부 사용량 확인
 3. docker ps -a로 최근에 재시작이 잦은 컨테이너 확인
-4. docker inspect --format='{{.LogPath}}' <container>로 로그 파일 위치 확인
+4. {% raw %}docker inspect --format='{{.LogPath}}' <container>{% endraw %}로 로그 파일 위치 확인
 5. tail -n 200 <logfile>으로 로그 내용 확인(에러/반복 로그 원인)
 6. 임시 완화: docker logs --since 1h로 최근 로그 점검, 불필요한 로그 레벨을 낮추거나 컨테이너 재기동(신중)
 7. 장기적 해결: 로그 레벨/회전 정책 설정, 중앙 로그 수집 도입

@@ -1,5 +1,6 @@
 ---
 title: "대규모 트래픽 환경에서 분산 트레이싱 샘플링 정책 설계하기"
+description: "대규모 트래픽 환경에서 로그·지연 영향 없이 분산 트레이싱 샘플링 정책 설계하기"
 slug: "distributed-tracing-sampling-policy-high-traffic"
 date: 2026-07-16 12:00:00 +0900
 categories: ["Observability", "DevOps"]
@@ -16,7 +17,8 @@ image:
   alt: "분산 트레이싱 샘플링 썸네일"
 ---
 
-오늘의 주제
+대규모 트래픽 환경에서 로그·지연 영향 없이 분산 트레이싱 샘플링 정책 설계하기
+
 
 대규모 트래픽 환경에서 로그·지연 영향 없이 분산 트레이싱 샘플링 정책 설계하기
 

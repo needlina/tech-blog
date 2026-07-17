@@ -1,5 +1,6 @@
 ---
 title: "API 중복 요청 방지: 실무에서 쓰는 멱등성 키(idempotency key) 설계 가이드"
+description: "오늘은 API 중복 요청을 막기 위해 멱등성 키(idempotency key)를 설계하고 실무에서 확인할 포인트를 정리해보려고 합니다. 저는 아직 초보 개발자지만, 몇 가지 구현 패턴과 운영에서 확인하면 좋을 것 같은 점들을 공부하면서 정리해봤습니다"
 slug: "api-idempotency-key-design"
 date: 2026-07-13 10:00:00 +0900
 categories: [Backend, DevOps]

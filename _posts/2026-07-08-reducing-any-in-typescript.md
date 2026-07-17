@@ -1,5 +1,6 @@
 ---
 title: "TypeScript에서 any 줄이기: 실무 가이드와 점진적 마이그레이션"
+description: "TypeScript에서 any를 조금씩 줄여가는 방법을 정리해봤습니다"
 date: 2026-07-08 12:00:00 +0900
 categories: [React, 실무패턴]
 tags: [react, typescript, frontend]

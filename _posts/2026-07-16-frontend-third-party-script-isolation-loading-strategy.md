@@ -1,5 +1,6 @@
 ---
 title: "프론트엔드 서드파티 스크립트 최적화: 격리와 로드 전략으로 렌더링 성능 개선하기"
+description: "오늘은 프론트엔드에서 서드파티(Third-party) 스크립트가 렌더링 성능에 미치는 영향과, 이를 단계적으로 격리하고 로드하는 전략을 정리해 보려 합니다"
 slug: "frontend-third-party-script-isolation-loading-strategy"
 date: 2026-07-16 10:00:00 +0900
 categories: ["Frontend", "Performance"]

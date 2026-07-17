@@ -2,6 +2,9 @@
   Style for Tab Categories
 */
 
+@use '../addon/variables' as *;
+@use '../addon/module' as *;
+
 %category-icon-color {
   color: gray;
 }

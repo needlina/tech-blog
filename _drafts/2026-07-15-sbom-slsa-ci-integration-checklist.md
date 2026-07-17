@@ -1,5 +1,6 @@
 ---
 title: "소프트웨어 공급망 보안: SBOM과 SLSA 도입 가이드 및 CI 연동 실무 점검"
+description: "는 소프트웨어 공급망 보안에서 요즘 자주 보이는 SBOM(Software Bill of Materials)과 SLSA(Supply-chain Levels for Software Artifacts)를 실제 CI(Continuous Integration) 파이프라인에 연동해서"
 slug: "sbom-slsa-ci-integration-checklist"
 date: 2026-07-15 10:00:00 +0900
 categories: ["Security", "DevOps"]
@@ -9,7 +10,8 @@ image:
   alt: "SBOM·SLSA 실무 점검 썸네일"
 ---
 
-오늘의 주제는 소프트웨어 공급망 보안에서 요즘 자주 보이는 SBOM(Software Bill of Materials)과 SLSA(Supply-chain Levels for Software Artifacts)를 실제 CI(Continuous Integration) 파이프라인에 연동해서 어떻게 검증하고 운영 관점에서 어떤 점을 점검하면 좋을지에 대한 개인적인 정리입니다. 저는 현재 초보 개발자 입장에서 천천히 공부하면서 실제로 해본 실습과 문서들을 정리한 내용이라, 모든 사례가 정답이라고 주장하려는 건 아닙니다. 다만 실무에서 바로 확인해볼 수 있는 포인트, 명령어 예시, 간단한 CI 예제를 위주로 정리했습니다.
+는 소프트웨어 공급망 보안에서 요즘 자주 보이는 SBOM(Software Bill of Materials)과 SLSA(Supply-chain Levels for Software Artifacts)를 실제 CI(Continuous Integration) 파이프라인에 연동해서
+
 
 목차(간단)
 - SBOM과 SLSA의 개념(간단히)
@@ -88,6 +90,7 @@ SBOM과 SLSA, 아주 간단히
 - upload-artifact로 sbom + attestation 저장
 
 예(의사 코드 형태):
+{% raw %}
 name: build-and-sbom
 on: push
 jobs:
@@ -114,6 +117,7 @@ jobs:
           path: |
             sbom.json
             *.att.json
+{% endraw %}
 
 (설정 팁)
 - 키 관리는 GitHub secrets에 직접 키를 넣기보다 OIDC 기반 워크로드 아이덴티티로 접근해 KMS에서 서명하도록 구성하면 노출 리스크를 줄일 수 있습니다.

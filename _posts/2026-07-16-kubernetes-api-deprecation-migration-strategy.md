@@ -1,5 +1,6 @@
 ---
 title: "쿠버네티스 API 폐기 주기 점검과 실제 마이그레이션 전략 정리"
+description: "오늘은 쿠버네티스에서 API(및 기능)의 폐기(deprecation) 주기를 점검하고, 실무에서 마이그레이션을 어떻게 접근하면 좋을지 정리해 보려고 합니다"
 slug: "kubernetes-api-deprecation-migration-strategy"
 date: 2026-07-16 12:00:00 +0900
 categories: ["DevOps", "Cloud"]

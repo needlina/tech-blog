@@ -1,5 +1,6 @@
 ---
 title: "Linux 서버에서 로그로 장애 원인 좁히기: 기본 흐름과 실무 팁"
+description: "Linux 서버에서 로그를 확인하고 장애 원인을 좁히는 기본 흐름"
 slug: "linux-log-troubleshooting-basic-workflow"
 date: 2026-07-10 10:00:00 +0900
 categories: [Linux, DevOps, Observability]

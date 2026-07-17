@@ -2,6 +2,8 @@
 * Mainly scss modules, only imported to `assets/css/main.scss`
 */
 
+@use 'variables' as *;
+
 /* ---------- scss placeholder --------- */
 
 %heading {

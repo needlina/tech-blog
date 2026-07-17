@@ -1,5 +1,6 @@
 ---
 title: "Nginx 리버스 프록시: 초보가 자주 하는 실수와 실무 점검 방법"
+description: "오늘은 Nginx로 리버스 프록시(Reverse Proxy)를 처음 구성할 때 제가 자주 실수하거나 헷갈렸던 부분들을 정리해 보려고 합니다. 실무에서 바로 쓸 수 있는 확인 절차와 명령어 예시를 중심으로, 초보의 시선에서 차근차근 적어봤습니다"
 slug: "nginx-reverse-proxy-common-mistakes"
 date: 2026-07-11 10:00:00 +0900
 categories: [DevOps, Linux]

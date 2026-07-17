@@ -1,5 +1,6 @@
 ---
 title: "Sigstore 기반 CI 코드·이미지 서명 파이프라인 도입 체크리스트"
+description: ": Sigstore(cosign/rekor/fulcio) 기반 CI 코드·이미지 서명 파이프라인 도입 체크리스트를 정리합니다. 개인적으로 공부하면서 정리한 초안이라 틀릴 가능성이 있고, 실무 환경에 맞게 조정하면 좋겠습니다"
 slug: "sigstore-cosign-code-signing-pipeline"
 date: 2026-07-16 10:00:00 +0900
 categories: ["DevOps", "Security"]
@@ -9,7 +10,8 @@ image:
   alt: "CI/CD 서명 자동화 썸네일"
 ---
 
-오늘의 주제
+: Sigstore(cosign/rekor/fulcio) 기반 CI 코드·이미지 서명 파이프라인 도입 체크리스트를 정리합니다. 개인적으로 공부하면서 정리한 초안이라 틀릴 가능성이 있고, 실무 환경에 맞게 조정하면 좋겠습니다
+
 : Sigstore(cosign/rekor/fulcio) 기반 CI 코드·이미지 서명 파이프라인 도입 체크리스트를 정리합니다. 개인적으로 공부하면서 정리한 초안이라 틀릴 가능성이 있고, 실무 환경에 맞게 조정하면 좋겠습니다.
 
 들어가며
@@ -95,7 +97,7 @@ CI 파이프라인 적용 예시 (GitHub Actions)
         - name: Build image
           run: |
             docker build -t ghcr.io/myorg/myimage:1.0.0 .
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u USERNAME --password-stdin
+            echo "{% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}" | docker login ghcr.io -u USERNAME --password-stdin
             docker push ghcr.io/myorg/myimage:1.0.0
         - name: Install cosign
           run: |

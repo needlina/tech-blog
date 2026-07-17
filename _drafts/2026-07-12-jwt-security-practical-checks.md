@@ -1,5 +1,6 @@
 ---
 title: "JWT 인증 보안 체크리스트: 실무에서 점검할 핵심 포인트"
+description: "오늘은 JWT(Json Web Token)를 인증에 사용할 때 실무에서 주의할 점들을 제가 공부하면서 정리한 내용을 공유하려고 합니다. 처음 접했을 때는 개념은 간단해 보였지만, 실제로 적용·운용할 때 놓치기 쉬운 보안 포인트가 꽤 많다는 걸 느꼈습니다"
 slug: "jwt-security-practical-checks"
 date: 2026-07-12 12:00:00 +0900
 categories: [Security, Backend]

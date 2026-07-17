@@ -1,5 +1,6 @@
 ---
 title: "React useEffect 실무 패턴: 흔한 실수와 안전한 개선 방법"
+description: "React에서 useEffect를 잘못 쓰는 대표적인 패턴과 개선 방법"
 date: 2026-07-07 12:00:00 +0900
 categories: [React, 실무패턴]
 tags: [react, typescript, frontend]
