@@ -4,7 +4,7 @@ description: "Redis 캐시를 도입하기 전에 먼저 확인해야 할 것들
 slug: "redis-cache-checklist-before-adoption"
 date: 2026-07-12 09:00:00 +0900
 categories: [Database, DevOps]
-tags: [redis, cache, performance, observability, devops]
+tags: ["redis", "cache", "성능튜닝", "운영점검", "devops"]
 image:
   path: /assets/img/posts/blog/redis-cache-checklist-before-adoption/image-1.webp
   alt: "단순한 Redis 캐시 개념을 나타내는 일러스트"

@@ -4,7 +4,7 @@ title: "GitHub Pages에서 Disqus 없이 giscus 댓글과 GoatCounter 조회수 
 description: "GitHub Pages로 블로그를 운영하다 보면 댓글과 조회수 기능을 붙이고 싶어집니다. 하지만 GitHub Pages는 정적 호스팅이기 때문에 서버에서 댓글을 저장하거나 조회수를 직접 증가시키는 로직을 실행할 수 없습니다"
 date: 2026-07-09 01:02:20 +0900
 categories: [Blogging, GitHub Pages]
-tags: [github-pages, jekyll, chirpy, giscus, goatcounter, comments]
+tags: ["github-pages", "jekyll", "giscus", "goatcounter", "댓글설정"]
 comments: true
 ---
 

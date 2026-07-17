@@ -4,7 +4,7 @@ description: "는 소프트웨어 공급망 보안에서 요즘 자주 보이는
 slug: "sbom-slsa-ci-integration-checklist"
 date: 2026-07-15 10:00:00 +0900
 categories: ["Security", "DevOps"]
-tags: ["sbom", "slsa", "software-supply-chain", "ci-cd", "news", "trend"]
+tags: ["sbom", "slsa", "공급망보안", "ci-cd", "새소식", "트렌드"]
 image:
   path: /assets/img/posts/blog/sbom-slsa-ci-integration-checklist/preview.png
   alt: "SBOM·SLSA 실무 점검 썸네일"

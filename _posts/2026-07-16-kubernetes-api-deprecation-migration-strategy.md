@@ -4,7 +4,7 @@ description: "오늘은 쿠버네티스에서 API(및 기능)의 폐기(deprecat
 slug: "kubernetes-api-deprecation-migration-strategy"
 date: 2026-07-16 12:00:00 +0900
 categories: ["DevOps", "Cloud"]
-tags: ["kubernetes", "api-deprecation", "migration", "news", "trend"]
+tags: ["kubernetes", "api-deprecation", "마이그레이션", "새소식", "트렌드"]
 image:
   path: /assets/img/posts/blog/kubernetes-api-deprecation-migration-strategy/preview.png
   alt: "Kubernetes 마이그레이션 썸네일"

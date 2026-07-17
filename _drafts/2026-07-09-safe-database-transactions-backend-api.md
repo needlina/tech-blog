@@ -4,7 +4,7 @@ description: "요즘 백엔드 API를 다루며 데이터 무결성과 동시성
 slug: "safe-database-transactions-backend-api"
 date: 2026-07-09 09:00:00 +0900
 categories: [Backend, Database]
-tags: [database-transactions, postgresql, backend, psql, transactional-operations]
+tags: ["postgresql", "database-transactions", "backend", "트랜잭션", "데이터정합성"]
 ---
 
 요즘 백엔드 API를 다루며 데이터 무결성과 동시성 문제를 안전하게 처리하려고 트랜잭션을 더 자세히 공부했습니다. 아직 초보라서 완전히 정답을 말하긴 어렵지만, 공부하면서 정리한 내용을 제 관점에서 정리해봅니다. 실무에서 직접 확인해볼 수 있는 명령어, 설정 예시, 코드 샘플도 포함했습니다. 필요하면 내용을 더 검증해서 쓰면 좋겠다고 생각합니다.

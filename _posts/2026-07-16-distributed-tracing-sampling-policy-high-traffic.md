@@ -4,14 +4,7 @@ description: "대규모 트래픽 환경에서 로그·지연 영향 없이 분�
 slug: "distributed-tracing-sampling-policy-high-traffic"
 date: 2026-07-16 12:00:00 +0900
 categories: ["Observability", "DevOps"]
-tags:
-  [
-    "distributed-tracing",
-    "sampling",
-    "observability",
-    "opentelemetry",
-    "jaeger"
-  ]
+tags: ["distributed-tracing", "sampling", "observability", "대용량트래픽", "성능분석"]
 image:
   path: /assets/img/posts/blog/distributed-tracing-sampling-policy-high-traffic/preview.png
   alt: "분산 트레이싱 샘플링 썸네일"

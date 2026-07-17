@@ -4,7 +4,7 @@ description: "오늘은 API 중복 요청을 막기 위해 멱등성 키(idempot
 slug: "api-idempotency-key-design"
 date: 2026-07-13 10:00:00 +0900
 categories: [Backend, DevOps]
-tags: [idempotency, api, deduplication, request-id, backend]
+tags: ["api", "idempotency", "중복요청방지", "backend", "설계패턴"]
 image:
   path: /assets/img/posts/blog/api-idempotency-key-design/preview.png
   alt: "중복 요청을 막는 멱등성 키 썸네일"

@@ -4,7 +4,7 @@ description: "오늘은 Docker Compose 환경에서 컨테이너의 헬스체크
 slug: "docker-compose-health-restart-stabilization"
 date: 2026-07-17 12:00:00 +0900
 categories: ["Docker", "DevOps"]
-tags: ["docker-compose", "healthcheck", "restart-policy", "devops"]
+tags: ["docker-compose", "healthcheck", "restart-policy", "서비스안정화", "devops"]
 image:
   path: /assets/img/posts/blog/docker-compose-health-restart-stabilization/preview.png
   alt: "Compose 안정화 썸네일"

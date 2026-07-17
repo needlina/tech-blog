@@ -4,15 +4,7 @@ description: "오늘은 패키지 매니저 락파일(lockfile) 포맷 변경이
 slug: "lockfile-format-ci-cache-strategy"
 date: 2026-07-16 10:00:00 +0900
 categories: ["DevOps", "Frontend"]
-tags:
-  [
-    "package-manager",
-    "ci-cache",
-    "lockfile-format",
-    "npm-pnpm-yarn",
-    "news",
-    "trend"
-  ]
+tags: ["npm", "pnpm", "yarn", "lockfile", "ci-cache", "의존성관리"]
 image:
   path: /assets/img/posts/blog/lockfile-format-ci-cache-strategy/preview.png
   alt: "락파일 & 캐시 썸네일"

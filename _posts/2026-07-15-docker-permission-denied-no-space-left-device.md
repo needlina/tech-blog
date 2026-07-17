@@ -4,7 +4,7 @@ description: "Docker 컨테이너 실행 중 permission denied 또는 No space l
 slug: "docker-permission-denied-no-space-left-device"
 date: 2026-07-15 11:20:00 +0900
 categories: [Docker, DevOps]
-tags: [docker, permission-denied, disk-space, container, devops]
+tags: ["docker", "permission-denied", "disk-space", "장애대응", "container"]
 image:
   path: /assets/img/posts/blog/docker-permission-denied-no-space-left-device/preview.png
   alt: "Docker 컨테이너 실행 오류 Permission Denied와 No space left on device 해결 방법 썸네일"

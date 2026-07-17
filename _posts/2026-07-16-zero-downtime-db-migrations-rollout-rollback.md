@@ -4,7 +4,7 @@ description: "오늘은 \"무중단으로 데이터베이스 스키마 마이그
 slug: "zero-downtime-db-migrations-rollout-rollback"
 date: 2026-07-16 10:00:00 +0900
 categories: ["Database", "DevOps"]
-tags: ["database-migrations", "zero-downtime", "rollback", "postgres", "devops"]
+tags: ["postgresql", "database-migration", "무중단배포", "롤백전략", "devops"]
 image:
   path: /assets/img/posts/blog/zero-downtime-db-migrations-rollout-rollback/preview.png
   alt: "무중단 DB 마이그레이션 썸네일"

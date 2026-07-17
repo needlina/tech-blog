@@ -4,7 +4,7 @@ description: "오늘은 CORS(Cross-Origin Resource Sharing) 프리플라이트(p
 slug: "cors-preflight-troubleshooting"
 date: 2026-07-14 10:00:00 +0900
 categories: [Backend, Security]
-tags: [cors, preflight, http, troubleshooting, nginx]
+tags: ["cors", "preflight", "http", "장애대응", "nginx"]
 image:
   path: /assets/img/posts/blog/cors-preflight-troubleshooting/preview.png
   alt: "CORS 프리플라이트 오류 썸네일"

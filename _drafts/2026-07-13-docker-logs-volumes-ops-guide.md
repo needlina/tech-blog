@@ -4,7 +4,7 @@ description: "오늘은 Docker 컨테이너 로그와 볼륨을 운영 관점에
 slug: "docker-logs-volumes-ops-guide"
 date: 2026-07-13 10:00:00 +0900
 categories: [Docker, DevOps]
-tags: [docker, container-logs, volumes, logging, operations]
+tags: ["docker", "container-logs", "volumes", "로그관리", "운영점검"]
 image:
   path: /assets/img/posts/blog/docker-logs-volumes-ops-guide/image-1.webp
   alt: "도커 컨테이너 로그와 볼륨을 상징적으로 보여주는 단순한 기술 일러스트"

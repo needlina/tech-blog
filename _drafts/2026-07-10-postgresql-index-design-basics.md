@@ -4,7 +4,7 @@ description: "오늘은 \"PostgreSQL 인덱스를 처음 설계할 때 알아야
 slug: "postgresql-index-design-basics"
 date: 2026-07-10 10:00:00 +0900
 categories: [Database, PostgreSQL]
-tags: [postgresql, indexing, query-optimization, index-performance, database]
+tags: ["postgresql", "indexing", "쿼리최적화", "성능튜닝", "인덱스설계"]
 ---
 
 오늘은 "PostgreSQL 인덱스를 처음 설계할 때 알아야 할 기준"에 대해 제가 공부하면서 정리한 내용을 적어봅니다. 초보 입장에서 실무에 바로 적용할 수 있는 포인트 위주로, 헷갈렸던 부분과 실무에서 확인하면 좋은 점검 절차도 함께 적습니다. 제가 틀리거나 더 좋은 방법이 있을 수 있으니 참고 자료로 보시고, 실제 환경에서는 테스트해보면서 결정하시는 게 좋겠습니다.

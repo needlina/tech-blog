@@ -4,7 +4,7 @@ description: "Linux 서버에서 로그를 확인하고 장애 원인을 좁히�
 slug: "linux-log-troubleshooting-basic-workflow"
 date: 2026-07-10 10:00:00 +0900
 categories: [Linux, DevOps, Observability]
-tags: [linux, logs, troubleshooting, devops, monitoring]
+tags: ["linux", "로그분석", "장애대응", "devops", "monitoring"]
 image:
   path: /assets/img/posts/blog/linux-log-troubleshooting-basic-workflow/image-1.png
   alt: "Linux 서버 로그를 확인하며 장애 원인을 좁히는 터미널 작업 화면"

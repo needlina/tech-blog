@@ -4,7 +4,7 @@ description: "들어가며 — 왜 단계별로 접근할까 제가 최근에 AP
 slug: "api-response-bottleneck-troubleshooting"
 date: 2026-07-12 09:00:00 +0900
 categories: [Backend, Observability]
-tags: [api-performance, observability, debugging, database, docker]
+tags: ["api-performance", "observability", "병목진단", "장애대응", "backend"]
 image:
   path: /assets/img/posts/blog/api-response-bottleneck-troubleshooting/image-1.webp
   alt: "API 요청-응답 과정과 주요 병목 지점을 단순 아이콘으로 보여주는 일러스트"

@@ -4,7 +4,7 @@ description: "오늘은 데이터베이스 마이그레이션을 \"가능한 한
 slug: "safe-database-migration-deployment"
 date: 2026-07-12 10:00:00 +0900
 categories: [Database, DevOps]
-tags: [database-migration, postgresql, devops, backup, zero-downtime]
+tags: ["postgresql", "database-migration", "무중단배포", "롤백전략", "devops"]
 image:
   path: /assets/img/posts/blog/safe-database-migration-deployment/image-1.webp
   alt: "마이그레이션 점검 항목이 적힌 체크리스트 일러스트"

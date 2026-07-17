@@ -4,7 +4,7 @@ description: "오늘은 JWT(Json Web Token)를 인증에 사용할 때 실무에
 slug: "jwt-security-practical-checks"
 date: 2026-07-12 12:00:00 +0900
 categories: [Security, Backend]
-tags: [jwt, authentication, security, token, jwks]
+tags: ["jwt", "authentication", "보안점검", "token", "jwks"]
 image:
   path: /assets/img/posts/blog/jwt-security-practical-checks/image-1.webp
   alt: "JWT 토큰 구조를 단순히 보여주는 원형 다이어그램"

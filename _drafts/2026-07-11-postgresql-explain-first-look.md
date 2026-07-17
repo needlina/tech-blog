@@ -4,7 +4,7 @@ description: "PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들"
 slug: "postgresql-explain-first-look"
 date: 2026-07-11 10:00:00 +0900
 categories: [Database, PostgreSQL]
-tags: [postgresql, explain, query-planning, performance, indexing]
+tags: ["postgresql", "explain", "실행계획", "성능튜닝", "indexing"]
 image:
   path: /assets/img/posts/blog/postgresql-explain-first-look/image-1.png
   alt: "PostgreSQL EXPLAIN 출력의 요약과 주요 항목을 도식화한 이미지"

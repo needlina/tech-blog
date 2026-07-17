@@ -4,7 +4,7 @@ description: "OAuth 리다이렉트 URI 설정에서 자주 생기는 보안 실
 slug: "oauth-redirect-uri-security-mistakes"
 date: 2026-07-14 10:00:00 +0900
 categories: [Security, Backend]
-tags: [oauth, redirect-uri, security, authentication, open-redirect]
+tags: ["oauth", "redirect-uri", "보안점검", "authentication", "open-redirect"]
 image:
   path: /assets/img/posts/blog/oauth-redirect-uri-security-mistakes/preview.png
   alt: "OAuth 리다이렉트 URI 점검 썸네일"

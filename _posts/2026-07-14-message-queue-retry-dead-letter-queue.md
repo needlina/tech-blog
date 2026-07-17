@@ -4,7 +4,7 @@ description: "메시지 큐에서 재시도와 데드레터 큐를 나누는 기
 slug: "message-queue-retry-dead-letter-queue"
 date: 2026-07-14 12:00:00 +0900
 categories: [Backend, DevOps]
-tags: [message-queue, dead-letter-queue, retries, observability]
+tags: ["message-queue", "dead-letter-queue", "재시도전략", "장애대응", "observability"]
 image:
   path: /assets/img/posts/blog/message-queue-retry-dead-letter-queue/preview.png
   alt: "재시도와 DLQ 나누기 썸네일"

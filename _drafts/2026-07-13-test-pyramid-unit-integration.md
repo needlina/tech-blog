@@ -4,7 +4,7 @@ description: "테스트 피라미드를 기준으로 단위 테스트와 통합 
 slug: "test-pyramid-unit-integration"
 date: 2026-07-13 12:00:00 +0900
 categories: [Testing, DevOps]
-tags: [testing, unit-testing, integration-testing, test-pyramid, ci-cd]
+tags: ["testing", "unit-testing", "integration-testing", "테스트전략", "ci-cd"]
 image:
   path: /assets/img/posts/blog/test-pyramid-unit-integration/image-1.webp
   alt: "테스트 피라미드와 단위/통합 테스트 층을 보여주는 단순한 일러스트"

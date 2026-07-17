@@ -4,7 +4,7 @@ description: "오늘은 대형 레포(여러 서비스/마이크로서비스가 
 slug: "docker-image-layer-optimization"
 date: 2026-07-16 10:00:00 +0900
 categories: ["Docker", "DevOps"]
-tags: ["docker", "image-optimization", "dockerfile", "buildkit", "devops"]
+tags: ["docker", "dockerfile", "buildkit", "이미지최적화", "레이어분석"]
 image:
   path: /assets/img/posts/blog/docker-image-layer-optimization/preview.png
   alt: "Docker 이미지 레이어 최적화 썸네일"

@@ -4,7 +4,7 @@ description: "오늘은 클라우드 네이티브 환경에서 WebAssembly(Wasm)
 slug: "wasm-cloud-native-runtime-adoption"
 date: 2026-07-15 10:00:00 +0900
 categories: ["Cloud", "DevOps"]
-tags: ["wasm", "webassembly", "cloud-native", "runtime", "news", "trend"]
+tags: ["wasm", "webassembly", "cloud-native", "runtime", "새소식", "트렌드"]
 image:
   path: /assets/img/posts/blog/wasm-cloud-native-runtime-adoption/preview.png
   alt: "Wasm × 클라우드 네이티브 썸네일"

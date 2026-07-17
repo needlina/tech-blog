@@ -4,7 +4,7 @@ description: "React나 Node.js 개발 서버에서 listen EADDRINUSE address alr
 slug: "react-node-eaddrinuse-port-3000-fix"
 date: 2026-07-15 11:10:00 +0900
 categories: [Frontend, Backend]
-tags: [nodejs, react, eaddrinuse, port, troubleshooting]
+tags: ["nodejs", "react", "eaddrinuse", "포트충돌", "장애대응"]
 image:
   path: /assets/img/posts/blog/react-node-eaddrinuse-port-3000-fix/preview.png
   alt: "React/Node.js 실행 오류 listen EADDRINUSE address already in use 3000 해결 방법 썸네일"

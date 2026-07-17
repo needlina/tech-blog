@@ -4,15 +4,7 @@ description: "오늘은 GitHub Actions의 self-hosted 러너를 운영하면서 
 slug: "github-actions-self-hosted-runner-secrets-hardening"
 date: 2026-07-16 12:00:00 +0900
 categories: ["DevOps", "Security", "GitHub Actions"]
-tags:
-  [
-    "github-actions",
-    "self-hosted",
-    "secrets-management",
-    "security",
-    "news",
-    "trend"
-  ]
+tags: ["github-actions", "self-hosted-runner", "시크릿관리", "보안점검", "devops"]
 image:
   path: /assets/img/posts/blog/github-actions-self-hosted-runner-secrets-hardening/preview.png
   alt: "셀프호스트 러너 보안 썸네일"

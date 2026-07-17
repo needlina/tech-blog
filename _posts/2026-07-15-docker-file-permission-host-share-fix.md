@@ -4,7 +4,7 @@ description: "Docker 컨테이너에서 파일 권한 문제로 호스트와 파
 slug: "docker-file-permission-host-share-fix"
 date: 2026-07-15 10:00:00 +0900
 categories: ["Docker", "DevOps"]
-tags: ["docker", "file-permissions", "linux", "volumes", "uid-gid"]
+tags: ["docker", "file-permissions", "linux", "volumes", "권한문제"]
 image:
   path: /assets/img/posts/blog/docker-file-permission-host-share-fix/preview.png
   alt: "컨테이너-호스트 파일 권한 문제 썸네일"

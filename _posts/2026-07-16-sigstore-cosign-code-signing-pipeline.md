@@ -4,7 +4,7 @@ description: ": Sigstore(cosign/rekor/fulcio) 기반 CI 코드·이미지 서명
 slug: "sigstore-cosign-code-signing-pipeline"
 date: 2026-07-16 10:00:00 +0900
 categories: ["DevOps", "Security"]
-tags: ["sigstore", "cosign", "ci-cd", "supply-chain-security", "news", "trend"]
+tags: ["sigstore", "cosign", "ci-cd", "공급망보안", "새소식", "트렌드"]
 image:
   path: /assets/img/posts/blog/sigstore-cosign-code-signing-pipeline/preview.png
   alt: "CI/CD 서명 자동화 썸네일"

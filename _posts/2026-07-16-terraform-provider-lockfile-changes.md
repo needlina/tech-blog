@@ -4,7 +4,7 @@ description: "오늘은 Terraform에서 공급자(provider) 설치 방식과 .te
 slug: "terraform-provider-lockfile-changes"
 date: 2026-07-16 09:00:00 +0900
 categories: ["DevOps", "Cloud"]
-tags: ["terraform", "devops", "dependency-management", "lockfile", "news", "trend"]
+tags: ["terraform", "lockfile", "의존성관리", "cloud", "새소식", "트렌드"]
 image:
   path: /assets/img/posts/blog/terraform-provider-lockfile-changes/preview.png
   alt: "Terraform 공급자 변화 썸네일"
