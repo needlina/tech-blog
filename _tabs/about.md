@@ -20,4 +20,4 @@ React, TypeScript, Node.js, 프론트엔드 아키텍처와 개발 생산성을 
 ## Links
 
 - [henjini.com](https://henjini.com)
-- [GitHub](https://github.com/needlina)
+- [info-blog](https://info.henjini.com)
