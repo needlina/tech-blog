@@ -1,0 +1,83 @@
+{
+  "generatedAt": "2026-07-17T02:47:04.505Z",
+  "blog": "tech-blog",
+  "kind": "new-trend",
+  "source": "openai-new-trend-candidates",
+  "candidates": [
+    {
+      "index": 1,
+      "title": "OCI 이미지와 SBOM 저장 방식 업데이트로 레지스트리 호환성 점검하기",
+      "slug": "oci-image-sbom-registry-compatibility-update",
+      "thumbnail": {
+        "title": "OCI 이미지·SBOM 변화",
+        "subtitle": "레지스트리와 CI 파이프라인 영향 점검"
+      },
+      "reason": "OCI 아티팩트와 SBOM 저장/조회 방식의 사양·레지스트리 구현 변경이 CI/CD와 배포 파이프라인에 즉각적인 영향이 있어 확인을 권한다.",
+      "searchIntent": "OCI 이미지에 SBOM을 어떻게 포함하고 레지스트리에서 일관되게 조회·검증해야 하는가?",
+      "practicalValue": "레지스트리 호환성 체크리스트와 CI 파이프라인의 SBOM 생성·업로드·검증 단계를 실무에 맞게 업데이트하는 방법을 제공한다.",
+      "freshnessReason": "최근 OCI/레지스트리 관련 스펙 및 벤더 구현 업데이트가 배포되어 기존 파이프라인이 실패할 수 있기 때문에 지금 점검해야 한다.",
+      "sourceHint": "OCI 스펙, 레지스트리(Distribution) 릴리스 노트, CNCF/벤더 블로그",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 2,
+      "title": "sigstore·cosign과 Rekor의 서명·투명성 정책 변화 점검",
+      "slug": "sigstore-cosign-rekor-policy-updates",
+      "thumbnail": {
+        "title": "소스서명 정책 변화",
+        "subtitle": "cosign·rekor 업데이트 영향 분석"
+      },
+      "reason": "사인·투명성 로그 도구인 sigstore 생태계의 인증·정책 변경은 공급망 서명 검증 경로와 자동화에 직접적인 영향을 주므로 검토가 필요하다.",
+      "searchIntent": "cosign/rekor의 최근 변경이 기존 키리스(keyless) 서명, 서명 검증 또는 Rekor 조회 방식에 어떤 영향을 주는가?",
+      "practicalValue": "빌드·배포 파이프라인에서 서명 생성·검증, Rekor 기반 증빙 수집을 안전하게 유지하도록 설정을 조정하는 실무 가이드를 제공한다.",
+      "freshnessReason": "최근 sigstore/ cosign/rekor 릴리스와 보안 권고로 인해 도구 사용법과 정책이 바뀌었기 때문에 당장 확인해야 한다.",
+      "sourceHint": "sigstore 및 cosign 공식 문서·릴리즈 노트, Rekor 문서, 벤더/프로젝트 블로그",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 3,
+      "title": "Kubernetes에서 eBPF 기반 CNI 도입 확산과 네트워크 정책 변화",
+      "slug": "kubernetes-cni-ebpf-adoption-network-policy",
+      "thumbnail": {
+        "title": "eBPF CNI 확산",
+        "subtitle": "네트워크 정책·디버깅 관점 점검"
+      },
+      "reason": "eBPF 기반 CNI(예: Cilium) 채택이 늘면서 네트워크 정책 동작, 관찰성, 디버깅 방법이 기존 iptables/CNI와 달라지는 사례가 많아 기술적 영향 점검이 필요하다.",
+      "searchIntent": "eBPF 기반 CNI로 전환하면 네트워크 정책 적용·로그·트래픽 디버깅 절차가 어떻게 달라지나?",
+      "practicalValue": "마이그레이션 시점에 필요한 정책 매핑, 모니터링/디버깅 도구 설정, 퍼포먼스 고려사항을 실무적으로 적용할 수 있게 한다.",
+      "freshnessReason": "최근 eBPF CNI의 주요 기능 추가와 Kubernetes 관련 변경이 잦아 실제 클러스터 운영에 영향을 주기 때문에 현재 확인해야 한다.",
+      "sourceHint": "Cilium/other CNI 릴리즈 노트, Kubernetes SIG 문서, 벤더 블로그",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 4,
+      "title": "CI/CD의 OIDC 기반 토큰·신뢰관계 권장값 변경과 보안 영향",
+      "slug": "ci-cd-oidc-token-trust-recommendations-update",
+      "thumbnail": {
+        "title": "CI/CD OIDC 권장값",
+        "subtitle": "토큰·신뢰관계 최신 보안 지침"
+      },
+      "reason": "클라우드 제공자와 CI 플랫폼의 OIDC 신뢰 설정·토큰 정책 변경은 권한 위임과 일시적 자격증명 흐름에 직접 영향을 주므로 즉시 점검해야 한다.",
+      "searchIntent": "GitHub Actions나 다른 CI에서 OIDC를 이용해 클라우드 자격증명을 안전하게 설정하려면 무엇을 바꿔야 하나?",
+      "practicalValue": "권한 위임 구성, 최소 권한 원칙 적용, 토큰 만료·회수 처리 같은 실무 설정을 업데이트하는 구체적 지침을 제공한다.",
+      "freshnessReason": "최근 클라우드 제공자와 CI 플랫폼의 보안 권고·정책 변경으로 기존 OIDC 설정이 취약해질 수 있어 지금 검토해야 한다.",
+      "sourceHint": "AWS/GCP/Azure OIDC 문서, GitHub Actions 공식 문서, 보안 권고",
+      "source": "openai-new-trend-candidates"
+    },
+    {
+      "index": 5,
+      "title": "WebAssembly(WASI/Wasmtime) 런타임 확장과 서버리스·엣지 배포 영향",
+      "slug": "wasm-wasi-wasmtime-runtime-changes-serverless-edge",
+      "thumbnail": {
+        "title": "WASI·Wasmtime 업데이트",
+        "subtitle": "서버리스·엣지 배포 전략 재검토"
+      },
+      "reason": "WASI와 Wasmtime 등의 런타임이 시스템 인터페이스와 컴포넌트 모델을 확장하면서 Wasm을 이용한 서버리스·엣지 아키텍처에 설계 변경이 요구된다.",
+      "searchIntent": "최근 WASI/Wasmtime 변경으로 기존 네이티브 기반 함수나 서비스의 Wasm 마이그레이션·배포 방식이 어떻게 달라지나?",
+      "practicalValue": "패키징, 권한·호출 경계, 성능 비교, 런타임 의존성 관리를 통해 서버리스·엣지 환경에 실무 적용할 수 있게 한다.",
+      "freshnessReason": "최근 Wasmtime/WASI 스펙·릴리스로 인해 런타임 기능과 보안 경계가 변하고 있어 배포 전략을 지금 조정해야 한다.",
+      "sourceHint": "Wasmtime 릴리즈 노트, WASI 스펙 문서, Bytecode Alliance/벤더 블로그",
+      "source": "openai-new-trend-candidates"
+    }
+  ]
+}
