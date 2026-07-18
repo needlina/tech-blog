@@ -19,6 +19,7 @@
     "build": "concurrently npm:build:*",
     "build:css": "purgecss -c purgecss.config.js",
     "build:js": "rollup -c --bundleConfigAsCjs --environment BUILD:production",
+    "analyze:ai-content": "node scripts/ai-content-index/index.mjs",
     "verify:indexing": "node scripts/verify-indexing-readiness.mjs",
     "watch:js": "rollup -c --bundleConfigAsCjs -w",
     "lint:scss": "stylelint _sass/**/*.scss",
