@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-18-backend-concurrent-uploads-temp-disk-control.md",
+  "slug": "backend-concurrent-uploads-temp-disk-control",
+  "title": "동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 가이드",
+  "analyzedAt": "2026-07-18T03:21:34.942Z",
+  "scores": {
+    "aiUsage": 7,
+    "experience": 93,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1318,
+    "sentenceCount": 62,
+    "headingCount": 3,
+    "codeBlockCount": 2,
+    "linkCount": 2,
+    "versionMentionCount": 1,
+    "filePathMentionCount": 27,
+    "commandCount": 7,
+    "numberWithUnitCount": 6,
+    "errorMessageCount": 1,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 9,
+    "verificationSignalCount": 14,
+    "maxSimilarity": 0.072,
+    "maxHeadingSimilarity": 0.429,
+    "mostSimilarPost": "nginx-large-file-upload-buffering-fixes"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
