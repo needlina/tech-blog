@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-18-db-long-running-transaction-detection-alerting.md",
+  "slug": "db-long-running-transaction-detection-alerting",
+  "title": "PostgreSQL에서 장기 실행 트랜잭션 자동 감지와 알람·응답 루틴 구축 가이드",
+  "analyzedAt": "2026-07-18T03:21:34.970Z",
+  "scores": {
+    "aiUsage": 5,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1119,
+    "sentenceCount": 52,
+    "headingCount": 2,
+    "codeBlockCount": 8,
+    "linkCount": 2,
+    "versionMentionCount": 5,
+    "filePathMentionCount": 14,
+    "commandCount": 2,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 2,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 22,
+    "verificationSignalCount": 11,
+    "maxSimilarity": 0.065,
+    "maxHeadingSimilarity": 0.429,
+    "mostSimilarPost": "docker-compose-health-restart-stabilization"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
