@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-18-chatgpt-codex-ideas-top-10.md",
+  "slug": "chatgpt-codex-ideas-top-10",
+  "title": "ChatGPT/Codex로 시도해볼 실용 아이디어 Top 10과 실무 확인 포인트",
+  "analyzedAt": "2026-07-18T13:04:28.431Z",
+  "scores": {
+    "aiUsage": 1,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 95
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1251,
+    "sentenceCount": 64,
+    "headingCount": 2,
+    "codeBlockCount": 4,
+    "linkCount": 2,
+    "versionMentionCount": 4,
+    "filePathMentionCount": 9,
+    "commandCount": 3,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 13,
+    "verificationSignalCount": 49,
+    "maxSimilarity": 0.045,
+    "maxHeadingSimilarity": 0,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
