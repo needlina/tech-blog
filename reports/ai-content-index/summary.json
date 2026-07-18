@@ -1,5 +1,5 @@
 {
-  "analyzedAt": "2026-07-18T03:21:34.973Z",
+  "analyzedAt": "2026-07-18T12:32:37.586Z",
   "mode": "report",
   "thresholds": {
     "warn": 61,
@@ -7,19 +7,19 @@
     "minExperience": 30
   },
   "counts": {
-    "pass": 2,
+    "pass": 1,
     "warn": 0,
     "block": 0
   },
   "errors": [],
   "posts": [
     {
-      "file": "_drafts/2026-07-18-backend-concurrent-uploads-temp-disk-control.md",
-      "slug": "backend-concurrent-uploads-temp-disk-control",
-      "title": "동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 가이드",
+      "file": "_drafts/2026-07-18-postgresql-indexing-explain-plan.md",
+      "slug": "postgresql-indexing-explain-plan",
+      "title": "PostgreSQL 인덱스와 실행 계획(EXPLAIN)으로 성능 문제 빠르게 좁히기",
       "scores": {
-        "aiUsage": 7,
-        "experience": 93,
+        "aiUsage": 13,
+        "experience": 47,
         "specificity": 100,
         "verification": 100,
         "originality": 93
@@ -31,27 +31,9 @@
       "findings": [
         "No major quality risks were detected by the rule-based checker."
       ],
-      "recommendations": []
-    },
-    {
-      "file": "_drafts/2026-07-18-db-long-running-transaction-detection-alerting.md",
-      "slug": "db-long-running-transaction-detection-alerting",
-      "title": "PostgreSQL에서 장기 실행 트랜잭션 자동 감지와 알람·응답 루틴 구축 가이드",
-      "scores": {
-        "aiUsage": 5,
-        "experience": 100,
-        "specificity": 100,
-        "verification": 100,
-        "originality": 93
-      },
-      "risk": {
-        "massProduction": "low",
-        "publishDecision": "pass"
-      },
-      "findings": [
-        "No major quality risks were detected by the rule-based checker."
-      ],
-      "recommendations": []
+      "recommendations": [
+        "Add a short first-person review section with the actual environment, what failed first, and what changed after fixing it."
+      ]
     }
   ]
 }

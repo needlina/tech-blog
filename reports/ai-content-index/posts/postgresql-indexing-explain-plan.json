@@ -1,0 +1,41 @@
+{
+  "file": "_drafts/2026-07-18-postgresql-indexing-explain-plan.md",
+  "slug": "postgresql-indexing-explain-plan",
+  "title": "PostgreSQL 인덱스와 실행 계획(EXPLAIN)으로 성능 문제 빠르게 좁히기",
+  "analyzedAt": "2026-07-18T12:32:37.585Z",
+  "scores": {
+    "aiUsage": 13,
+    "experience": 47,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1204,
+    "sentenceCount": 70,
+    "headingCount": 2,
+    "codeBlockCount": 6,
+    "linkCount": 2,
+    "versionMentionCount": 9,
+    "filePathMentionCount": 11,
+    "commandCount": 0,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 1,
+    "experienceSignalCount": 4,
+    "verificationSignalCount": 15,
+    "maxSimilarity": 0.074,
+    "maxHeadingSimilarity": 0,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": [
+    "Add a short first-person review section with the actual environment, what failed first, and what changed after fixing it."
+  ]
+}
