@@ -50,6 +50,10 @@
 
   {{ seo_tags }}
 
+  {% if page.noindex or page.layout == 'tag' or page.layout == 'tags' %}
+    <meta name="robots" content="noindex, follow">
+  {% endif %}
+
   <title>
     {%- unless page.layout == 'home' -%}
       {{ page.title | append: ' | ' }}
