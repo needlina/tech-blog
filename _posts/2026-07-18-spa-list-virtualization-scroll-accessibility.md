@@ -24,7 +24,7 @@ image:
 - 자주 묻는 질문(FAQ)
 - 실무 체크리스트
 
-![가상화 개념을 단순히 보여주는 일러스트](/assets/img/posts/blog/spa-virtualization-scroll-accessibility/image-1.webp)
+![가상화 개념을 단순히 보여주는 일러스트](/assets/img/posts/blog/spa-list-virtualization-scroll-accessibility/image-1.webp)
 이미지 출처: AI 생성 이미지
 
 가상화와 생기는 주요 증상
@@ -144,7 +144,7 @@ function ensureVisible(el) {
 | react-virtualized | 큼 | 지원 | 보통 | 다양한 기능, 레거시 지원 필요할 때 |
 | react-virtual | 작음 | 지원 | 쉬움 | 최신 API, 유연성 원할 때 |
 
-![키보드 포커스와 스크롤 보정을 설명하는 단순 일러스트](/assets/img/posts/blog/spa-virtualization-scroll-accessibility/image-2.webp)
+![키보드 포커스와 스크롤 보정을 설명하는 단순 일러스트](/assets/img/posts/blog/spa-list-virtualization-scroll-accessibility/image-2.webp)
 이미지 출처: AI 생성 이미지
 
 실무 체크: 스크롤 튐/지연 디버깅 절차
