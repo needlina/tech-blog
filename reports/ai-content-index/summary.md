@@ -1,32 +1,21 @@
 # AI Content Index Summary
 
 - Mode: report
-- Analyzed posts: 2
-- PASS: 2
+- Analyzed posts: 1
+- PASS: 1
 - WARN: 0
 - BLOCK: 0
 
 ## Posts
 
-### PASS 동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 가이드
+### PASS PostgreSQL 연결 풀링: PgBouncer와 Pgpool-II 비교 및 실무 확인 포인트
 
-- File: `_drafts/2026-07-18-backend-concurrent-uploads-temp-disk-control.md`
-- AI Usage: 7
-- Experience: 93
-- Specificity: 100
-- Verification: 100
-- Originality: 93
-
-- No major quality risks were detected by the rule-based checker.
-
-### PASS PostgreSQL에서 장기 실행 트랜잭션 자동 감지와 알람·응답 루틴 구축 가이드
-
-- File: `_drafts/2026-07-18-db-long-running-transaction-detection-alerting.md`
-- AI Usage: 5
+- File: `_drafts/2026-07-18-pgbouncer-vs-pgpool-connection-pooling.md`
+- AI Usage: 2
 - Experience: 100
 - Specificity: 100
 - Verification: 100
-- Originality: 93
+- Originality: 91
 
 - No major quality risks were detected by the rule-based checker.
 

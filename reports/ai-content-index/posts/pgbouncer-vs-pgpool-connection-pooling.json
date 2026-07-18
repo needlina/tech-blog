@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-18-pgbouncer-vs-pgpool-connection-pooling.md",
+  "slug": "pgbouncer-vs-pgpool-connection-pooling",
+  "title": "PostgreSQL 연결 풀링: PgBouncer와 Pgpool-II 비교 및 실무 확인 포인트",
+  "analyzedAt": "2026-07-18T12:24:14.306Z",
+  "scores": {
+    "aiUsage": 2,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 91
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1450,
+    "sentenceCount": 77,
+    "headingCount": 3,
+    "codeBlockCount": 8,
+    "linkCount": 2,
+    "versionMentionCount": 8,
+    "filePathMentionCount": 25,
+    "commandCount": 0,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 1,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 14,
+    "verificationSignalCount": 21,
+    "maxSimilarity": 0.085,
+    "maxHeadingSimilarity": 0,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
