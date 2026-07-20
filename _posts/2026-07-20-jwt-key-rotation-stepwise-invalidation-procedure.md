@@ -2,7 +2,7 @@
 title: "JWT 키·알고리즘 롤링과 기존 토큰 단계적 무효화 실무 가이드"
 description: "JWT 서명키·알고리즘 교체 시 단계적 무효화 절차, kid/jwks 점검 포인트, 롤링 전략 비교, 테스트 명령과 장애 증상 확인 경로 포함"
 slug: "jwt-key-rotation-stepwise-invalidation-procedure"
-date: 2026-07-20 10:00:00 +0900
+date: 2026-07-20 21:00:00 +0900
 categories: ["Security", "DevOps"]
 tags: ["jwt", "key-rotation", "token-revocation", "보안점검", "배포자동화"]
 image:
@@ -114,7 +114,7 @@ JWT 검증 실패 시 흔한 로그 메시지 예
   - 조치: 개인키 권한을 600으로 변경(chmod 600 /etc/auth/keys/private-20260720.pem), 버킷 private로 재설정, 모든 토큰 강제 재발급(블랙리스트 + 리프레시 토큰 무효화)
 
 이미지: JWT 키 롤링 개념도
-![키 롤링: 새 키와 구 키를 병행 검증하는 개념도](/assets/img/posts/blog/jwt-key-rotation-stepwise-invalidation-procedure/image-1.webp)
+![키 롤링 새 키와 구 키를 병행 검증하는 개념도](/assets/img/posts/blog/jwt-key-rotation-stepwise-invalidation-procedure/image-1.webp)
 이미지 출처: AI 생성 이미지
 
 자주 묻는 질문 (Q&A)
@@ -147,11 +147,6 @@ A: 로그에서 "No matching JWK found for kid" 또는 "get_signing_key_from_jwt
 - OAuth 2.0 JWT 권장사항 및 JWKS 표준: https://tools.ietf.org/html/rfc7517
 - 라이브러리 문서: PyJWT, node-jose, Auth0 JWKS 문서(각 라이브러리 버전별 사용법 확인)
 
-## 나의 의견 1
-여기에 직접 겪은 환경(예: 토큰 만료 시간, 사용한 라이브러리 버전, 처음 실패한 로그 메시지 등)을 적어 보세요. 가능한 한 버전과 명령(예: Python 3.10, PyJWT 2.8.0, 로그 내용)을 포함하면 좋습니다.
-
-## 나의 의견 2
-롤링 정책을 실제로 적용하면서 관찰한 결과(예: 사용자 불편 발생 시간대, JWKS 캐시 문제 발생 빈도, 블랙리스트 조회 성능 영향 등)를 적어 보세요. 실패 전후의 구체적인 수치(에러율, 응답 시간 등)를 남기면 추후 개선에 도움이 됩니다.
 
 실무 체크리스트
 - [ ] 현재 액세스 토큰 TTL 확인 (예: exp 값, 기본 900초인지)
@@ -167,5 +162,3 @@ A: 로그에서 "No matching JWK found for kid" 또는 "get_signing_key_from_jwt
 마무리 — 무엇을 먼저 확인해야 하나요, 언제 다른 선택을 고려하나요
 - 먼저 확인할 것: 현재 운영 중인 토큰의 평균 TTL(초), JWKS 캐시 정책, 발급 토큰 헤더의 kid 규칙. 이 세 가지를 모르면 롤링 중 서비스 장애 가능성이 높습니다.
 - 다른 선택이 나은 경우: 만약 사용자 세션이 거의 실시간으로 끊기면 안 되는 상황(예: 금융 트랜잭션)은 토큰 인스펙션/서버 사이드 세션 관리를 고려하세요. 반대로 인증 요청이 빈번하고 성능이 중요하면 **짧은 TTL + 그레이스 병행**이 보편적으로 무난한 타협일 수 있습니다.
-
-읽으면서 더 궁금한 점이나, 제가 넣은 명령/파일 경로 예시(예: /etc/auth/keys/private-20260720.pem, /var/www/auth/.well-known/jwks.json)를 실제 환경에 맞게 바꾸는 방법이 궁금하면 이어서 질문해 주세요.

@@ -2,7 +2,7 @@
 title: "분산 트레이스 샘플링 손실로 끊긴 트랜잭션 복원 절차와 실무 점검 포인트"
 description: "분산 트레이스에서 샘플링 누락으로 끊긴 트랜잭션을 상관관계로 재조합하는 방법, 로그·메트릭 병행 검증 절차, Jaeger/OTel 수집기 설정 예시와 점검 명령·오류 증상 확인 경로 목록"
 slug: "tracing-recover-missing-spans-correlation-procedure"
-date: 2026-07-20 12:00:00 +0900
+date: 2026-07-20 22:00:00 +0900
 categories: ["Observability", "DevOps"]
 tags: ["tracing", "distributed-tracing", "observability", "sampling-loss", "장애대응"]
 image:
@@ -32,6 +32,9 @@ image:
 - 샘플링 위치: 클라이언트(에이전트), 애플리케이션 라이브러리, Collector(서버) — 위치에 따라 누락 원인과 해결책이 달라짐
 - tail-based sampling: Collector가 모든 스팬을 잠시 보관한 뒤 중요 트랜잭션을 골라 저장(보존률 향상)
 - 로그-트레이스 연계: 로그에 trace_id를 포함하면 샘플링 누락을 로그로 보완 가능
+
+![분산 트레이스 흐름 일러스트](/assets/img/posts/blog/tracing-recover-missing-spans-correlation-procedure/image-1.webp)
+이미지 출처: AI 생성 이미지
 
 실무에서는 이렇게 확인하면 좋겠다
 1. 누락 패턴 파악
@@ -95,6 +98,8 @@ processors:
 | 로그 연계 재구성 | 로그에 trace_id 포함 여부 | 샘플링 누락 보완 가능 | 로그가 없으면 불가능 |
 | 지표기반 보존(에러 중심) | error 태그/메트릭 활용 | 문제 트랜잭션 우선 보존 | 정상 트랜잭션은 누락 가능 |
 
+
+
 실무 점검 절차(우선 순위)
 1. 애플리케이션 로그 포맷에 trace_id가 포함되어 있는지 확인 (로그 경로, 예: /var/log/*)
 2. 에이전트/SDK 버전과 sampling 설정 확인 (예: OpenTelemetry SDK v1.16.0, sampling_probability 설정)
@@ -143,11 +148,7 @@ A: 트랜잭션의 최대 예상 지연(예: 5s API, 비동기는 30s)을 기반
 Q: 포맷(B3 vs W3C) 불일치 문제 어떻게 확인하나?
 A: 애플리케이션과 Collector의 propagated formats 설정을 확인하고, 실제 요청 헤더(예: curl -v)에서 traceparent 또는 X-B3-TraceId가 존재하는지 검증하세요.
 
-## 나의 의견 1
-여기에 직접 경험을 적어보세요. 예: 내 환경의 OTel Collector 버전, 처음 실패했던 curl 명령, 샘플링 비율 변경 전·후 트레이스 수치 등.
 
-## 나의 의견 2
-여기에 직접 경험을 적어보세요. 예: 로그에서 trace_id가 누락되었던 케이스와 수정 전후 로그 예시, tail_sampling decision_wait 설정 값과 메모리 영향 수치 등.
 
 실무 체크리스트 (즉시 실행 가능)
 - [ ] 애플리케이션 로그 포맷에서 trace_id 출력 여부 확인 (로그 경로: /var/log/<app>/*.log)
@@ -165,6 +166,10 @@ A: 애플리케이션과 Collector의 propagated formats 설정을 확인하고,
   - OpenTelemetry Collector: https://opentelemetry.io/docs/collector/
   - Tail-based sampling 참고 자료: Collector 문서 내 processors/tail_sampling
 
+
+![샘플링 손실 복원 절차 다이어그램](/assets/img/posts/blog/tracing-recover-missing-spans-correlation-procedure/image-2.webp)
+이미지 출처: AI 생성 이미지
+
 마무리: 무엇을 먼저 확인하고 언제 다른 선택을 고려할지
 - 먼저 확인할 것: 로그에 trace_id 존재 여부, 샘플링이 어디서 적용되는지(애플리케이션 vs Collector), orphan span 패턴
 - 다른 선택이 나은 경우:
@@ -173,8 +178,4 @@ A: 애플리케이션과 Collector의 propagated formats 설정을 확인하고,
 
 참고: 구성·명령어·버전은 예시이며, 실제 환경에서는 사용 중인 SDK/Collector/Jaeger 버전을 확인하고 공식 문서를 기준으로 설정하세요. 이미지와 체크리스트를 바탕으로 환경에서 직접 점검해 보시면 관련 이슈를 빠르게 좁혀갈 수 있을 겁니다.
 
-![분산 트레이스 흐름 일러스트](/assets/img/posts/blog/tracing-recover-missing-spans-correlation-procedure/image-1.webp)
-이미지 출처: AI 생성 이미지
 
-![샘플링 손실 복원 절차 다이어그램](/assets/img/posts/blog/tracing-recover-missing-spans-correlation-procedure/image-2.webp)
-이미지 출처: AI 생성 이미지
