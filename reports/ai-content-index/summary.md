@@ -15,7 +15,7 @@
 - Experience: 100
 - Specificity: 100
 - Verification: 100
-- Originality: 93
+- Originality: 91
 
 - No major quality risks were detected by the rule-based checker.
 

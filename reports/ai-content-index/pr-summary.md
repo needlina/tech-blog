@@ -12,7 +12,7 @@
 | Experience | 100 |
 | Specificity | 100 |
 | Verification | 100 |
-| Originality | 93 |
+| Originality | 91 |
 
 
 
