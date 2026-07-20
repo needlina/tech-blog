@@ -4,24 +4,24 @@
 - Result: pass=2, warn=0, block=0
 - Full report: `reports/ai-content-index/summary.md`
 
-#### PASS 동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 가이드
+#### PASS Nix로 개발환경 재현하기: 패키지, 환경설정, CI 연동 실무 가이드
 
 | Score | Value |
 | --- | ---: |
-| AI Usage | 7 |
-| Experience | 93 |
+| AI Usage | 8 |
+| Experience | 100 |
 | Specificity | 100 |
 | Verification | 100 |
-| Originality | 93 |
+| Originality | 94 |
 
 
 
-#### PASS PostgreSQL에서 장기 실행 트랜잭션 자동 감지와 알람·응답 루틴 구축 가이드
+#### PASS Docker 컨테이너에서 PID 1 부재로 인한 좀비 프로세스 해결 절차
 
 | Score | Value |
 | --- | ---: |
-| AI Usage | 5 |
-| Experience | 100 |
+| AI Usage | 14 |
+| Experience | 71 |
 | Specificity | 100 |
 | Verification | 100 |
 | Originality | 93 |

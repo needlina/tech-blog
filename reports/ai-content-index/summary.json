@@ -1,5 +1,5 @@
 {
-  "analyzedAt": "2026-07-18T03:21:34.973Z",
+  "analyzedAt": "2026-07-20T14:45:58.486Z",
   "mode": "report",
   "thresholds": {
     "warn": 61,
@@ -14,15 +14,15 @@
   "errors": [],
   "posts": [
     {
-      "file": "_drafts/2026-07-18-backend-concurrent-uploads-temp-disk-control.md",
-      "slug": "backend-concurrent-uploads-temp-disk-control",
-      "title": "동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 가이드",
+      "file": "_drafts/2026-07-20-blog-reproducible-examples-with-nix-shell.md",
+      "slug": "blog-reproducible-examples-with-nix-shell",
+      "title": "Nix로 개발환경 재현하기: 패키지, 환경설정, CI 연동 실무 가이드",
       "scores": {
-        "aiUsage": 7,
-        "experience": 93,
+        "aiUsage": 8,
+        "experience": 100,
         "specificity": 100,
         "verification": 100,
-        "originality": 93
+        "originality": 94
       },
       "risk": {
         "massProduction": "low",
@@ -34,12 +34,12 @@
       "recommendations": []
     },
     {
-      "file": "_drafts/2026-07-18-db-long-running-transaction-detection-alerting.md",
-      "slug": "db-long-running-transaction-detection-alerting",
-      "title": "PostgreSQL에서 장기 실행 트랜잭션 자동 감지와 알람·응답 루틴 구축 가이드",
+      "file": "_drafts/2026-07-20-docker-pid1-reaping-zombie-processes.md",
+      "slug": "docker-pid1-reaping-zombie-processes",
+      "title": "Docker 컨테이너에서 PID 1 부재로 인한 좀비 프로세스 해결 절차",
       "scores": {
-        "aiUsage": 5,
-        "experience": 100,
+        "aiUsage": 14,
+        "experience": 71,
         "specificity": 100,
         "verification": 100,
         "originality": 93

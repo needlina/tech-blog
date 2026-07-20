@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-20-docker-pid1-reaping-zombie-processes.md",
+  "slug": "docker-pid1-reaping-zombie-processes",
+  "title": "Docker 컨테이너에서 PID 1 부재로 인한 좀비 프로세스 해결 절차",
+  "analyzedAt": "2026-07-20T14:45:58.484Z",
+  "scores": {
+    "aiUsage": 14,
+    "experience": 71,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1112,
+    "sentenceCount": 52,
+    "headingCount": 3,
+    "codeBlockCount": 13,
+    "linkCount": 0,
+    "versionMentionCount": 4,
+    "filePathMentionCount": 10,
+    "commandCount": 15,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 7,
+    "verificationSignalCount": 18,
+    "maxSimilarity": 0.066,
+    "maxHeadingSimilarity": 0.75,
+    "mostSimilarPost": "k8s-podsecurity-seccomp-runtime-checklist"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
