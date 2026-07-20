@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-20-blog-reproducible-examples-with-nix-shell.md",
+  "slug": "blog-reproducible-examples-with-nix-shell",
+  "title": "Nix로 개발환경 재현하기: 패키지, 환경설정, CI 연동 실무 가이드",
+  "analyzedAt": "2026-07-20T14:45:58.466Z",
+  "scores": {
+    "aiUsage": 8,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 94
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 896,
+    "sentenceCount": 56,
+    "headingCount": 2,
+    "codeBlockCount": 4,
+    "linkCount": 2,
+    "versionMentionCount": 7,
+    "filePathMentionCount": 17,
+    "commandCount": 7,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 5,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 13,
+    "verificationSignalCount": 21,
+    "maxSimilarity": 0.062,
+    "maxHeadingSimilarity": 0.75,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
