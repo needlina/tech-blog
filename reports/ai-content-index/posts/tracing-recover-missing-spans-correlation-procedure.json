@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-20-tracing-recover-missing-spans-correlation-procedure.md",
+  "slug": "tracing-recover-missing-spans-correlation-procedure",
+  "title": "분산 트레이스 샘플링 손실로 끊긴 트랜잭션 복원 절차와 실무 점검 포인트",
+  "analyzedAt": "2026-07-20T14:46:14.275Z",
+  "scores": {
+    "aiUsage": 9,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 91
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1282,
+    "sentenceCount": 53,
+    "headingCount": 3,
+    "codeBlockCount": 3,
+    "linkCount": 2,
+    "versionMentionCount": 4,
+    "filePathMentionCount": 22,
+    "commandCount": 6,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 8,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 46,
+    "verificationSignalCount": 12,
+    "maxSimilarity": 0.087,
+    "maxHeadingSimilarity": 0.75,
+    "mostSimilarPost": "distributed-tracing-sampling-policy-high-traffic"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}

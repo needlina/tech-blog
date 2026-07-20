@@ -1,5 +1,5 @@
 {
-  "analyzedAt": "2026-07-20T14:45:51.128Z",
+  "analyzedAt": "2026-07-20T14:44:40.644Z",
   "mode": "report",
   "thresholds": {
     "warn": 61,
@@ -14,15 +14,15 @@
   "errors": [],
   "posts": [
     {
-      "file": "_drafts/2026-07-20-db-autocomplete-tokenization-index-design.md",
-      "slug": "db-autocomplete-tokenization-index-design",
-      "title": "데이터베이스 기반 자동완성 설계: 토큰화·인덱스·운영 점검 체크포인트",
+      "file": "_drafts/2026-07-20-graphql-subscription-contract-testing-for-event-consistency.md",
+      "slug": "graphql-subscription-contract-testing-for-event-consistency",
+      "title": "GraphQL Subscription 계약 테스트로 서비스 간 이벤트 정합성 검증하기",
       "scores": {
-        "aiUsage": 11,
-        "experience": 63,
+        "aiUsage": 4,
+        "experience": 100,
         "specificity": 100,
-        "verification": 92,
-        "originality": 93
+        "verification": 100,
+        "originality": 91
       },
       "risk": {
         "massProduction": "low",
