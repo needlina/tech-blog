@@ -1,5 +1,5 @@
 {
-  "analyzedAt": "2026-07-20T14:45:58.486Z",
+  "analyzedAt": "2026-07-20T14:44:40.644Z",
   "mode": "report",
   "thresholds": {
     "warn": 61,
@@ -7,42 +7,22 @@
     "minExperience": 30
   },
   "counts": {
-    "pass": 2,
+    "pass": 1,
     "warn": 0,
     "block": 0
   },
   "errors": [],
   "posts": [
     {
-      "file": "_drafts/2026-07-20-blog-reproducible-examples-with-nix-shell.md",
-      "slug": "blog-reproducible-examples-with-nix-shell",
-      "title": "Nix로 개발환경 재현하기: 패키지, 환경설정, CI 연동 실무 가이드",
+      "file": "_drafts/2026-07-20-graphql-subscription-contract-testing-for-event-consistency.md",
+      "slug": "graphql-subscription-contract-testing-for-event-consistency",
+      "title": "GraphQL Subscription 계약 테스트로 서비스 간 이벤트 정합성 검증하기",
       "scores": {
-        "aiUsage": 8,
+        "aiUsage": 4,
         "experience": 100,
         "specificity": 100,
         "verification": 100,
-        "originality": 94
-      },
-      "risk": {
-        "massProduction": "low",
-        "publishDecision": "pass"
-      },
-      "findings": [
-        "No major quality risks were detected by the rule-based checker."
-      ],
-      "recommendations": []
-    },
-    {
-      "file": "_drafts/2026-07-20-docker-pid1-reaping-zombie-processes.md",
-      "slug": "docker-pid1-reaping-zombie-processes",
-      "title": "Docker 컨테이너에서 PID 1 부재로 인한 좀비 프로세스 해결 절차",
-      "scores": {
-        "aiUsage": 14,
-        "experience": 71,
-        "specificity": 100,
-        "verification": 100,
-        "originality": 93
+        "originality": 91
       },
       "risk": {
         "massProduction": "low",

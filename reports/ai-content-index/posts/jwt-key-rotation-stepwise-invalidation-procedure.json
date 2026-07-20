@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-20-jwt-key-rotation-stepwise-invalidation-procedure.md",
+  "slug": "jwt-key-rotation-stepwise-invalidation-procedure",
+  "title": "JWT 키·알고리즘 롤링과 기존 토큰 단계적 무효화 실무 가이드",
+  "analyzedAt": "2026-07-20T14:46:14.254Z",
+  "scores": {
+    "aiUsage": 9,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1403,
+    "sentenceCount": 69,
+    "headingCount": 2,
+    "codeBlockCount": 3,
+    "linkCount": 2,
+    "versionMentionCount": 9,
+    "filePathMentionCount": 28,
+    "commandCount": 6,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 3,
+    "genericPhraseCount": 1,
+    "experienceSignalCount": 11,
+    "verificationSignalCount": 20,
+    "maxSimilarity": 0.065,
+    "maxHeadingSimilarity": 0.75,
+    "mostSimilarPost": "tracing-recover-missing-spans-correlation-procedure"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}

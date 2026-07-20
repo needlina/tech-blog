@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-20-db-autocomplete-tokenization-index-design.md",
+  "slug": "db-autocomplete-tokenization-index-design",
+  "title": "데이터베이스 기반 자동완성 설계: 토큰화·인덱스·운영 점검 체크포인트",
+  "analyzedAt": "2026-07-20T14:45:51.126Z",
+  "scores": {
+    "aiUsage": 11,
+    "experience": 63,
+    "specificity": 100,
+    "verification": 92,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 998,
+    "sentenceCount": 60,
+    "headingCount": 13,
+    "codeBlockCount": 13,
+    "linkCount": 2,
+    "versionMentionCount": 0,
+    "filePathMentionCount": 7,
+    "commandCount": 0,
+    "numberWithUnitCount": 2,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 6,
+    "verificationSignalCount": 6,
+    "maxSimilarity": 0.065,
+    "maxHeadingSimilarity": 0.182,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
