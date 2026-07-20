@@ -1,28 +1,17 @@
 # AI Content Index Summary
 
 - Mode: report
-- Analyzed posts: 2
-- PASS: 2
+- Analyzed posts: 1
+- PASS: 1
 - WARN: 0
 - BLOCK: 0
 
 ## Posts
 
-### PASS 동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 가이드
+### PASS GraphQL Subscription 계약 테스트로 서비스 간 이벤트 정합성 검증하기
 
-- File: `_drafts/2026-07-18-backend-concurrent-uploads-temp-disk-control.md`
-- AI Usage: 7
-- Experience: 93
-- Specificity: 100
-- Verification: 100
-- Originality: 93
-
-- No major quality risks were detected by the rule-based checker.
-
-### PASS PostgreSQL에서 장기 실행 트랜잭션 자동 감지와 알람·응답 루틴 구축 가이드
-
-- File: `_drafts/2026-07-18-db-long-running-transaction-detection-alerting.md`
-- AI Usage: 5
+- File: `_drafts/2026-07-20-graphql-subscription-contract-testing-for-event-consistency.md`
+- AI Usage: 4
 - Experience: 100
 - Specificity: 100
 - Verification: 100
