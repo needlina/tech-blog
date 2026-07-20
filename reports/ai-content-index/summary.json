@@ -1,5 +1,5 @@
 {
-  "analyzedAt": "2026-07-20T14:46:14.278Z",
+  "analyzedAt": "2026-07-20T14:44:40.644Z",
   "mode": "report",
   "thresholds": {
     "warn": 61,
@@ -7,38 +7,18 @@
     "minExperience": 30
   },
   "counts": {
-    "pass": 2,
+    "pass": 1,
     "warn": 0,
     "block": 0
   },
   "errors": [],
   "posts": [
     {
-      "file": "_drafts/2026-07-20-jwt-key-rotation-stepwise-invalidation-procedure.md",
-      "slug": "jwt-key-rotation-stepwise-invalidation-procedure",
-      "title": "JWT 키·알고리즘 롤링과 기존 토큰 단계적 무효화 실무 가이드",
+      "file": "_drafts/2026-07-20-graphql-subscription-contract-testing-for-event-consistency.md",
+      "slug": "graphql-subscription-contract-testing-for-event-consistency",
+      "title": "GraphQL Subscription 계약 테스트로 서비스 간 이벤트 정합성 검증하기",
       "scores": {
-        "aiUsage": 9,
-        "experience": 100,
-        "specificity": 100,
-        "verification": 100,
-        "originality": 93
-      },
-      "risk": {
-        "massProduction": "low",
-        "publishDecision": "pass"
-      },
-      "findings": [
-        "No major quality risks were detected by the rule-based checker."
-      ],
-      "recommendations": []
-    },
-    {
-      "file": "_drafts/2026-07-20-tracing-recover-missing-spans-correlation-procedure.md",
-      "slug": "tracing-recover-missing-spans-correlation-procedure",
-      "title": "분산 트레이스 샘플링 손실로 끊긴 트랜잭션 복원 절차와 실무 점검 포인트",
-      "scores": {
-        "aiUsage": 9,
+        "aiUsage": 4,
         "experience": 100,
         "specificity": 100,
         "verification": 100,
