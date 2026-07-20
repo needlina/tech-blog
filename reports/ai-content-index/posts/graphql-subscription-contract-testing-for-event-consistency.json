@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-20-graphql-subscription-contract-testing-for-event-consistency.md",
+  "slug": "graphql-subscription-contract-testing-for-event-consistency",
+  "title": "GraphQL Subscription 계약 테스트로 서비스 간 이벤트 정합성 검증하기",
+  "analyzedAt": "2026-07-20T14:44:40.643Z",
+  "scores": {
+    "aiUsage": 4,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1258,
+    "sentenceCount": 61,
+    "headingCount": 3,
+    "codeBlockCount": 5,
+    "linkCount": 2,
+    "versionMentionCount": 2,
+    "filePathMentionCount": 21,
+    "commandCount": 10,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 3,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 13,
+    "verificationSignalCount": 44,
+    "maxSimilarity": 0.072,
+    "maxHeadingSimilarity": 0.333,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
