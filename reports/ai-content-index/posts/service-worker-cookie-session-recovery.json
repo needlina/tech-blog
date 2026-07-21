@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-21-service-worker-cookie-session-recovery.md",
+  "slug": "service-worker-cookie-session-recovery",
+  "title": "서비스 워커·쿠키 변경으로 인한 세션 불일치 복구 절차",
+  "analyzedAt": "2026-07-21T14:04:21.934Z",
+  "scores": {
+    "aiUsage": 11,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1154,
+    "sentenceCount": 55,
+    "headingCount": 2,
+    "codeBlockCount": 5,
+    "linkCount": 1,
+    "versionMentionCount": 4,
+    "filePathMentionCount": 19,
+    "commandCount": 8,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 2,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 23,
+    "verificationSignalCount": 15,
+    "maxSimilarity": 0.067,
+    "maxHeadingSimilarity": 1,
+    "mostSimilarPost": "jwt-key-rotation-stepwise-invalidation-procedure"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
