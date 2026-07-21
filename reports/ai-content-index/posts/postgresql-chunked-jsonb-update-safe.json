@@ -1,0 +1,41 @@
+{
+  "file": "_drafts/2026-07-21-postgresql-chunked-jsonb-update-safe.md",
+  "slug": "postgresql-chunked-jsonb-update-safe",
+  "title": "PostgreSQL에서 대규모 JSONB 컬럼을 청크로 안전하게 업데이트하는 실전 절차",
+  "analyzedAt": "2026-07-21T14:04:21.901Z",
+  "scores": {
+    "aiUsage": 11,
+    "experience": 57,
+    "specificity": 100,
+    "verification": 92,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1213,
+    "sentenceCount": 51,
+    "headingCount": 14,
+    "codeBlockCount": 6,
+    "linkCount": 2,
+    "versionMentionCount": 3,
+    "filePathMentionCount": 10,
+    "commandCount": 0,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 3,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 3,
+    "verificationSignalCount": 6,
+    "maxSimilarity": 0.074,
+    "maxHeadingSimilarity": 0.09,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": [
+    "Add a short first-person review section with the actual environment, what failed first, and what changed after fixing it."
+  ]
+}

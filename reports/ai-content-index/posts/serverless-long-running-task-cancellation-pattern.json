@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-21-serverless-long-running-task-cancellation-pattern.md",
+  "slug": "serverless-long-running-task-cancellation-pattern",
+  "title": "서버리스에서 장기 실행 작업 안전하게 취소하고 리소스 해제하기",
+  "analyzedAt": "2026-07-21T14:04:21.919Z",
+  "scores": {
+    "aiUsage": 11,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 92
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1341,
+    "sentenceCount": 61,
+    "headingCount": 2,
+    "codeBlockCount": 3,
+    "linkCount": 2,
+    "versionMentionCount": 6,
+    "filePathMentionCount": 22,
+    "commandCount": 1,
+    "numberWithUnitCount": 1,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 14,
+    "verificationSignalCount": 22,
+    "maxSimilarity": 0.079,
+    "maxHeadingSimilarity": 1,
+    "mostSimilarPost": "docker-build-uid-gid-consistency"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}

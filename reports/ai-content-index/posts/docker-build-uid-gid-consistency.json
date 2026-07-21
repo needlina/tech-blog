@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-21-docker-build-uid-gid-consistency.md",
+  "slug": "docker-build-uid-gid-consistency",
+  "title": "컨테이너 빌드에서 UID/GID 일관화로 파일 권한 문제 예방하기",
+  "analyzedAt": "2026-07-21T14:04:21.869Z",
+  "scores": {
+    "aiUsage": 19,
+    "experience": 63,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 92
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1286,
+    "sentenceCount": 59,
+    "headingCount": 2,
+    "codeBlockCount": 4,
+    "linkCount": 0,
+    "versionMentionCount": 4,
+    "filePathMentionCount": 41,
+    "commandCount": 14,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 6,
+    "verificationSignalCount": 14,
+    "maxSimilarity": 0.079,
+    "maxHeadingSimilarity": 1,
+    "mostSimilarPost": "serverless-long-running-task-cancellation-pattern"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}

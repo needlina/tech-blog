@@ -1,5 +1,5 @@
 {
-  "analyzedAt": "2026-07-20T14:44:40.644Z",
+  "analyzedAt": "2026-07-21T14:04:21.936Z",
   "mode": "report",
   "thresholds": {
     "warn": 61,
@@ -7,22 +7,124 @@
     "minExperience": 30
   },
   "counts": {
-    "pass": 1,
+    "pass": 6,
     "warn": 0,
     "block": 0
   },
   "errors": [],
   "posts": [
     {
-      "file": "_drafts/2026-07-20-graphql-subscription-contract-testing-for-event-consistency.md",
-      "slug": "graphql-subscription-contract-testing-for-event-consistency",
-      "title": "GraphQL Subscription 계약 테스트로 서비스 간 이벤트 정합성 검증하기",
+      "file": "_drafts/2026-07-21-ci-cd-verify-secrets-sync-staging-to-prod.md",
+      "slug": "ci-cd-verify-secrets-sync-staging-to-prod",
+      "title": "CI/CD 비밀값 동기화 자동 검증 체크리스트",
       "scores": {
-        "aiUsage": 4,
+        "aiUsage": 9,
         "experience": 100,
         "specificity": 100,
         "verification": 100,
+        "originality": 92
+      },
+      "risk": {
+        "massProduction": "low",
+        "publishDecision": "pass"
+      },
+      "findings": [
+        "No major quality risks were detected by the rule-based checker."
+      ],
+      "recommendations": []
+    },
+    {
+      "file": "_drafts/2026-07-21-docker-build-uid-gid-consistency.md",
+      "slug": "docker-build-uid-gid-consistency",
+      "title": "컨테이너 빌드에서 UID/GID 일관화로 파일 권한 문제 예방하기",
+      "scores": {
+        "aiUsage": 19,
+        "experience": 63,
+        "specificity": 100,
+        "verification": 100,
+        "originality": 92
+      },
+      "risk": {
+        "massProduction": "low",
+        "publishDecision": "pass"
+      },
+      "findings": [
+        "No major quality risks were detected by the rule-based checker."
+      ],
+      "recommendations": []
+    },
+    {
+      "file": "_drafts/2026-07-21-jwt-on-behalf-backend-delegation-without-client-secret.md",
+      "slug": "jwt-on-behalf-backend-delegation-without-client-secret",
+      "title": "JWT on-behalf 패턴으로 OAuth2 클라이언트 시크릿 없이 백엔드 권한 위임하기",
+      "scores": {
+        "aiUsage": 6,
+        "experience": 99,
+        "specificity": 100,
+        "verification": 100,
         "originality": 91
+      },
+      "risk": {
+        "massProduction": "low",
+        "publishDecision": "pass"
+      },
+      "findings": [
+        "No major quality risks were detected by the rule-based checker."
+      ],
+      "recommendations": []
+    },
+    {
+      "file": "_drafts/2026-07-21-postgresql-chunked-jsonb-update-safe.md",
+      "slug": "postgresql-chunked-jsonb-update-safe",
+      "title": "PostgreSQL에서 대규모 JSONB 컬럼을 청크로 안전하게 업데이트하는 실전 절차",
+      "scores": {
+        "aiUsage": 11,
+        "experience": 57,
+        "specificity": 100,
+        "verification": 92,
+        "originality": 93
+      },
+      "risk": {
+        "massProduction": "low",
+        "publishDecision": "pass"
+      },
+      "findings": [
+        "No major quality risks were detected by the rule-based checker."
+      ],
+      "recommendations": [
+        "Add a short first-person review section with the actual environment, what failed first, and what changed after fixing it."
+      ]
+    },
+    {
+      "file": "_drafts/2026-07-21-serverless-long-running-task-cancellation-pattern.md",
+      "slug": "serverless-long-running-task-cancellation-pattern",
+      "title": "서버리스에서 장기 실행 작업 안전하게 취소하고 리소스 해제하기",
+      "scores": {
+        "aiUsage": 11,
+        "experience": 100,
+        "specificity": 100,
+        "verification": 100,
+        "originality": 92
+      },
+      "risk": {
+        "massProduction": "low",
+        "publishDecision": "pass"
+      },
+      "findings": [
+        "No major quality risks were detected by the rule-based checker."
+      ],
+      "recommendations": []
+    },
+    {
+      "file": "_drafts/2026-07-21-service-worker-cookie-session-recovery.md",
+      "slug": "service-worker-cookie-session-recovery",
+      "title": "서비스 워커·쿠키 변경으로 인한 세션 불일치 복구 절차",
+      "scores": {
+        "aiUsage": 11,
+        "experience": 100,
+        "specificity": 100,
+        "verification": 100,
+        "originality": 93
       },
       "risk": {
         "massProduction": "low",
