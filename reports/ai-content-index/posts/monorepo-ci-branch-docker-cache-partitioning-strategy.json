@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-23-monorepo-ci-branch-docker-cache-partitioning-strategy.md",
+  "slug": "monorepo-ci-branch-docker-cache-partitioning-strategy",
+  "title": "Monorepo CI에서 브랜치별 Docker 레이어 캐시 충돌 없이 분할·재사용하는 현실적인 전략",
+  "analyzedAt": "2026-07-23T11:22:12.779Z",
+  "scores": {
+    "aiUsage": 3,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1258,
+    "sentenceCount": 64,
+    "headingCount": 5,
+    "codeBlockCount": 3,
+    "linkCount": 0,
+    "versionMentionCount": 5,
+    "filePathMentionCount": 31,
+    "commandCount": 13,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 1,
+    "genericPhraseCount": 1,
+    "experienceSignalCount": 13,
+    "verificationSignalCount": 11,
+    "maxSimilarity": 0.072,
+    "maxHeadingSimilarity": 0.092,
+    "mostSimilarPost": "docker-build-uid-gid-consistency"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
