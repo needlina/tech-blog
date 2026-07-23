@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-23-structured-log-injection-detection-and-mitigation.md",
+  "slug": "structured-log-injection-detection-and-mitigation",
+  "title": "구조화 로그에서 로그 인젝션(필드 주입) 탐지·차단 실무 패턴 정리",
+  "analyzedAt": "2026-07-23T11:22:12.822Z",
+  "scores": {
+    "aiUsage": 6,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1247,
+    "sentenceCount": 67,
+    "headingCount": 3,
+    "codeBlockCount": 3,
+    "linkCount": 2,
+    "versionMentionCount": 4,
+    "filePathMentionCount": 21,
+    "commandCount": 2,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 3,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 39,
+    "verificationSignalCount": 20,
+    "maxSimilarity": 0.072,
+    "maxHeadingSimilarity": 0.5,
+    "mostSimilarPost": "tracing-recover-missing-spans-correlation-procedure"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
