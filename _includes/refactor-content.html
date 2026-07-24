@@ -137,7 +137,7 @@
       {% assign _right = _right | prepend: '></div' %}
 
     {% else %}
-      <!-- make sure the `<img>` is wrapped by `<a>` -->
+      <!-- make sure the image tag is wrapped by a tag -->
       {% assign _parent = _right | slice: 1, 4 %}
 
       {% if _parent == '</a>' %}
