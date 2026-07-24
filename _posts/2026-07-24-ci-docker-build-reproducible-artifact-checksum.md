@@ -42,7 +42,7 @@ image:
 | ------------------------------------- | ------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------------------- |
 | 로컬과 CI의 docker save sha256 불일치 | tar 내부 파일 mtime/정렬이나 gzip 헤더 차이 | docker save my:tag -o image.tar; sha256sum image.tar | image.tar를 추출 후 재패키징(정렬·mtime 고정) 후 sha 검사      |
 | 레지스트리 manifest digest 불일치     | 빌드 시 레이어 순서나 라벨이 다름           | docker manifest inspect registry/my:tag              | 빌드 명령과 라벨을 고정, 동일 레지스트리로 push 후 digest 사용 |
-| 이미지 ID가 달라짐(하지만 기능 같음)  | 이미지 ID는 로컬 메타데이터 영향            | docker image inspect <image>                         | 이미지 내용(파일)과 manifest digest로 비교                     |
+| 이미지 ID가 달라짐(하지만 기능 같음)  | 이미지 ID는 로컬 메타데이터 영향            | docker image inspect `<image>`                       | 이미지 내용(파일)과 manifest digest로 비교                     |
 
 ## 어떤 방법을 선택해야 할지: 선택 기준 비교표
 
