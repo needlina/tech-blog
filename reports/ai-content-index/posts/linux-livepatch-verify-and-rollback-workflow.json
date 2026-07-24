@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-24-linux-livepatch-verify-and-rollback-workflow.md",
+  "slug": "linux-livepatch-verify-and-rollback-workflow",
+  "title": "Linux Livepatch 적용 전 검증과 안전한 롤백 워크플로우",
+  "analyzedAt": "2026-07-24T10:35:37.265Z",
+  "scores": {
+    "aiUsage": 11,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 94
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1250,
+    "sentenceCount": 65,
+    "headingCount": 4,
+    "codeBlockCount": 2,
+    "linkCount": 5,
+    "versionMentionCount": 6,
+    "filePathMentionCount": 32,
+    "commandCount": 2,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 1,
+    "genericPhraseCount": 2,
+    "experienceSignalCount": 16,
+    "verificationSignalCount": 18,
+    "maxSimilarity": 0.062,
+    "maxHeadingSimilarity": 0.867,
+    "mostSimilarPost": "db-long-running-transaction-detection-alerting"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}

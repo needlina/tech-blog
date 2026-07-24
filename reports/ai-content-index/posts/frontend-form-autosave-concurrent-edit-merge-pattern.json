@@ -1,0 +1,39 @@
+{
+  "file": "_drafts/2026-07-24-frontend-form-autosave-concurrent-edit-merge-pattern.md",
+  "slug": "frontend-form-autosave-concurrent-edit-merge-pattern",
+  "title": "프론트엔드 폼 자동저장 동시편집: 클라이언트-서버 병합 패턴 정리",
+  "analyzedAt": "2026-07-24T10:35:37.243Z",
+  "scores": {
+    "aiUsage": 9,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 95
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1144,
+    "sentenceCount": 63,
+    "headingCount": 3,
+    "codeBlockCount": 6,
+    "linkCount": 5,
+    "versionMentionCount": 0,
+    "filePathMentionCount": 18,
+    "commandCount": 4,
+    "numberWithUnitCount": 2,
+    "errorMessageCount": 3,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 12,
+    "verificationSignalCount": 19,
+    "maxSimilarity": 0.054,
+    "maxHeadingSimilarity": 0.867,
+    "mostSimilarPost": "postgresql-chunked-jsonb-update-safe"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
