@@ -1,0 +1,41 @@
+{
+  "file": "_drafts/2026-07-24-ci-docker-build-reproducible-artifact-checksum.md",
+  "slug": "ci-docker-build-reproducible-artifact-checksum",
+  "title": "CI에서 Docker 빌드 산출물 체크섬 재현: 실무 패턴과 점검 가이드",
+  "analyzedAt": "2026-07-24T10:35:37.219Z",
+  "scores": {
+    "aiUsage": 16,
+    "experience": 31,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 92
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1274,
+    "sentenceCount": 66,
+    "headingCount": 16,
+    "codeBlockCount": 5,
+    "linkCount": 5,
+    "versionMentionCount": 4,
+    "filePathMentionCount": 29,
+    "commandCount": 29,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 2,
+    "verificationSignalCount": 21,
+    "maxSimilarity": 0.078,
+    "maxHeadingSimilarity": 0.064,
+    "mostSimilarPost": "docker-build-uid-gid-consistency"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": [
+    "Add a short first-person review section with the actual environment, what failed first, and what changed after fixing it."
+  ]
+}
