@@ -600,7 +600,7 @@ function renderPrSummary(summary) {
 
 - Mode: \`${summary.mode}\`
 - Result: pass=${summary.counts.pass}, warn=${summary.counts.warn}, block=${summary.counts.block}
-- Full report: \`reports/ai-content-index/summary.md\`
+- Detailed report files were generated during the workflow and intentionally left out of the PR diff.
 
 ${summary.posts
   .map(
