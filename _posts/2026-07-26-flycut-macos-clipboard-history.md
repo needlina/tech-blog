@@ -72,10 +72,7 @@ Flycut은 Homebrew Cask로 설치하는 것이 가장 쉬웠다. Homebrew가 없
 | 붙여넣기 시 이상 동작         | 입력 포커스 문제 / 에디터 단축키 우선 | pbpaste로 직접 테스트: echo "t"                                                      | pbcopy && pbpaste 포커스 재설정, 다른 단축키로 바꿔 테스트 |
 | 설치 실패                     | Homebrew 문제 / 네트워크              | brew install --cask flycut 출력                                                      | brew update && brew doctor, 네트워크 확인                  |
 
-이 표에서 시간을 많이 쓰는 부분은 단축키 충돌 확인이다. 단축키가 꼬이면 개발 중에 생산성이 크게 떨어진다.
-
 ![flycut 사용 이미지](/assets/img/posts/blog/flycut-macos-clipboard-history/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 ## 설정에서 꼭 확인할 것들 (권한·단축키·보관 개수)
 
