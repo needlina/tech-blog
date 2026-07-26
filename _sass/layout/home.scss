@@ -18,6 +18,15 @@
     }
   }
 
+  .home-infeed-ad {
+    margin: 0 0 1.25rem;
+    min-height: 120px;
+  }
+
+  .home-infeed-ad-slot-mobile {
+    display: none !important;
+  }
+
   .card {
     border: 0;
     background: none;
@@ -85,6 +94,18 @@
     }
   }
 } /* #post-list */
+
+@media all and (max-width: 767.98px) {
+  #post-list {
+    .home-infeed-ad-slot-desktop {
+      display: none !important;
+    }
+
+    .home-infeed-ad-slot-mobile {
+      display: block !important;
+    }
+  }
+}
 
 .pagination {
   color: var(--text-color);

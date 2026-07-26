@@ -113,6 +113,62 @@ refactor: true
         </div>
       </a>
     </article>
+
+    {% assign infeed_remainder = forloop.index | modulo: 4 %}
+    {% if infeed_remainder == 0 and forloop.last == false %}
+      <div class="home-infeed-ad" aria-label="Advertisement">
+        <ins
+          class="adsbygoogle home-infeed-ad-slot home-infeed-ad-slot-desktop"
+          style="display:block"
+          data-ad-format="fluid"
+          data-ad-layout-key="-eu-2+fi-5k-by"
+          data-ad-client="ca-pub-3406214103222062"
+          data-ad-slot="8328610792"
+        ></ins>
+        <ins
+          class="adsbygoogle home-infeed-ad-slot home-infeed-ad-slot-mobile"
+          style="display:block"
+          data-ad-format="fluid"
+          data-ad-layout-key="-5r+bq-2p-3w+100"
+          data-ad-client="ca-pub-3406214103222062"
+          data-ad-slot="5872883552"
+        ></ins>
+        <script>
+          if (!window.homeInfeedAdsReady) {
+            window.homeInfeedAdsReady = true;
+            window.addEventListener('load', function () {
+              document.querySelectorAll('.home-infeed-ad').forEach(function (wrapper) {
+                var visibleSlot = Array.prototype.find.call(
+                  wrapper.querySelectorAll('.home-infeed-ad-slot'),
+                  function (slot) {
+                    return slot.offsetWidth > 0 && slot.offsetHeight >= 0;
+                  }
+                );
+
+                if (!visibleSlot || visibleSlot.dataset.adsbygoogleStatus || visibleSlot.dataset.adPushRequested) {
+                  return;
+                }
+
+                visibleSlot.dataset.adPushRequested = 'true';
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+
+                var collapseIfUnfilled = function () {
+                  if (visibleSlot.dataset.adStatus === 'unfilled') {
+                    wrapper.hidden = true;
+                  }
+                };
+
+                collapseIfUnfilled();
+                new MutationObserver(collapseIfUnfilled).observe(visibleSlot, {
+                  attributes: true,
+                  attributeFilter: ['data-ad-status']
+                });
+              });
+            });
+          }
+        </script>
+      </div>
+    {% endif %}
   {% endfor %}
 </div>
 <!-- #post-list -->
