@@ -113,6 +113,41 @@ refactor: true
         </div>
       </a>
     </article>
+
+    {% if paginator.page == 1 and forloop.index == 2 %}
+      <div class="home-infeed-ad" aria-label="Advertisement">
+        <ins
+          class="adsbygoogle"
+          style="display:block"
+          data-ad-format="fluid"
+          data-ad-layout-key="-5r+bq-2p-3w+100"
+          data-ad-client="ca-pub-3406214103222062"
+          data-ad-slot="1948246725"
+        ></ins>
+        <script>
+          window.addEventListener('load', function () {
+            var slot = document.querySelector('.home-infeed-ad .adsbygoogle');
+            var wrapper = slot && slot.closest('.home-infeed-ad');
+
+            if (!slot || !wrapper) {
+              return;
+            }
+
+            var collapseIfUnfilled = function () {
+              if (slot.dataset.adStatus === 'unfilled') {
+                wrapper.hidden = true;
+              }
+            };
+
+            collapseIfUnfilled();
+            new MutationObserver(collapseIfUnfilled).observe(slot, {
+              attributes: true,
+              attributeFilter: ['data-ad-status']
+            });
+          });
+        </script>
+      </div>
+    {% endif %}
   {% endfor %}
 </div>
 <!-- #post-list -->
