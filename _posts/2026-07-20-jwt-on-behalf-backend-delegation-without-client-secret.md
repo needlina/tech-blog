@@ -1,4 +1,4 @@
----
+﻿---
 title: "JWT on-behalf 패턴으로 OAuth2 클라이언트 시크릿 없이 백엔드 권한 위임하기"
 description: "대리권한 위임이 필요한 백엔드 간 통신: 서명된 JWT assertion으로 클라이언트 시크릿 없이 토큰을 요청하는 흐름, 키 관리·토큰 교환·검증 포인트와 점검 명령어"
 slug: "jwt-on-behalf-backend-delegation-without-client-secret"
@@ -9,10 +9,7 @@ image:
   path: /assets/img/posts/blog/jwt-on-behalf-backend-delegation-without-client-secret/preview.png
   alt: "JWT on-behalf 패턴 썸네일"
 ---
-
-서명된 JWT(Assertion)를 사용해 서비스 A가 자체 클라이언트 시크릿 없이 서비스 B를 대신해 토큰을 발급받는 방식은, **서비스 간 권한 위임을 비밀값 저장 없이 구현**할 때 유용하며 토큰 교환 엔드포인트, 키 타입, 만료시간 검증을 먼저 확인하면 적용 실패 확률을 줄일 수 있습니다.
-
-안녕하세요. 요즘 백엔드 간 권한 위임을 다룰 일이 생겨서, JWT on-behalf(혹은 JWT assertion) 패턴을 직접 따라가며 정리한 내용을 적어봅니다. 저는 초보 개발자 입장에서 겪은 혼란과 체크 포인트 중심으로 정리하려고 해요. 공식 문서의 용어와 구현 세부가 조금 달라 혼란스러웠는데, 실무에서 어떤 파일과 명령부터 확인하면 좋은지 위주로 썼습니다.
+안녕하세요. 요즘 백엔드 간 권한 위임을 다룰 일이 생겨서, JWT on-behalf(혹은 JWT assertion) 패턴을 직접 따라가며 정리한 내용을 적어봅니다. 저는 처음 다루는 입장에서 입장에서 겪은 혼란과 체크 포인트 중심으로 정리하려고 해요. 공식 문서의 용어와 구현 세부가 조금 달라 혼란스러웠는데, 실무에서 어떤 파일과 명령부터 확인하면 좋은지 위주로 썼습니다.
 
 왜 이걸 쓰는가 — 문제 상황
 
@@ -25,7 +22,7 @@ image:
 - 인증 서버는 JWT의 서명과 클레임(iss, sub, aud, exp 등)을 검증한 뒤, 대상 리소스에 맞는 접근 토큰을 발급하거나 교환해줍니다.
 - 이 방식은 **비밀값(클라이언트 시크릿) 보관을 줄이고 공개키 기반 검증을 활용**하기 때문에 키 관리와 회전 정책이 중요합니다.
 
-처음에 헷갈렸던 부분
+처음 막히는 지점
 
 - "JWT assertion"과 "access token(JWT)"의 차이:
   - JWT assertion은 인증서버에 제출하는 증명서(주로 클라이언트 인증용)이고,
@@ -80,7 +77,6 @@ console.log(token);
 - 주의: exp는 매우 짧게 설정하는 편이 안전합니다(예: 30~120초).
 
 ![JWT assertion을 사용하는 서비스 간 권한 위임 흐름 다이어그램](/assets/img/posts/blog/jwt-on-behalf-backend-delegation-without-client-secret/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 3. 토큰 교환 요청(curl)
 
@@ -152,7 +148,6 @@ assertion_exp_seconds: 60
 - **로깅**: 인증 요청과 응답(민감 데이터 제외)은 추적 가능하도록 로그 경로를 정하세요(/var/log/myapp/auth.log).
 
 ![서비스가 JWT를 생성해 서명하는 간단한 일러스트](/assets/img/posts/blog/jwt-on-behalf-backend-delegation-without-client-secret/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 검증 시나리오(재현 명령 포함)
 
@@ -166,39 +161,27 @@ assertion_exp_seconds: 60
    - curl -H "Authorization: Bearer <access_token>" https://api.example.com/resource
    - 기대 응답: 200 또는 403(권한 부족) — 응답 코드에 따라 scope/role 확인
 
-## 자주 묻는 질문
+## 독자가 헷갈리기 쉬운 부분
 
-Q: 인증 서버가 token-exchange를 지원하지 않으면 어떻게 하나요?  
+Q: 인증 서버가 token-exchange를 지원하지 않으면 어떻게 하나요?
 A: 두 가지 선택이 있습니다. (1) 인증서버 설정 변경/확장으로 RFC 8693 지원을 요청하거나 (2) 서비스 A가 직접 리소스 서버의 위임 허용 로직을 구현해 클라이언트 시크릿 없이 신뢰 관계를 설정하는 방법을 고려할 수 있습니다. 전자는 표준, 후자는 맞춤형입니다.
 
-Q: 공개키는 어떻게 배포해야 하나요?  
+Q: 공개키는 어떻게 배포해야 하나요?
 A: 보통 JWKs 엔드포인트(예: /.well-known/jwks.json)에 등록하거나 인증서버 관리자 콘솔을 통해 업로드합니다. 자동화가 필요하면 CI/CD로 JWKs 업로드를 구현하거나 KMS/CA를 사용하는 방법을 권장합니다.
 
-Q: JWT를 너무 길게 설정했더니 보안 이슈가 있나요?  
+Q: JWT를 너무 길게 설정했더니 보안 이슈가 있나요?
 A: 길게 설정하면 재사용 위험이 커집니다. **짧은 만료(예: 30~120초)**와 jti로 재사용을 막는 조합이 안전합니다.
 
-Q: 실패했을 때 어느 로그를 먼저 확인해야 하나요?  
+Q: 실패했을 때 어느 로그를 먼저 확인해야 하나요?
 A: 인증서버의 토큰 엔드포인트 로그(/var/log/auth-server/token.log 또는 중앙 로거) → 인증서버가 제공한 에러 문자열 → 클라이언트(서비스 A)에서 전송한 JWT(헤더/페이로드) 확인 순을 권합니다.
 
-## Q&A (추가)
+## 독자가 헷갈리기 쉬운 부분
 
-Q: RS256 대신 ES256을 써야 할까요?  
+Q: RS256 대신 ES256을 써야 할까요?
 A: ES256은 서명 크기가 작아 네트워크 이점이 있지만, 키 관리와 라이브러리 지원을 먼저 확인하세요(예: OpenSSL vs libsecp256k1 지원). 작은 차이로 운영 부담이 달라질 수 있습니다.
 
-Q: 서비스 디스커버리와 결합하려면?  
+Q: 서비스 디스커버리와 결합하려면?
 A: token_endpoint와 jwks_uri를 서비스 메타데이터로 관리하고 ConfigMap/KV 저장소(Consul, Vault)와 연동하면 좋습니다.
-
-실무 체크리스트
-
-- [ ] 인증서버가 RFC 7523(RFC 8693 포함) 지원 여부 문서 확인
-- [ ] token_endpoint URL과 요청 파라미터 형식 확인
-- [ ] 필요한 JWT 클레임(iss, sub, aud, exp, jti) 목록 작성
-- [ ] 개인키 보관 위치 확인(/etc/myapp/keys/private.pem 등) 및 파일 권한 설정(chmod 640)
-- [ ] 공개키가 JWKs 또는 관리 콘솔에 등록되어 있는지 확인
-- [ ] assertion_algorithm(RS256 등) 일치 여부 확인
-- [ ] 로그 경로(/var/log/myapp/auth.log, auth-server logs)와 에러 메시지 샘플 수집
-- [ ] 토큰 발급 후 리소스 서버 호출로 최종 권한 확인(curl + HTTP 상태 코드)
-- [ ] 키 회전 정책 및 자동화 계획(주기, 무중단 교체 방법) 수립
 
 참고 문서(우선 확인 경로)
 
@@ -206,7 +189,7 @@ A: token_endpoint와 jwks_uri를 서비스 메타데이터로 관리하고 Confi
 - RFC 8693 (OAuth 2.0 Token Exchange)
 - 사용 중인 인증서버 공식 문서(예: Keycloak, Auth0, Okta 등)에서 "client assertion" 또는 "token exchange" 키워드 검색
 
-마무리 — 무엇을 먼저 확인할지, 언제 다른 선택지가 나은지
+— 무엇을 먼저 확인할지, 언제 다른 선택지가 나은지
 
 - 먼저 확인할 것: 인증서버가 어떤 클라이언트 인증 방식을 지원하는지(클레임 요구사항·엔드포인트·서명 알고리즘), 그리고 **aud/iss 값**이 문서와 일치하는지입니다.
 - 다른 선택지가 나은 경우: 인증서버가 token-exchange를 지원하지 않거나 키 관리에 큰 부담이 있다면, 내부 신뢰 구역에서만 사용할 클라이언트 시크릿 방식이나 IP 기반 신뢰, mTLS 같은 대체 방법을 고려하세요.

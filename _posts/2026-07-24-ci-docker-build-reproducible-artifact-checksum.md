@@ -1,5 +1,5 @@
----
-title: "CI에서 Docker 빌드 산출물 체크섬 재현: 실무 패턴과 점검 가이드"
+﻿---
+title: "CI에서 Docker 빌드 산출물 체크섬 재현: 실무 패턴과 점검 기준"
 description: "로컬·CI 간 Docker 이미지 체크섬 차이 원인, 재현 가능한 체크섬 생성 방법(환경변수·파일정렬·tar 정규화), 검증 명령과 GitHub Actions 예시, 실패 시 점검 포인트."
 slug: "ci-docker-build-reproducible-artifact-checksum"
 date: 2026-07-24 10:00:00 +0900
@@ -53,7 +53,6 @@ image:
 | SBOM/파일단위 해시 사용         | 파일 변경 추적이 목적일 때             | 전체 이미지 바이트 비교가 필요할 때   | sbom 생성(예: syft), 파일별 해시 확인 |
 
 ![Docker 이미지 체크섬 재현 흐름도](/assets/img/posts/blog/ci-docker-build-reproducible-artifact-checksum/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 재현 불가의 흔한 원인과 확인 명령
 
@@ -104,7 +103,6 @@ CMD ["node", "dist/index.js"]
 ```
 
 ![CI 파이프라인에서 체크섬 생성 및 검증 단계](/assets/img/posts/blog/ci-docker-build-reproducible-artifact-checksum/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 ## 빌드 및 정규화 스크립트 예시 (Linux, CI에서 실행 권장)
 
@@ -201,48 +199,22 @@ skopeo inspect docker://registry.example.com/my/image:tag --format '{{.Digest}}'
 4. 레지스트리에 push했다면 manifest digest 비교
 5. 필요시 이미지 내용 비교: docker save → 파일 추출 → 파일별 해시 비교
 
-## 실무 점검 표: 실패 증상 / 원인 / 확인 명령 / 조치 (구체 예)
+## 실제로 많이 막히는 지점
 
-| 실패 증상                                | 원인                                          | 확인 명령                                                       | 권장 조치                                   |
-| ---------------------------------------- | --------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------- |
-| CI 체크섬 != 로컬 체크섬                 | CI에서 gzip 헤더 포함 / tar 항목 mtime 불일치 | tar --version; gzip -l image-normalized.tar.gz                  | tar/gzip 옵션으로 재패키징, gzip -n 적용    |
-| manifest digest가 레지스트리와 로컬 다름 | 로컬 이미지는 푸시 전 형태                    | docker image inspect <local> ; docker manifest inspect <remote> | CI에서 push 직후 manifest를 읽어 저장       |
-| 동일 소스·동일 Dockerfile인데도 달라짐   | 빌드 환경(빌드킷) 버전 차이                   | docker buildx version; docker version                           | 빌드 환경 버전 고정, 컨테이너화된 빌더 사용 |
-
-## Q&A (자주 묻는 질문)
-
-Q: "docker image inspect"의 어떤 필드를 봐야 하나요?  
+Q: "docker image inspect"의 어떤 필드를 봐야 하나요?
 A: manifest digest는 레지스트리 푸시 후에 확인 가능한 RepoDigests/Manifest digest를 우선 봅니다. 로컬 Id는 메타데이터 영향을 더 받습니다.
 
-Q: gzip -n 없이도 동일 체크섬을 얻을 수 있나요?  
+Q: gzip -n 없이도 동일 체크섬을 얻을 수 있나요?
 A: gzip -n은 gzip 헤더의 타임스탬프를 제거하므로 일반적으로 사용 권장입니다. 다른 방법으로는 gzip 대신 uncompressed tar를 사용하고 tar의 mtime/정렬을 고정하는 방식이 있습니다.
 
-Q: SOURCE_DATE_EPOCH는 어디에 쓰는 값인가요?  
+Q: SOURCE_DATE_EPOCH는 어디에 쓰는 값인가요?
 A: 빌드 과정에서 생성되는 파일의 타임스탬프(예: 빌드 도구가 embed하는 created 필드)를 고정하는 표준 관행입니다. CI에서는 일정한 epoch를 build-arg로 전달하는 경우가 많습니다.
 
-Q: 레지스트리 digest와 tar checksum 중 무엇을 신뢰해야 하나요?  
+Q: 레지스트리 digest와 tar checksum 중 무엇을 신뢰해야 하나요?
 A: 레지스트리 digest는 푸시된 아티팩트의 고유 식별자라서 배포 파이프라인에서는 보통 더 신뢰합니다. 다만 tar checksum은 오프라인 전달이나 아카이브 검증에 유용합니다.
 
-Q: GitHub Actions에서 파일 정렬·정규화 스크립트를 어디에 두는 게 좋을까요?  
+Q: GitHub Actions에서 파일 정렬·정규화 스크립트를 어디에 두는 게 좋을까요?
 A: 빌드 저장소 내 scripts/normalize-image.sh처럼 두고, CI에서 같은 스크립트를 호출하면 재현성이 좋아집니다.
 
-Q: 높은 수준의 자동화가 필요한 경우 어떤 도구가 도움이 되나요?  
+Q: 높은 수준의 자동화가 필요한 경우 어떤 도구가 도움이 되나요?
 A: Skopeo, ORAS, umoci, buildkit의 정규화 기능(때때로 확장)을 검토해볼 수 있습니다. 각 도구의 버전과 옵션을 반드시 확인하세요.
-
-## 함께 보면 좋은 글
-
-- [Monorepo CI에서 브랜치별 Docker 레이어 캐시 충돌 없이 분할·재사용하는 현실적인 전략](/posts/monorepo-ci-branch-docker-cache-partitioning-strategy/)
-- [컨테이너 빌드에서 UID/GID 일관화로 파일 권한 문제 예방하기](/posts/docker-build-uid-gid-consistency/)
-- [Docker 이미지 크기 줄이기: 실무에서 확인해야 할 점들](/posts/docker-image-size-reduction-checkpoints/)
-
-## 실무 체크리스트
-
-- [ ] docker version 및 docker buildx version 확인: `docker version`, `docker buildx version`
-- [ ] 빌드 스크립트에 SOURCE_DATE_EPOCH 고정 추가: `--build-arg SOURCE_DATE_EPOCH=1609459200`
-- [ ] 이미지 저장/정규화 스크립트 실행: `docker save my/image -o image.tar` → `tar --sort=name --mtime='1970-01-01' -cf - -C tmp . | gzip -n > image-normalized.tar.gz`
-- [ ] 체크섬 생성 및 아티팩트 저장: `sha256sum image-normalized.tar.gz > checksum.txt` (CI artifact로 업로드)
-- [ ] 레지스트리에 push 후 manifest digest 확인: `docker manifest inspect registry/repo:tag` 또는 `skopeo inspect`
-- [ ] 실패 시 상세 로그 수집: `docker buildx build --progress=plain` 및 `docker save` 이후 tar 리스트 `tar -tf image.tar | head -n 50`
-- [ ] 롤백/검증: 배포 전 CI에서 저장한 manifest digest를 사용해 대상 환경에서 정확히 그 digest를 pull하도록 스크립트 검증
-
-마무리로, 이 주제에서 먼저 확인해야 할 것은 "내가 비교하려는 값이 무엇인지(manifest digest vs image tar checksum)와 빌드 입력이 완전히 고정되어 있는지"입니다. 만약 레지스트리 기반 배포라면 푸시 직후의 manifest digest를 기준으로 검증하는 것이 보통 더 간단합니다. 반면 오프라인 전달이나 아카이브 비교가 필요하면 tar 정규화(파일 정렬·mtime 고정·gzip -n) 방식이 더 적합합니다. 언제 다른 선택지가 나은지(예: 레지스트리 사용 불가, 빌드 환경 통제 불가 등)는 위 표의 선택 기준을 참고해 보시면 좋겠습니다.

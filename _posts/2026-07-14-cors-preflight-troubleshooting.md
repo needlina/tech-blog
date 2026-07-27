@@ -1,6 +1,6 @@
----
+﻿---
 title: "CORS 프리플라이트 요청 실패 원인 찾는 순서와 실무 점검법"
-description: "오늘은 CORS(Cross-Origin Resource Sharing) 프리플라이트(preflight) 요청이 실패할 때 원인을 찾아가는 순서를 정리해봤습니다"
+description: "CORS(Cross-Origin Resource Sharing) 프리플라이트(preflight) 요청이 실패할 때 원인을 찾아가는 순서를 정리했습니다."
 slug: "cors-preflight-troubleshooting"
 date: 2026-07-14 10:00:00 +0900
 categories: [Backend, Security]
@@ -10,16 +10,16 @@ image:
   alt: "CORS 프리플라이트 오류 썸네일"
 ---
 
-오늘은 CORS(Cross-Origin Resource Sharing) 프리플라이트(preflight) 요청이 실패할 때 원인을 찾아가는 순서를 정리해봤습니다. 개인적으로 프론트엔드와 백엔드 사이에서 CORS 때문에 고생한 경험이 몇 번 있어서, 공부하면서 정리한 내용을 최대한 실무에서 바로 확인할 수 있게 정리하려고 합니다. 가능하면 단정적으로 쓰지 않고, 제가 이해한 선에서 조심스럽게 적겠습니다.
+CORS(Cross-Origin Resource Sharing) 프리플라이트(preflight) 요청이 실패할 때 원인을 찾아가는 순서를 정리했습니다. 개인적으로 프론트엔드와 백엔드 사이에서 CORS 때문에 고생한 경험이 몇 번 있어서, 정리한 내용을 최대한 실무에서 바로 확인할 수 있게 정리하려고 합니다. 가능하면 단정적으로 쓰지 않고, 제가 이해한 선에서 조심스럽게 적겠습니다.
 
-공부하면서 알게 된 점
+확인하며 남긴 메모
 
 - 프리플라이트는 브라우저가 보내는 OPTIONS 요청이고, 브라우저가 요구하는 특정 응답 헤더가 없으면 실제 요청을 보내지 않습니다.
 - 서버에서 CORS 관련 헤더를 정확히 포함시켜야 하고, 특히 credential(자격증명)을 사용할 때는 Access-Control-Allow-Origin에 '\*'을 쓰면 안 됩니다.
 - 브라우저는 CORS를 강제하지만, curl 같은 툴로 요청하면 CORS 제약이 적용되지 않으므로 헤더 확인용으로는 유용하지만 문제 재현은 브라우저에서 해야 합니다.
 - 리버스 프록시(Nginx, CDN 등)가 CORS 헤더를 제거하거나 변경하는 경우가 종종 있어서, 백엔드가 정상 응답해도 브라우저에서 실패하는 일이 있습니다.
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 
 - OPTIONS 요청에 대해 204를 보내면 좋은지 200을 보내면 좋은지, 어떤 응답 코드가 적절한지 헷갈렸습니다. 실무에서는 200/204 모두 동작하지만, 중요한 건 응답에 필요한 CORS 헤더가 포함되어 있어야 한다는 점이었습니다.
 - Access-Control-Allow-Headers에 어떤 값을 넣어야 하는지도 헷갈렸는데, 브라우저가 보내는 Access-Control-Request-Headers에 명시된 값들을 포함해야 안전합니다.
@@ -32,9 +32,8 @@ image:
 - 서버는 응답에 Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers(필요시), Access-Control-Allow-Credentials(필요시), Access-Control-Max-Age(선택적) 등을 포함해야 합니다.
 
 ![CORS preflight 흐름을 보여주는 간단한 다이어그램(브라우저 → OPTIONS → 서버 → 응답 헤더 → 실제 요청)](/assets/img/posts/blog/cors-preflight-troubleshooting/image-1.webp)
-이미지 출처: AI 생성 이미지
 
-실무에서는 이렇게 확인하면 좋겠다 — 단계별 점검 순서
+운영 전 확인할 부분 — 단계별 점검 순서
 
 1. 브라우저 개발자 도구에서 네트워크 탭 확인
    - 프리플라이트 OPTIONS 요청을 찾고 상태 코드와 응답 헤더를 확인합니다.
@@ -112,7 +111,6 @@ image:
    - 커스텀 헤더가 있는 요청, application/json 등의 Content-Type이 있는 요청 등 여러 케이스를 테스트합니다.
 
 ![클라이언트와 서버, 리버스 프록시가 있고 헤더가 오가며 검사되는 구성도(간단한 아이콘과 화살표)](/assets/img/posts/blog/cors-preflight-troubleshooting/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 자주 발생하는 실수(체크 포인트)
 
@@ -139,16 +137,5 @@ image:
 1. CORS preflight 흐름을 보여주는 간단한 다이어그램(브라우저 → OPTIONS → 서버 → 응답 헤더 → 실제 요청)
 2. 클라이언트와 서버, 리버스 프록시가 있고 헤더가 오가며 검사되는 구성도(간단한 아이콘과 화살표)
 
-실무 체크리스트
-
-- [ ] 브라우저 Network 탭에서 OPTIONS 요청과 응답 헤더를 확인했는가?
-- [ ] 서버가 Access-Control-Allow-Origin, Access-Control-Allow-Methods를 반환하는가?
-- [ ] 필요한 커스텀 헤더(Authorization, X-\* 등)가 Access-Control-Allow-Headers에 포함되어 있는가?
-- [ ] withCredentials(쿠키/인증)을 사용하는 경우 Access-Control-Allow-Credentials: true 와 정확한 Origin을 반환하는가?
-- [ ] 프록시/CDN이 CORS 헤더를 제거하거나 변경하지 않는가?
-- [ ] 프리플라이트가 3xx 리다이렉트나 4xx/5xx 응답을 반환하지 않는가?
-- [ ] 서버 로그에서 OPTIONS 요청이 정상적으로 처리되는지 확인했는가?
-- [ ] 여러 브라우저와 환경(HTTPS/HTTP, 포트 포함)에서 테스트했는가?
-
-마무리하며 — 조심스러운 권고
-CORS는 브라우저의 보안 정책이므로, 브라우저 개발자 도구와 서버/프록시 로그를 함께 보면서 문제를 좁혀 가는 것이 좋습니다. 제가 정리한 순서는 저의 경험과 문서를 바탕으로 한 방법일 뿐이며, 환경에 따라 예외가 있을 수 있으니 실제 구성에서는 하나씩 확인해 보시길 권합니다.
+하며 — 조심스러운 권고
+CORS는 브라우저의 보안 정책이므로, 브라우저 개발자 도구와 서버/프록시 로그를 함께 보면서 문제를 좁혀 가는 것이 좋습니다. 정리한 순서는 저의 경험과 문서를 바탕으로 한 방법일 뿐이며, 환경에 따라 예외가 있을 수 있으니 실제 구성에서는 하나씩 확인해 보시길 권합니다.

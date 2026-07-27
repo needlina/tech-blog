@@ -1,4 +1,4 @@
----
+﻿---
 title: "분산 트레이스 샘플링 손실로 끊긴 트랜잭션 복원 절차와 실무 점검 포인트"
 description: "분산 트레이스에서 샘플링 누락으로 끊긴 트랜잭션을 상관관계로 재조합하는 방법, 로그·메트릭 병행 검증 절차, Jaeger/OTel 수집기 설정 예시와 점검 명령·오류 증상 확인 경로 목록"
 slug: "tracing-recover-missing-spans-correlation-procedure"
@@ -9,15 +9,12 @@ image:
   path: /assets/img/posts/blog/tracing-recover-missing-spans-correlation-procedure/preview.png
   alt: "끊긴 트레이스 복원 썸네일"
 ---
-
-분산 환경에서 일부 스팬이 샘플링 정책 때문에 빠지면 트랜잭션이 끊긴 것처럼 보이는데, **로그·메트릭·남아있는 스팬들의 타임스탬프·trace_id·parent_id를 기준으로 상관관계 재조합을 시도**할 수 있고, 실무에서는 특정 패턴(예: 누락이 특정 서비스에서 집중되는지, 샘플링 비율 변화, tail-based sampling 미적용 여부)을 먼저 확인하면 시간을 절약할 수 있다.
-
-공부하면서 알게 된 점
+확인하며 남긴 메모
 - 분산 트레이스는 trace_id와 span_id(및 parent_id)로 연결되는데, 샘플링으로 일부 스팬이 수집되지 않으면 연결이 끊기는 듯 보인다.
 - 로그에 trace_id를 남기면 샘플링 누락 스팬을 로그로 보완해 트랜잭션 흐름을 재구성할 수 있다.
-- tail-based sampling(수집기 단계에서 샘플링을 결정)으로 바꾸면 중요한 트랜잭션을 보존할 가능성이 높아진다. 
+- tail-based sampling(수집기 단계에서 샘플링을 결정)으로 바꾸면 중요한 트랜잭션을 보존할 가능성이 높아진다.
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 - "샘플링이 클라이언트 쪽에서만 일어나면 수집기에서 못 보는 것 아니냐?"가 헷갈렸는데, 샘플링은 보통 클라이언트/서비스 에이전트(헤더 기반 결정) 또는 Collector(OTel Collector)에서 모두 설정될 수 있다. 어느 단계에서 샘플링이 적용되는지 확인해야 원인을 좁힐 수 있다.
 - trace_id가 로그에도 없고 스팬도 없을 때는 재구성이 불가능하다는 점을 실무에서 체감했다. 따라서 **관계 복원을 위해 trace_id를 로그에 남기는 정책은 거의 필수**로 느꼈다.
 
@@ -34,9 +31,8 @@ image:
 - 로그-트레이스 연계: 로그에 trace_id를 포함하면 샘플링 누락을 로그로 보완 가능
 
 ![분산 트레이스 흐름 일러스트](/assets/img/posts/blog/tracing-recover-missing-spans-correlation-procedure/image-1.webp)
-이미지 출처: AI 생성 이미지
 
-실무에서는 이렇게 확인하면 좋겠다
+운영 전 확인할 부분
 1. 누락 패턴 파악
    - 어느 서비스에서 parent_id가 많은지, 특정 시간대에 집중되는지 확인
    - Jaeger UI나 Elasticsearch/ClickHouse 스팬 인덱스를 쿼리해서 빈도 확인
@@ -99,7 +95,6 @@ processors:
 | 지표기반 보존(에러 중심) | error 태그/메트릭 활용 | 문제 트랜잭션 우선 보존 | 정상 트랜잭션은 누락 가능 |
 
 
-
 실무 점검 절차(우선 순위)
 1. 애플리케이션 로그 포맷에 trace_id가 포함되어 있는지 확인 (로그 경로, 예: /var/log/*)
 2. 에이전트/SDK 버전과 sampling 설정 확인 (예: OpenTelemetry SDK v1.16.0, sampling_probability 설정)
@@ -135,7 +130,7 @@ queue.Send(msg, headers)
 - 샘플링 정책 변경: 최근 배포로 sampling_probability가 바뀌었는지 Git log 확인
 - 포맷 불일치: 에이전트와 Collector가 사용하는 trace 포맷(B3 vs W3C) 불일치
 
-## Q&A
+## 상황별 짧은 답변
 Q: 샘플링을 높이면 저장비용이 크게 늘어나는데 대안은?
 A: **tail-based sampling**으로 중요한 트랜잭션만 보존하거나, error/latency 기반 샘플링을 적용하면 비용을 줄이며 보존율을 높일 수 있다. 우선 현재 error 트랜잭션의 빈도, 평균 스팬 크기(바이트)를 측정해 비용 예측을 하세요.
 
@@ -149,28 +144,7 @@ Q: 포맷(B3 vs W3C) 불일치 문제 어떻게 확인하나?
 A: 애플리케이션과 Collector의 propagated formats 설정을 확인하고, 실제 요청 헤더(예: curl -v)에서 traceparent 또는 X-B3-TraceId가 존재하는지 검증하세요.
 
 
-
-실무 체크리스트 (즉시 실행 가능)
-- [ ] 애플리케이션 로그 포맷에서 trace_id 출력 여부 확인 (로그 경로: /var/log/<app>/*.log)
-  - grep "trace_id=" /var/log/<app>/*.log | head
-- [ ] 애플리케이션 SDK sampling 설정 확인 (파일/환경변수, 예: OTEL_TRACES_SAMPLER, OTEL_TRACES_SAMPLER_ARG)
-- [ ] Collector 설정 파일 경로 확인 및 tail_sampling 존재 여부 확인 (/etc/otel-collector/config.yaml)
-- [ ] Jaeger/Zipkin UI에서 orphan span 비율 확인
-  - Jaeger: 서비스별 트레이스 수, span 수 통계 비교
-- [ ] 네트워크/Exporter 오류 로그 확인 (애플리케이션 로그에서 exporter 에러 메시지 검색)
-- [ ] 로그와 트레이스의 타임스탬프 오차 확인 (NTP 상태)
-- [ ] 변경 전후 영향 측정: 트레이스 건수, 저장량(GB/day), 비용 추정
-- [ ] 재현 테스트: 특정 흐름(예: 오류 발생 시나리오)을 강제로 실행 → 로그+트레이스 비교
-- [ ] 문서 링크 확인:
-  - Jaeger docs: https://www.jaegertracing.io/docs/
-  - OpenTelemetry Collector: https://opentelemetry.io/docs/collector/
-  - Tail-based sampling 참고 자료: Collector 문서 내 processors/tail_sampling
-
-
-![샘플링 손실 복원 절차 다이어그램](/assets/img/posts/blog/tracing-recover-missing-spans-correlation-procedure/image-2.webp)
-이미지 출처: AI 생성 이미지
-
-마무리: 무엇을 먼저 확인하고 언제 다른 선택을 고려할지
+무엇을 먼저 확인하고 언제 다른 선택을 고려할지
 - 먼저 확인할 것: 로그에 trace_id 존재 여부, 샘플링이 어디서 적용되는지(애플리케이션 vs Collector), orphan span 패턴
 - 다른 선택이 나은 경우:
   - 빈도 높은 오류 트랜잭션을 잃고 있다면 tail-based sampling을 도입해 보존을 우선시하세요.

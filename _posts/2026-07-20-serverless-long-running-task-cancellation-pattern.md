@@ -1,4 +1,4 @@
----
+﻿---
 title: "서버리스에서 장기 실행 작업 안전하게 취소하고 리소스 해제하기"
 description: "서버리스 함수(FaaS/컨테이너)에서 타임아웃·중단 시 리소스 누수 방지하는 체크포인트·타임아웃 검사·외부 작업 위임 패턴, 재시도/회복 절차, 검증 명령과 로그 확인 경로"
 slug: "serverless-long-running-task-cancellation-pattern"
@@ -20,15 +20,13 @@ image:
 
 서버리스 함수에서 장기 실행 작업을 안전하게 취소하려면 실행 루틴에 외부 상태 체크포인트(예: S3/DynamoDB 체크포인트), 런타임 남은 시간 검사, 그리고 가능하면 외부 워크플로(큐나 Step Functions)로 위임하는 세 축을 결합해 리소스 해제를 설계하는 것이 현실적으로 가장 안전합니다. 실무에서는 **남은 실행 시간 확인**, **작업 재개용 체크포인트 기록**, **외부 작업 취소 신호 지원** 세 가지를 먼저 점검하세요.
 
-왜 이걸 적고 있냐면, 로컬에서는 잘 돌아가는데 실제 클라우드에서 함수가 중간에 잘려서 DB 커넥션이 남아 있거나 잠금이 풀리지 않는 문제를 겪었기 때문입니다. 이번 글은 제가 공부하면서 헷갈렸던 부분과 실무에서 바로 확인할 포인트, 실패 예시와 수정 예시를 중심으로 정리한 초안입니다.
-
-목차
+왜 이걸 적고 있냐면, 로컬에서는 잘 돌아가는데 실제 클라우드에서 함수가 중간에 잘려서 DB 커넥션이 남아 있거나 잠금이 풀리지 않는 문제를 겪었기 때문입니다. 이 문서는 헷갈렸던 부분과 운영에서 바로 볼 지점, 실패 예시와 수정 예시를 중심으로 정리한 문서입니다.
 
 - 문제 상황: 왜 서버리스에서 취소가 어려운가
 - 패턴 비교(간단 표)
 - 코드 예시: 실패 예시 / 수정 예시 (Node.js, Python)
 - 운영·검증: 명령어, 로그 문구, 파일 경로, 런타임 버전
-- 처음에 헷갈렸던 점 / 공부하면서 알게 된 점
+- 처음에 헷갈렸던 점 / 확인하며 남긴 메모
 - 실무에서 이렇게 확인하면 좋겠다(체크리스트 포함)
 - Q&A
 - 실무 체크리스트
@@ -48,13 +46,13 @@ image:
 | **함수 내부 체크포인트**         | 간단, 코드만 변경           | 복구 포인트 설계 필요 | 반복 가능한 작업         |
 | **컨테이너 기반 종료 신호 처리** | SIGTERM 처리로 graceful     | 컨테이너 실행비용     | 장기 연결이 필요할 때    |
 
-공부하면서 알게 된 점
+확인하며 남긴 메모
 
 - **남은 시간 점검이 가장 현실적**: AWS Lambda에서는 context.getRemainingTimeInMillis()로 남은 시간을 확인해 네트워크 호출을 취소하거나 체크포인트를 남기면 실제 타임아웃 상황에서의 손해를 줄일 수 있었다.
 - 컨테이너형 서버리스(Cloud Run 등)는 SIGTERM을 받고 graceful shutdown을 시도할 수 있어, 장기 작업을 해야 한다면 컨테이너 패턴이 더 안전할 때가 있다.
 - 외부 리소스(예: DB 트랜잭션, 분산 락)는 작업이 중단됐을 때 자동 해제 되지 않을 수 있으므로 **타임아웃내 체크포인트 + 보상(Compensating action)** 설계가 필요했다.
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 
 - "함수 플랫폼에서 SIGTERM을 언제 보내는가?"와 "context.getRemainingTimeInMillis로 모든 문제를 해결할 수 있는가?"는 서로 다른 질문이었다.
   - FaaS는 플랫폼별 제약이 달라 동일한 전략이 통하지 않을 수 있음(예: Lambda는 명시적 SIGTERM 동작을 보장하지 않음).
@@ -164,7 +162,6 @@ def save_checkpoint(i):
 ```
 
 ![서버리스 작업 취소 개념 다이어그램](/assets/img/posts/blog/serverless-long-running-task-cancellation-pattern/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 운영·검증: 실행 가능한 명령어와 확인 방법 (구체성 충족)
 
@@ -209,49 +206,7 @@ def save_checkpoint(i):
 - **체크포인트 설계**: 중간상태를 덮어쓰기 식으로 저장하면 재시도 시 중복 처리 로직이 단순해짐.
 - **외부 리소스 보상 처리**: 트랜잭션이 중단되면 보상 작업(compensating action)을 스케줄링하는 것이 안전.
 
-Q&A (자주 묻는 질문)
-
-Q: Lambda에서 SIGTERM을 받을 수 있나?  
-A: Lambda는 플랫폼 내부적으로 인스턴스를 관리하고 SIGTERM 동작을 사용자에게 보장하지 않을 수 있으니 **context.getRemainingTimeInMillis** 기반 방어가 더 현실적입니다.
-
-Q: 체크포인트를 너무 자주 쓰면 비용이 큰가?  
-A: 네. 체크포인트 빈도는 비용/복구정확성/중복 처리 비용의 균형입니다. 예산과 SLA를 고려해 1회 작업 단위를 기준으로 결정하세요.
-
-Q: Step Functions와 큐, 어느 쪽이 더 쉬운가?  
-A: 아래 표 참고하세요.
-
-| 항목        | Step Functions  | 큐 + 워커      |
-| ----------- | --------------- | -------------- |
-| 상태 관리   | O               | 워커 구현 필요 |
-| 복잡한 분기 | 좋음            | 코드로 구현    |
-| 비용        | 상대적으로 높음 | 워커 비용 변동 |
-
-![서버리스 작업 체크포인트와 재시도 흐름 일러스트](/assets/img/posts/blog/serverless-long-running-task-cancellation-pattern/image-2.webp)
-이미지 출처: AI 생성 이미지
-
-실무 체크리스트 (바로 따라할 것)
-
-- 코드 점검
-  - handler 파일 경로 확인: src/handler.js 또는 src/handler.py
-  - 남은 시간 검사 사용: Node(context.getRemainingTimeInMillis), Azure(context.remaining_time)
-- 배포 설정
-  - template.yaml / function.json에서 Timeout 값 확인 및 주석으로 기록
-  - 컨테이너의 경우 Dockerfile에 HEALTHCHECK 명시
-- 로그/재현
-  - sam local invoke MyFunction -e tests/event-long.json
-  - aws logs tail /aws/lambda/my-function --since 1h --follow
-- DB / 리소스 점검
-  - PostgreSQL: psql -h HOST -U USER -c "SELECT count(\*) FROM pg_stat_activity WHERE state = 'idle';"
-  - 남은 락 확인: SELECT \* FROM pg_locks;
-- 복구/검증
-  - 체크포인트 파일 존재 여부: aws s3 ls s3://my-bucket/checkpoints/
-  - 재시도 성공률 측정: 최근 24시간 체크포인트 복구 이벤트 / 총 이벤트 비율
-- 문서·참고
-  - AWS Lambda timeout 및 context: https://docs.aws.amazon.com/lambda/latest/dg/
-  - Step Functions: https://docs.aws.amazon.com/step-functions/
-  - Cloud Run graceful shutdown: https://cloud.google.com/run/docs
-
-마무리 — 무엇을 먼저 확인하고, 언제 다른 선택지가 나은지
+— 무엇을 먼저 확인하고, 언제 다른 선택지가 나은지
 
 - 먼저 확인할 것: 현재 플랫폼(FaaS인지 컨테이너형인지), 런타임 버전, 함수의 timeout 설정, 그리고 로그에서 "Task timed out..." 같은 타임아웃 문구. 이 네 가지가 문제 해결 우선순위를 결정합니다.
 - 다른 선택지가 나은 때:
@@ -260,6 +215,6 @@ A: 아래 표 참고하세요.
 
 참고(공식 문서)
 
-- AWS Lambda 개발자 가이드: https://docs.aws.amazon.com/lambda/latest/dg/
+- AWS Lambda 개발자 기준: https://docs.aws.amazon.com/lambda/latest/dg/
 - AWS Step Functions: https://docs.aws.amazon.com/step-functions/
 - Cloud Run graceful shutdown: https://cloud.google.com/run/docs/

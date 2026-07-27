@@ -1,4 +1,4 @@
----
+﻿---
 title: "Docker 컨테이너 실행 오류 Permission Denied와 No space left on device 해결 방법"
 description: "Docker 컨테이너 실행 중 permission denied 또는 No space left on device 에러가 날 때 권한과 디스크 용량을 순서대로 확인하는 방법을 정리했습니다."
 slug: "docker-permission-denied-no-space-left-device"
@@ -9,9 +9,6 @@ image:
   path: /assets/img/posts/blog/docker-permission-denied-no-space-left-device/preview.png
   alt: "Docker 컨테이너 실행 오류 Permission Denied와 No space left on device 해결 방법 썸네일"
 ---
-
-Docker 컨테이너 실행 중 `permission denied` 또는 `No space left on device` 에러가 날 때는 권한과 디스크 용량을 함께 확인해야 합니다. 이 글은 원인을 나눠 보고 빠르게 점검하는 순서를 정리합니다.
-
 Docker 컨테이너 실행 중 `permission denied` 또는 `No space left on device` 에러가 날 때 권한과 디스크 용량을 순서대로 확인하는 방법
 
 Docker를 쓰다 보면 컨테이너가 뜨지 않거나, 빌드는 되는데 실행 단계에서 갑자기 실패하는 경우가 있습니다. 로그를 보면 권한 문제처럼 보이기도 하고, 디스크 용량 문제처럼 보이기도 합니다.
@@ -28,10 +25,9 @@ docker: Error response from daemon: oci runtime error: container process invoked
 failed to copy files: error: No space left on device
 ```
 
-처음에는 두 에러가 완전히 다른 문제라고 생각했는데, 실제로는 둘 다 "컨테이너가 필요한 파일을 읽거나 쓰지 못하는 상태"라는 점에서 같이 점검할 필요가 있었습니다. 이번 글에서는 Docker 초보 입장에서 권한과 용량 문제를 나눠서 확인하는 순서를 정리해보겠습니다.
+처음에는 두 에러가 완전히 다른 문제라고 생각했는데, 실제로는 둘 다 "컨테이너가 필요한 파일을 읽거나 쓰지 못하는 상태"라는 점에서 같이 점검할 필요가 있었습니다. 여기서는 Docker 초보 입장에서 권한과 용량 문제를 나눠서 확인하는 순서를 정리해보겠습니다.
 
 ![Docker 컨테이너가 파일 권한과 디스크 용량 두 갈래 문제를 만나는 단순한 장애 흐름 일러스트.](/assets/img/posts/blog/docker-permission-denied-no-space-left-device/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 증상 정리
 
@@ -46,7 +42,7 @@ failed to copy files: error: No space left on device
 
 중요한 것은 에러 메시지만 보고 바로 `chmod 777`이나 `docker system prune -a`를 실행하지 않는 것입니다. 둘 다 빠른 해결처럼 보일 수 있지만, 권한을 너무 넓게 열거나 필요한 이미지를 지워서 다른 문제가 생길 수 있습니다.
 
-## 공부하면서 알게 된 점
+## 확인하며 남긴 메모
 
 Docker 권한 문제는 크게 세 가지로 나눠볼 수 있었습니다.
 
@@ -245,7 +241,6 @@ Build Cache     50        0         6GB       6GB
 여기서 reclaimable이 크다고 해서 바로 모두 지우기보다는 무엇이 필요한지 확인해야 합니다.
 
 ![이미지, 컨테이너, 볼륨, 빌드 캐시가 Docker 디스크 공간을 나눠 쓰는 구조를 보여주는 개념도.](/assets/img/posts/blog/docker-permission-denied-no-space-left-device/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 ## 6단계: 안전하게 Docker 용량 정리하기
 
@@ -336,13 +331,13 @@ services:
         max-file: "3"
 ```
 
-## 처음에는 헷갈렸던 부분
+## 처음 확인할 때 막히는 부분
 
 저는 `No space left on device`가 나오면 항상 디스크 용량만 부족한 줄 알았습니다. 그런데 inode가 부족해도 같은 계열의 문제가 생길 수 있고, Docker Desktop에서는 내부 VM 디스크가 꽉 찬 것일 수도 있었습니다.
 
 또 `permission denied`를 보면 `chmod 777`로 바로 해결하려고 했는데, 이 방식은 보안상 좋지 않고 원인을 숨길 수 있습니다. 실제로는 실행 파일 권한, UID/GID, bind mount, SELinux label, Docker Desktop 파일 공유 설정을 나눠서 보는 편이 더 안전했습니다.
 
-## 실무에서는 이렇게 확인하면 좋겠다
+## 운영 전 확인할 부분
 
 운영 환경에서는 아래 순서가 가장 덜 위험해 보입니다.
 
@@ -353,18 +348,6 @@ services:
 5. prune 명령은 작은 범위부터 실행합니다.
 6. 볼륨 삭제 전에는 반드시 어떤 데이터가 들어 있는지 확인합니다.
 7. 재발하면 로그 회전과 빌드 캐시 관리 정책을 추가합니다.
-
-## 실무 체크리스트
-
-- [ ] 원본 에러 로그에서 `permission denied`와 `No space left on device` 중 어느 쪽이 핵심인지 확인했다.
-- [ ] entrypoint나 실행 파일에 execute 권한이 있는지 확인했다.
-- [ ] 컨테이너의 `USER`, `id`, 작업 디렉터리 소유권을 확인했다.
-- [ ] bind mount 경로의 UID/GID와 permission을 호스트와 컨테이너 양쪽에서 확인했다.
-- [ ] SELinux, AppArmor, Docker Desktop 파일 공유 설정을 확인했다.
-- [ ] `df -h`, `df -i`, `docker system df`로 용량과 inode를 확인했다.
-- [ ] Docker prune 명령은 컨테이너, 이미지, 빌드 캐시처럼 작은 범위부터 실행했다.
-- [ ] 볼륨 삭제 전에는 반드시 데이터 성격과 백업 여부를 확인했다.
-- [ ] 로그 파일이 계속 커지는 경우 Docker logging 옵션을 설정했다.
 
 ## 참고 자료
 

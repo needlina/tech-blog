@@ -1,4 +1,4 @@
----
+﻿---
 title: "Prepared Statement 캐시 누수로 인한 DB 커넥션 과다 사용 진단과 해결"
 description: "대량 요청 환경에서 PostgreSQL 서버·드라이버의 Prepared Statement 캐시 누수 원인 식별, pg_stat_activity·pg_prepared_statements 조회 명령어, 드라이버 설정(prepareThreshold 등) 변경과 임시 대처(DEALLOCATE/pg_terminate_backend) 절차와 실무 점검 포인트"
 slug: "db-prepared-statement-cache-leak-diagnosis"
@@ -9,30 +9,26 @@ image:
   path: /assets/img/posts/blog/db-prepared-statement-cache-leak-diagnosis/preview.png
   alt: "Prepared Statement 캐시 누수 썸네일"
 ---
-
-Prepared Statement 캐시가 의도치 않게 늘어나면 각 DB 세션의 메모리와 상태가 증가해 전체 커넥션 수·자원 사용이 급격히 늘어날 수 있고, 실무에서는 **pg_prepared_statements 조회**, **pg_stat_activity 모니터링**, 클라이언트 드라이버의 prepare 동작 설정 확인을 먼저 하면 원인 파악에 도움이 됩니다.
-
-들어가며 — 제가 공부하면서 정리한 흐름
+들어가며 — 정리한 흐름
 
 - 대량 요청 환경에서 특정 API가 갑자기 DB 연결을 많이 쓰기 시작했을 때, 보통 커넥션 풀 설정부터 보게 되는데, Prepared Statement 관련 캐시 누수가 숨은 원인일 때가 있더라고요.
 - 처음에는 "prepared statement가 어떻게 커넥션 수랑 연관이 있지?"라고 헷갈렸습니다. 직접 코드·드라이버 설정과 DB 내부 뷰를 비교해보니 몇 가지 확인 포인트가 보였습니다.
 - 아래에는 제가 실제로 체크해볼 단계, 자주 만나는 드라이버/풀 관련 이슈, 임시 대처법과 권장 설정들을 정리했습니다. 실무에서 바로 쓸 수 있도록 명령어·코드 예시도 넣었습니다.
 
 ![Prepared statement와 세션 관계를 단순화한 일러스트](/assets/img/posts/blog/db-prepared-statement-cache-leak-diagnosis/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 Prepared Statement 개념(간단히)
 
 - Prepared Statement는 동일한 쿼리를 반복 실행할 때 파싱/계획 비용을 줄이기 위해 미리 준비해두는 기법입니다. 서버 측(세션 단위)에서 준비되면 세션이 살아있는 동안 그 준비된 상태가 유지됩니다.
 - 클라이언트 드라이버(예: JDBC, node-postgres, psycopg 등)가 내부적으로 **서버 사이드 준비(named prepared statement)** 를 만들거나, 드라이버 내부 캐시를 유지해서 반복 사용 성능을 높이는 방식이 있습니다. 이 동작은 드라이버별로 다르고 설정 가능한 경우가 많습니다.
 
-공부하면서 알게 된 점
+확인하며 남긴 메모
 
 - 드라이버가 준비된 쿼리를 세션에 이름을 붙여 저장하면, 해당 세션(커넥션)에 준비된 항목이 누적될 수 있습니다.
 - 커넥션 풀이 커서/커넥션을 많이 만들고 오래 유지하면, 각 커넥션에 쌓인 prepared statement가 합쳐져 전체 메모리·상태를 키울 수 있습니다.
 - pgbouncer 같은 커넥션 풀러/프록시 모드(특히 transaction pooling)는 세션 기반 준비와 충돌이 생길 수 있어 주의가 필요합니다.
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 
 - pg_prepared_statements 뷰로는 어떤 세션(PID)에 속한 prepared statement인지 바로 알기 어렵더군요. 그래서 세션과 매핑하는 방법(응용 로그, 드라이버 로깅, 혹은 강제 커넥션 종료)을 조합해야 했습니다.
 - "자동으로 준비되는 것(드라이버 캐시) vs. 명시적으로 PREPARE한 것"을 구분해야 원인 추적이 쉬웠습니다.
@@ -126,7 +122,6 @@ await pool.query("SELECT col FROM t WHERE id = $1", [param]);
 | pgbouncer | transaction pooling과 충돌 | pooling mode 확인 | session pooling으로 전환하거나 prepare 사용 금지 |
 
 ![PG 뷰와 애플리케이션 로그를 비교하며 원인 추적하는 흐름도](/assets/img/posts/blog/db-prepared-statement-cache-leak-diagnosis/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 더 공부하면서 알게 된 작은 팁들
 
@@ -134,7 +129,7 @@ await pool.query("SELECT col FROM t WHERE id = $1", [param]);
 - 커넥션 풀의 커넥션 수와 준비된 statement 수를 기준으로 메모리 소모를 추정해볼 수 있습니다. 예: 평균 준비 항목 수 × 세션 수 × 항목당 평균 메모리(추정).
 - 운영 환경에서는 먼저 드라이버 설정을 바꾸고, 재현이 확실하면 코드 변경을 적용하는 순서가 안전합니다.
 
-실무에서는 이렇게 확인하면 좋겠다 (체크 포인트 정리)
+운영 전 확인할 부분 (체크 포인트 정리)
 
 - DB 측: pg_stat_activity, pg_prepared_statements, 서버 로그(로그 레벨에 따라 parse/describe 로그 가능) 확인
 - 애플리케이션: 드라이버의 prepared 관련 설정(prepareThreshold, statement cache 등) 확인 및 로그 활성화
@@ -147,7 +142,7 @@ await pool.query("SELECT col FROM t WHERE id = $1", [param]);
 - pg_terminate_backend는 트랜잭션을 강제로 롤백시키므로 서비스 영향이 클 수 있습니다. **가능하면 낮은 트래픽 시간대에** 사용하세요.
 - DEALLOCATE ALL은 세션 내부에서 실행해야 하므로 원격에서 시도하려면 해당 세션에 접속 가능한 수단이 필요합니다.
 
-## Q&A
+## 독자가 헷갈리기 쉬운 부분
 
 Q: pg_prepared_statements에서 세션 PID를 바로 알 수 있나요?
 A: 기본 뷰에는 PID가 포함되어 있지 않아서 바로 매핑하기 어렵습니다. 애플리케이션에서 prepared 생성 시 로그를 남기거나, 각 커넥션의 activity와 타임스탬프를 비교하는 방식으로 추적해야 할 때가 많습니다.
@@ -160,15 +155,6 @@ A: 일부 반복 쿼리에서 CPU·파싱 비용이 조금 늘어날 수 있지�
 
 Q: 자동으로 쌓인 prepared statement를 한 번에 제거하려면?
 A: 해당 세션에 접속해 `DEALLOCATE ALL;` 을 실행하거나, 세션을 종료(`pg_terminate_backend`)하면 해제됩니다.
-
-실무 체크리스트
-
-- [ ] pg_stat_activity에서 연결 분포(어플리케이션별, 호스트별) 확인
-- [ ] pg_prepared_statements 총수 및 최근 생성 패턴 확인
-- [ ] 애플리케이션 드라이버의 prepare 관련 설정(prepareThreshold, 쿼리 이름 사용) 점검
-- [ ] 커넥션 풀러(pgbouncer 등) 모드 확인 및 정책 검토
-- [ ] 임시로 문제 세션에 대해 DEALLOCATE ALL 또는 인가된 세션 종료 절차 마련
-- [ ] 변경 전/후 성능·메모리 영향 비교 테스트 계획 수립
 
 참고
 

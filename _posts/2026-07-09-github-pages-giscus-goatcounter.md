@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "GitHub Pages에서 Disqus 없이 giscus 댓글과 GoatCounter 조회수 붙이기"
 description: "GitHub Pages로 블로그를 운영하다 보면 댓글과 조회수 기능을 붙이고 싶어집니다. 하지만 GitHub Pages는 정적 호스팅이기 때문에 서버에서 댓글을 저장하거나 조회수를 직접 증가시키는 로직을 실행할 수 없습니다"
@@ -7,11 +7,7 @@ categories: [Blogging, GitHub Pages]
 tags: ["github-pages", "jekyll", "giscus", "goatcounter", "댓글설정"]
 comments: true
 ---
-
-GitHub Pages로 블로그를 운영하다 보면 댓글과 조회수 기능을 붙이고 싶어집니다.   
-하지만 GitHub Pages는 정적 호스팅이기 때문에 서버에서 댓글을 저장하거나 조회수를 직접 증가시키는 로직을 실행할 수 없습니다.
-
-그래서 보통은 외부 서비스를 붙입니다. 예전에는 Disqus를 많이 썼지만, 광고나 추적 스크립트가 부담스럽기도 하고 GitHub 기반 블로그와는 결이 조금 다르다고 느껴질 때가 있습니다.   
+그래서 보통은 외부 서비스를 붙입니다. 예전에는 Disqus를 많이 썼지만, 광고나 추적 스크립트가 부담스럽기도 하고 GitHub 기반 블로그와는 결이 조금 다르다고 느껴질 때가 있습니다.
 이번에는 Disqus 없이 `giscus`로 댓글을 붙이고, `GoatCounter`로 조회수를 확인하는 구성을 정리해보려 합니다.
 
 ## 목표
@@ -23,11 +19,11 @@ GitHub Pages로 블로그를 운영하다 보면 댓글과 조회수 기능을 �
 - API Key나 별도 서버 없이 GitHub Pages에 적용
 - Jekyll Chirpy 테마의 `_config.yml` 설정을 최대한 활용
 
-이 글은 Chirpy 테마 기준으로 작성했지만, 기본 개념은 다른 Jekyll 블로그에도 비슷하게 적용할 수 있습니다.
+이 문서는 Chirpy 테마 기준으로 작성했지만, 기본 개념은 다른 Jekyll 블로그에도 비슷하게 적용할 수 있습니다.
 
 ## GitHub Pages에서 댓글과 조회수가 까다로운 이유
 
-GitHub Pages는 HTML, CSS, JavaScript 같은 정적 파일을 호스팅합니다.   
+GitHub Pages는 HTML, CSS, JavaScript 같은 정적 파일을 호스팅합니다.
 즉 서버에서 DB에 값을 저장하거나, 방문자가 들어올 때마다 조회수를 `+1` 하는 백엔드 코드를 직접 실행할 수 없습니다.
 
 그래서 댓글과 조회수는 보통 아래 방식 중 하나를 선택합니다.
@@ -37,12 +33,12 @@ GitHub Pages는 HTML, CSS, JavaScript 같은 정적 파일을 호스팅합니다
 - Firebase, Supabase 같은 외부 DB를 직접 붙임
 - 별도 API 서버를 운영
 
-개인 기술 블로그라면 너무 무겁게 가져갈 필요는 없습니다.   
+개인 기술 블로그라면 너무 무겁게 가져갈 필요는 없습니다.
 댓글은 GitHub Discussions 기반의 `giscus`, 조회수는 가벼운 `GoatCounter` 조합이면 충분히 실용적입니다.
 
 ## giscus란?
 
-`giscus`는 GitHub Discussions를 댓글 저장소로 사용하는 댓글 시스템입니다.   
+`giscus`는 GitHub Discussions를 댓글 저장소로 사용하는 댓글 시스템입니다.
 방문자가 블로그 글에 댓글을 남기면 실제 데이터는 GitHub Discussions에 저장됩니다.
 
 장점은 다음과 같습니다.
@@ -68,7 +64,7 @@ giscus를 사용하려면 먼저 GitHub repository에서 몇 가지 설정을 �
 
 ### 1. Repository public 확인
 
-giscus는 public repository에서 사용하는 것이 기본입니다.   
+giscus는 public repository에서 사용하는 것이 기본입니다.
 방문자가 댓글 Discussion을 볼 수 있어야 하기 때문입니다.
 
 예를 들어 블로그 repository가 아래와 같다면:
@@ -94,7 +90,7 @@ Discussions를 켜면 repository 상단 메뉴에 `Discussions` 탭이 생깁니
 
 ### 3. giscus GitHub App 설치
 
-giscus는 GitHub App으로 동작합니다.   
+giscus는 GitHub App으로 동작합니다.
 아래 페이지에서 설치합니다.
 
 ```txt
@@ -130,7 +126,7 @@ data-repo-id="..."
 data-category-id="..."
 ```
 
-이 값들은 API Key가 아닙니다.   
+이 값들은 API Key가 아닙니다.
 비밀값이 아니라 GitHub repository와 discussion category를 식별하기 위한 공개 ID입니다.
 
 ## Chirpy에서 giscus 설정하기
@@ -170,7 +166,7 @@ comments:
     reactions_enabled: 1
 ```
 
-여기서 `repo_id`와 `category_id`는 꼭 실제 값으로 바꿔야 합니다.   
+여기서 `repo_id`와 `category_id`는 꼭 실제 값으로 바꿔야 합니다.
 `TODO_GISCUS_REPO_ID` 같은 placeholder가 남아 있으면 댓글 위젯이 정상적으로 동작하지 않을 수 있습니다.
 
 ## Disqus 흔적 제거하기
@@ -188,10 +184,10 @@ Disqus 광고 연동을 쓰지 않는다면 제거해도 됩니다.
 
 ## GoatCounter로 조회수 붙이기
 
-조회수는 `GoatCounter`를 사용합니다.   
+조회수는 `GoatCounter`를 사용합니다.
 GoatCounter는 가볍고, 개인 블로그에 붙이기 부담이 적습니다.
 
-Chirpy는 GoatCounter pageviews를 기본으로 지원합니다.   
+Chirpy는 GoatCounter pageviews를 기본으로 지원합니다.
 `_config.yml`에서 아래처럼 설정하면 됩니다.
 
 ```yml
@@ -203,7 +199,7 @@ pageviews:
   provider: goatcounter
 ```
 
-여기서 `tech-henjini`는 GoatCounter의 site code입니다.   
+여기서 `tech-henjini`는 GoatCounter의 site code입니다.
 즉 아래 주소에 대응됩니다.
 
 ```txt
@@ -225,10 +221,10 @@ giscus에서 필요한 값은 다음 정도입니다.
 
 이 값들은 비밀키가 아니라 공개 설정값입니다.
 
-GoatCounter도 일반적인 Chirpy 연동에서는 별도 API Key가 필요하지 않습니다.   
+GoatCounter도 일반적인 Chirpy 연동에서는 별도 API Key가 필요하지 않습니다.
 site code만 맞으면 됩니다.
 
-다만 Firebase, Supabase, 자체 서버로 조회수를 직접 구현한다면 이야기가 달라집니다.   
+다만 Firebase, Supabase, 자체 서버로 조회수를 직접 구현한다면 이야기가 달라집니다.
 그 경우에는 anon key, RLS, abuse 방어, 중복 조회 방지 등을 따로 설계해야 합니다.
 
 개인 블로그라면 처음부터 복잡하게 가져가기보다는 giscus와 GoatCounter 조합으로 시작하는 편이 좋습니다.
@@ -243,12 +239,12 @@ site code만 맞으면 됩니다.
 - GoatCounter dashboard에 방문 기록이 찍히는지
 - 글 상세 페이지의 조회수 영역이 비어 있지 않은지
 
-조회수가 바로 안 보인다면 광고 차단기가 GoatCounter 요청을 막고 있을 수도 있습니다.   
+조회수가 바로 안 보인다면 광고 차단기가 GoatCounter 요청을 막고 있을 수도 있습니다.
 브라우저 확장 프로그램을 잠시 끄거나 다른 브라우저에서 확인해보면 원인 파악이 쉽습니다.
 
 ## 정리
 
-GitHub Pages는 정적 호스팅이라 댓글과 조회수를 직접 저장할 수 없습니다.   
+GitHub Pages는 정적 호스팅이라 댓글과 조회수를 직접 저장할 수 없습니다.
 하지만 GitHub 생태계와 잘 맞는 도구를 붙이면 별도 서버 없이도 충분히 블로그다운 기능을 만들 수 있습니다.
 
 내 기준에서 가장 무난한 조합은 다음입니다.
@@ -260,7 +256,7 @@ GitHub Pages는 정적 호스팅이라 댓글과 조회수를 직접 저장할 �
 
 Disqus 없이도 댓글과 조회수를 구현할 수 있고, API Key나 서버 운영 없이 시작할 수 있다는 점이 가장 큰 장점입니다.
 
-## 실무 체크리스트
+## 적용 전 확인
 
 - [ ] repository가 public인지 확인한다.
 - [ ] GitHub Discussions를 활성화한다.

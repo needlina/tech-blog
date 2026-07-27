@@ -1,4 +1,4 @@
----
+﻿---
 title: "서비스 워커·쿠키 변경으로 인한 세션 불일치 복구 절차"
 description: "서비스 워커와 쿠키 변경으로 세션이 어긋날 때 확인할 항목(브라우저 캐시, SW scope, 쿠키 도메인/경로, SameSite/secure), 재현 명령, 서버 로그와 브라우저 검사 방법, 안전한 복구 순서와 검증 명령"
 slug: "service-worker-cookie-session-recovery"
@@ -20,7 +20,7 @@ image:
 
 서비스 워커가 배포되거나 쿠키 이름·속성이 바뀌었을 때 브라우저에 남은 서비스 워커/캐시 때문에 클라이언트가 옛 쿠키를 보내거나 새로운 쿠키를 무시해 서버와 세션이 불일치하는 사례가 자주 발생하며, **브라우저에서 SW 등록 상태, 쿠키 도메인·경로·SameSite·secure, 서버 로그의 세션 ID 비교**를 순서대로 확인하면 안전하게 복구할 수 있습니다.
 
-제가 공부하면서 정리한 내용을 차근차근 적어볼게요. 실무에서 바로 확인할 포인트, 재현 및 복구 명령과 실패/수정 코드 예시도 포함했습니다.
+정리한 내용을 차근차근 적어볼게요. 운영에서 바로 볼 지점, 재현 및 복구 명령과 실패/수정 코드 예시도 포함했습니다.
 
 왜 이런 불일치가 발생하나
 
@@ -28,16 +28,15 @@ image:
 - 쿠키 속성이 바뀌면 (ex: domain, path, SameSite, secure) 브라우저가 쿠키를 보내지 않거나 기존 쿠키를 덮어쓰지 못해 세션 탐지 실패로 이어집니다.
 - 특히 HTTPS 전환(secure 속성), 서브도메인 변경(도메인 속성), 혹은 HttpOnly 변경 같은 경우에 불일치가 자주 발생합니다.
 
-공부하면서 알게 된 점
+확인하며 남긴 메모
 
 - **브라우저 단에서의 우선순위**: 서비스 워커가 네트워크 요청을 가로채면 서버에 도달하기 전 응답이 결정된다. 그래서 서버 로그만 보면 원인을 놓치기 쉽습니다.
 - **쿠키 검사 우선순위**: 개발자 도구의 Application 탭에서 보이는 쿠키와 실제 요청에 붙는 쿠키는 다를 수 있습니다(특히 SameSite/secure 조건으로 인해).
 - **배포 전 SW 버전 관리 중요성**: SW 변경 시 scope와 캐시 네임을 명확히 관리하면 롤백/업그레이드 시 충돌 빈도를 줄일 수 있었습니다.
 
 ![브라우저 콘솔에 401이 뜨는데 서버에는 요청이 아예 안 찍혀요](/assets/img/posts/blog/service-worker-cookie-session-recovery/image-1.webp)
-이미지 출처: AI 생성 이미지
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 
 - "브라우저 콘솔에 401이 뜨는데 서버에는 요청이 아예 안 찍혀요" — 이 경우 대개 SW가 응답을 가로채서 클라이언트에 에러를 반환한 사례였습니다. SW를 unregister 하지 않으면 재현이 어렵더군요.
 - 쿠키가 Application에 보이는데 request headers에는 없는 경우 — SameSite 또는 secure/HTTP vs HTTPS 차이가 원인일 가능성이 높았습니다.
@@ -139,7 +138,6 @@ image:
 4. 배포 후 모니터링: 5분 간격으로 성공/실패 요청 비율, 401/403 건수 확인
 
 ![서비스 워커가 네트워크 요청을 가로채는 간단한 개념도](/assets/img/posts/blog/service-worker-cookie-session-recovery/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 비교: 세션 불일치 복구 전략
 
@@ -160,40 +158,6 @@ image:
   - 서버에서 Set-Cookie 확인: Set-Cookie: session_v2=abc123; Path=/; Secure; HttpOnly; SameSite=Lax
   - curl -k -i -b "session_v2=abc123" https://app.example.test/api/data
   - 성공 시 HTTP/1.1 200 OK
-
-자주 묻는 질문
-Q: 서비스 워커를 완전히 비활성화하려면?  
-A: DevTools > Application > Service Workers > Unregister 또는 스크립트에서 navigator.serviceWorker.getRegistrations()로 unregister. 자동화는 Puppeteer/Playwright로 가능.
-
-Q: 쿠키가 Application에는 보이는데 요청에 안 붙는 이유는?  
-A: SameSite, secure 속성, 도메인/경로 불일치 또는 서브도메인 차이일 가능성이 큽니다. 또한 HttpOnly는 JS에서 안 보이지만 요청엔 붙습니다.
-
-Q: 서버에서 이전 쿠키를 허용해도 보안상 문제 없나요?  
-A: 잠정적으로는 가능하지만 **장기적으로는 위험**할 수 있습니다. 이전 쿠키가 탈취된 상태라면 허용은 공격 표면을 늘립니다. 단기간의 롤백 용도로만 쓰세요.
-
-Q: 자동화로 사용자의 SW를 정리하는 게 가능한가요?  
-A: 브라우저 내부에서만 가능하므로 클라이언트 코드나 PWA 업데이트 로직으로 안내/유도해야 합니다. 원격에서 일괄 삭제는 불가능합니다.
-
-실무 체크리스트
-
-- 브라우저 측
-  - [ ] DevTools > Application > Service Workers에서 등록 상태·scope 확인
-  - [ ] Network 탭에서 실제 Request Headers의 Cookie 확인
-  - [ ] Application > Cookies에서 domain/path/SameSite/secure 확인
-- 서버 측
-  - [ ] 로그에서 "Session ID mismatch" 혹은 401 증가 시점 확인 (로그 경로: /var/log/myapp/\*.log)
-  - [ ] Set-Cookie 헤더가 의도한 속성으로 발급되는지 확인 (curl -I -k https://...)
-  - [ ] 세션 저장소(예: Redis)에서 session keys 갱신/중복 여부 확인
-- 배포·SW
-  - [ ] 서비스 워커 파일명/캐시 네임을 배포마다 변경하여 캐시 충돌 방지
-  - [ ] 인증 관련 API를 캐시하지 않도록 SW 정책 수정
-  - [ ] 롤백 계획: 이전 쿠키 허용 기간, 강제 로그아웃 경로 준비
-- 검증 명령(재현·확인)
-  - curl -i -b "session_v2=abc123" https://app.example.test/api/profile
-  - tail -n 200 /var/log/myapp/error.log | grep "Session"
-  - Puppeteer 스크립트로 navigator.serviceWorker.getRegistrations()
-
-마무리
 
 - 우선순위로는 1) 브라우저에서 SW 등록/캐시 여부 확인, 2) 요청에 실제 어떤 쿠키가 붙는지 검사, 3) 서버 로그에서 세션 ID 불일치 증거 확인을 먼저 하세요.
 - 만약 SW가 인증 응답을 캐시해 생긴 문제라면 SW 수정(캐시 정책 변경)과 함께 빠르게 unregister 유도하는 것이 좋습니다.

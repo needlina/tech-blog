@@ -1,5 +1,5 @@
----
-title: "동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 가이드"
+﻿---
+title: "동시 대량 업로드로 인한 임시 파일·디스크 급증 대응 기준"
 description: "백엔드에서 동시 대량 업로드로 임시 파일·디스크 사용량이 급증할 때 빠르게 증상 확인하고 임시 완화(tmpfs, 삭제, 서비스 재시작) 후 스트리밍·직접 업로드로 장기 해결하는 절차와 점검 명령"
 slug: "backend-concurrent-uploads-temp-disk-control"
 date: 2026-07-18 12:00:00 +0900
@@ -12,7 +12,7 @@ image:
 
 동시 다중 업로드가 몰리면 서비스 로그에 "ENOSPC" 같은 오류와 함께 /tmp나 컨테이너 루트의 디스크가 빠르게 채워질 수 있는데, 우선은 **디스크 사용량 확인(df/du), 열린 파일 확인(lsof), 임시파일 위치(/tmp, /var/lib/docker) 제거**로 단기 완화를 하고, 근본적으로는 **스트리밍 업로드 혹은 클라이언트→S3(사전 서명) 직접 업로드** 같은 설계 변경을 고려해야 합니다.
 
-시작 상황: 로컬/소규모 테스트에선 괜찮았는데, 프로덕션에서 50~200 동시 업로드가 들어오자 몇 분 만에 /tmp가 채워지고 서비스가 ENOSPC를 반환한 케이스를 마주했습니다. 아래는 제가 공부하면서 정리한 점과 실무에서 바로 쓸 수 있는 점검·대응 절차입니다.
+시작 상황: 로컬/소규모 테스트에선 괜찮았는데, 프로덕션에서 50~200 동시 업로드가 들어오자 몇 분 만에 /tmp가 채워지고 서비스가 ENOSPC를 반환한 케이스를 마주했습니다. 아래는 정리한 점과 실무에서 바로 쓸 수 있는 점검·대응 절차입니다.
 
 실무 핵심 요약
 
@@ -21,18 +21,18 @@ image:
 - 임시 완화: 오래된 임시파일 삭제(find /tmp -type f -mtime +1 -delete), tmpfs 마운트, 서비스 재시작(필요 시)
 - 근본 대책: 스트리밍 처리·버퍼 최소화, direct-to-cloud(Pre-signed upload), 업로드 제한/요율제어(rate limit)
 
-공부하면서 알게 된 점
+확인하며 남긴 메모
 
 - 디스크가 차는 원인은 단순히 파일 크기뿐만 아니라 업로드 처리 방식(메모리 vs 디스크 버퍼, 멀티파트 처리 라이브러리)이 큽니다. 예를 들어 Node.js + multer의 diskStorage를 그대로 쓰면 동시 업로드 수 × 파일 크기만큼 /tmp에 쌓입니다.
 - Docker 컨테이너 환경에서는 컨테이너의 루트 파일시스템(/)이 호스트의 /var/lib/docker/overlay2에 쌓이므로 컨테이너 내부 df만 보면 안 되고 호스트 df를 함께 봐야 했습니다.
 - tmpfs(메모리 기반 임시 파일시스템)는 임시 완화로 유용하지만 메모리 부족을 유발하므로 크기 한도를 정해둬야 합니다.
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 
 - "inode 고갈 vs 용량 고갈"이 구별되지 않아 잘못된 조치를 했습니다. inode 고갈인 경우 많은 작은 파일이 문제라서 du로는 잘 안 보이고 df -i로 확인해야 합니다.
 - 컨테이너 내부에서 /tmp를 비워도 호스트 측 Docker 레이어에 남아있는 경우가 있어서, docker system df와 /var/lib/docker 경로를 확인해야 한다는 점을 나중에 알아챘습니다.
 
-실무에서는 이렇게 확인하면 좋겠다 (즉시 명령 모음)
+운영 전 확인할 부분 (즉시 명령 모음)
 
 - 디스크/인오드 확인
   - df -h
@@ -91,7 +91,6 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 ```
 
 ![임시 파일이 쌓여 있는 서버의 개념도](/assets/img/posts/blog/backend-concurrent-uploads-temp-disk-control/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 문제: 업로드가 끝난 시점까지 디스크에 파일이 남고, 동시 업로드가 많으면 디스크가 금방 가득 참.
 
@@ -166,7 +165,6 @@ app.post("/upload", (req, res) => {
 - seq 1 100 | xargs -n1 -P10 -I{} curl -F "file=@10MB.bin" http://localhost:3000/upload
 
 ![임시 파일 전략과 직접 업로드 비교 일러스트](/assets/img/posts/blog/backend-concurrent-uploads-temp-disk-control/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 공부하면서 알게 된 실무 팁
 
@@ -175,7 +173,7 @@ app.post("/upload", (req, res) => {
 - 컨테이너 환경에서는 호스트의 /var/lib/docker 사용량을 확인하세요. 컨테이너가 삭제돼도 호스트 레이어에 파일이 남는 경우가 있습니다.
 - 업로드 처리 라이브러리의 기본 설정(예: multer의 dest, busboy의 높은 수치 버퍼)은 문서로 확인하고 기본값을 신뢰하지 마세요.
 
-## 자주 묻는 질문 / Q&A
+## 케이스별 확인
 
 Q1. ENOSPC가 뜨는데 어떤 순서로 확인해야 하나요?
 
@@ -200,25 +198,7 @@ Q5. 어떤 경우에 스트리밍보다 Pre-signed URL이 좋은가요?
 
 - 대형 파일(수백 MB 이상), 높은 동시성, 서버 리소스를 아끼고 싶을 때 Pre-signed가 유리합니다. 서버가 인증·메타데이터 처리만 담당하면 됩니다.
 
-실무 체크리스트 (바로 따라할 수 있도록)
-
-- [ ] df -h, df -i로 전체 상태 확인
-- [ ] sudo lsof +L1로 삭제됐지만 열린 파일 확인
-- [ ] sudo du -sh /tmp /var/lib/docker/overlay2 확인
-- [ ] 오래된 임시파일 삭제(삭제 전 영향 범위/백업 검토)
-  - sudo find /tmp -type f -mtime +1 -delete
-- [ ] 임시 완화 필요 시 tmpfs 마운트(메모리 한도 설정)
-  - sudo mount -t tmpfs -o size=2G tmpfs /tmp
-- [ ] 업로드 처리 코드 검토: diskStorage 사용 여부, 스트리밍으로 전환 가능성 확인
-- [ ] 장기 대책: Pre-signed URL, S3 Multipart, 클라이언트-side 재시도/요율제어 설계
-- [ ] 재현 테스트: dd로 파일 만들기, xargs+cURL로 동시 업로드 시뮬레이션
-- [ ] 관련 문서 참조
-  - Linux tmpfs: https://www.kernel.org/doc/html/latest/filesystems/tmpfs.html
-  - AWS S3 Multipart Upload: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html
-  - Node.js Streams: https://nodejs.org/api/stream.html
-  - Docker storage: https://docs.docker.com/storage/
-
-마무리(실무에서 먼저 확인할 항목)
+(실무에서 먼저 확인할 항목)
 
 - 먼저 확인할 것: df/df -i → lsof +L1 → du로 큰 디렉터리 확인.
 - 언제 다른 선택지가 나은가: 동시성이 낮고 파일이 작으면 서버 임시 저장이 편하지만, 동시성이 높고 대용량이면 **Pre-signed direct upload**나 **스트리밍**을 우선적으로 고려하는 편이 실무에서 더 안전할 가능성이 큽니다.

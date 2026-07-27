@@ -1,4 +1,4 @@
----
+﻿---
 title: "PostgreSQL EXPLAIN 읽기: 먼저 보는 항목들과 실무 체크포인트"
 description: "PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들"
 slug: "postgresql-explain-first-look"
@@ -9,21 +9,9 @@ image:
   path: /assets/img/posts/blog/postgresql-explain-first-look/image-1.png
   alt: "PostgreSQL EXPLAIN 출력의 요약과 주요 항목을 도식화한 이미지"
 ---
-
-PostgreSQL EXPLAIN 결과를 읽을 때 먼저 보는 항목들
-
-처음 PostgreSQL의 EXPLAIN을 접했을 때는 출력의 숫자들과 용어들(cost, rows, actual, loops 등) 때문에 막막했습니다. 공부를 조금씩 하면서 어느 정도는 이해가 되었고, 특히 실무에서 어떤 항목을 우선적으로 확인하면 좋을지 감을 잡게 되었습니다. 이 글은 제가 공부하면서 정리한 내용을 초보의 시선으로, 실무에서 바로 확인할 포인트 위주로 정리한 것입니다. 틀릴 가능성도 있으니 참고 정도로 읽어주시면 좋겠습니다.
+처음 PostgreSQL의 EXPLAIN을 접했을 때는 출력의 숫자들과 용어들(cost, rows, actual, loops 등) 때문에 막막했습니다. 공부를 조금씩 하면서 어느 정도는 이해가 되었고, 특히 실무에서 어떤 항목을 우선적으로 확인하면 좋을지 감을 잡게 되었습니다. 이 문서는 정리한 내용을 초보의 시선으로, 운영에서 바로 볼 지점 위주로 정리한 것입니다. 틀릴 가능성도 있으니 참고 정도로 읽어주시면 좋겠습니다.
 
 ![PostgreSQL EXPLAIN 출력의 요약과 주요 항목을 도식화한 이미지](/assets/img/posts/blog/postgresql-explain-first-look/image-1.png)
-이미지 출처: AI 생성 이미지
-
-목차(읽는 흐름)
-- EXPLAIN의 종류와 간단한 사용법
-- 출력에서 먼저 보는 항목들(우선순위)
-- 주요 노드(Scan/Join/Sort 등)별로 확인할 점
-- 실무에서의 체크 절차(명령어·설정 예시 포함)
-- 공부하면서 알게 된 점 / 헷갈렸던 부분 / 실무 팁
-- 실무 체크리스트
 
 1) EXPLAIN의 기본과 한 줄 사용법
 - EXPLAIN: 쿼리 계획(추정치)만 보여줍니다.
@@ -43,7 +31,7 @@ EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) SELECT * FROM orders WHERE user_id = 123
 ```
 
 2) 먼저 보는 항목들 (우선순위로)
-제가 정리한 '먼저 보는 항목' 순서는 다음과 같습니다. 실무에서는 이 순서대로 확인해보면 원인 파악이 빠르게 됩니다.
+정리한 '먼저 보는 항목' 순서는 다음과 같습니다. 실무에서는 이 순서대로 확인해보면 원인 파악이 빠르게 됩니다.
 
 1. 실제 실행 여부: EXPLAIN만으로는 실행 비용 추정치만 봅니다. 실제 상황인지 확인하려면 EXPLAIN ANALYZE를 사용하세요.
 2. Actual vs Estimated (rows, time): 실제 행 수(actual rows)와 추정 rows(estimated rows)가 크게 다르면 통계(ANALYZE)나 인덱스 선택에 문제가 있을 수 있습니다.
@@ -144,7 +132,6 @@ auto_explain.log_buffers = on
 설정 변경 후 DB 재시작 필요합니다. 이 방법은 실서비스에서 어떤 쿼리가 문제인지 찾는 데 도움이 되지만, 로그량/오버헤드에 주의하세요.
 
 ![EXPLAIN 출력에서 노드별(SeqScan, IndexScan, HashJoin 등) 주요 수치를 가리키는 다이어그램](/assets/img/posts/blog/postgresql-explain-first-look/image-2.png)
-이미지 출처: AI 생성 이미지
 
 6) 실제 예와 해석(초보자도 따라하기 쉽게)
 예시 EXPLAIN ANALYZE 출력(요약 형태):
@@ -160,16 +147,16 @@ Execution Time: 456.789 ms
 - 하지만 내부 Index Scan의 actual time이 각 loop마다 작지 않다면 전체 실행 시간은 크게 늘어날 수 있습니다. 이럴 때는 Hash Join/Bitmap이 더 효율적일지 검토해볼 수 있습니다(데이터 분포에 따라 다릅니다).
 - Planning vs Execution time을 같이 보면 planning이 오래 걸리는 쿼리는 쿼리 복잡성(많은 JOIN, 서브쿼리)나 파라미터화 특성 문제일 수 있습니다.
 
-7) 공부하면서 알게 된 점
+7) 확인하며 남긴 메모
 - EXPLAIN에서 보여주는 값들은 '추정'이 기본인 경우가 많아서 통계가 매우 중요하다는 점을 알게 되었습니다. ANALYZE를 주기적으로 돌려 통계를 갱신하면 planner의 선택이 바뀌는 경우가 있었습니다.
 - Index Only Scan이 항상 빠른 건 아니라는 점. visibility map과 함께 작동하기 때문에 테이블 변경이 잦으면 index-only가 잘 안될 수 있습니다.
 - cost 값 자체는 절대적이지 않아서, 다른 계획과의 상대 비교가 중요하다는 점을 실무에서 더 느꼈습니다.
 
-8) 처음에는 헷갈렸던 부분
+8) 처음 확인할 때 막히는 부분
 - cost의 의미(특히 start..end)와 실제 시간의 관계. start..end는 추정 비용의 범위이지 밀리초 수가 아니라는 점이 처음에는 헷갈렸습니다.
 - loops 값의 의미도 초반에 오해했는데, 어떤 노드는 내부 반복 때문에 큰 loops 값을 가지며 이로 인해 실제 트래픽이 증폭된다는 사실을 실제 EXPLAIN ANALYZE를 통해 확인하면서 이해했습니다.
 
-9) 실무에서는 이렇게 확인하면 좋겠다 (권장 절차)
+9) 운영 전 확인할 부분 (권장 절차)
 - 문제 쿼리 발견 → EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)로 실제 실행 계획 수집
 - pg_stat_statements로 빈도/비용이 큰 쿼리 파악
 - 문제 쿼리의 통계 확인 및 ANALYZE 수행
@@ -187,7 +174,7 @@ Execution Time: 456.789 ms
 - [ ] 설정 변경( work_mem, random_page_cost 등)은 반드시 테스트 환경에서 먼저 검증했다.
 - [ ] Docker/시스템 환경에서 psql 접근 방법과 로그 확인 절차를 문서화해 두었는가?
 
-마무리하며
-이 글은 제가 EXPLAIN을 처음 배울 때 정리해둔 요점들을 바탕으로 작성했습니다. EXPLAIN은 처음엔 복잡하지만, '먼저 볼 항목들'의 우선순위와 간단한 체크 절차만 기억해도 문제 원인 탐색이 훨씬 수월해집니다. 실무에서는 항상 안전하게(특히 EXPLAIN ANALYZE는 실제 실행을 하기 때문에) 테스트 환경에서 먼저 시도하고, 로그와 통계를 통해 반복적으로 확인하는 습관이 도움이 되었습니다.
+하며
+이 문서는 제가 EXPLAIN을 처음 배울 때 정리해둔 요점들을 바탕으로 작성했습니다. EXPLAIN은 처음엔 복잡하지만, '먼저 볼 항목들'의 우선순위와 간단한 체크 절차만 기억해도 문제 원인 탐색이 훨씬 수월해집니다. 실무에서는 항상 안전하게(특히 EXPLAIN ANALYZE는 실제 실행을 하기 때문에) 테스트 환경에서 먼저 시도하고, 로그와 통계를 통해 반복적으로 확인하는 습관이 도움이 됩니다.
 
-읽어주셔서 감사합니다. 혹시 특정 EXPLAIN 출력(원본)을 공유해 주시면 함께 단계별로 해석해보면서 더 구체적으로 도와드릴 수 있어요.
+혹시 특정 EXPLAIN 출력(원본)을 공유해 주시면 함께 단계별로 해석해보면서 더 구체적으로 도와드릴 수 있어요.

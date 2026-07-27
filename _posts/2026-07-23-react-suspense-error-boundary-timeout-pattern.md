@@ -1,4 +1,4 @@
----
+﻿---
 title: "React Suspense와 Error Boundary를 타임아웃과 안전하게 결합하는 패턴"
 description: "React 18+ 환경에서 Suspense와 Error Boundary에 타임아웃을 결합하는 방법, AbortController 예제 코드, 타임아웃 값·fallback UI·재시도·로그 확인 포인트 정리"
 slug: "react-suspense-error-boundary-timeout-pattern"
@@ -9,16 +9,13 @@ image:
   path: /assets/img/posts/blog/react-suspense-error-boundary-timeout-pattern/preview.png
   alt: "Suspense + Timeout 썸네일"
 ---
-
-로컬에서는 빠르게 보이는데 프로덕션에서 네트워크 지연으로 컴포넌트가 무한 로딩되는 상황을 겪을 수 있다. React Suspense와 Error Boundary를 **타임아웃(예: 3초)** 및 AbortController와 결합하면 사용자에게 적절한 대체 UI를 보여주고, 오류를 명확히 기록하며 안전하게 재시도할 수 있다 — 실무에서는 타임아웃 값, fallback 디자인, 로그/모니터링 포인트를 먼저 점검하면 좋다.
-
 ## 왜 나한테 필요한가
 
 - 사용자는 무한 스피너를 싫어한다. 일정 시간 이상 로딩되면 명확한 상태(오류 / 재시도 버튼 / 최소 정보)를 주는 편이 UX 측면에서 좋다.
 - Suspense만으로는 "무한 대기" 상황을 자동으로 정리하지 못한다. Error Boundary는 예외를 잡지만, 네트워크 지연은 예외가 아닐 수 있어 별도 타임아웃 로직가 필요하다.
 - AbortController로 요청을 취소하면 불필요한 리소스 사용을 줄이고, 백엔드 오용을 막을 수 있다.
 
-## 공부하면서 알게 된 점
+## 확인하며 남긴 메모
 
 - React 18부터 Concurrent 기능과 Suspense 사용 경험이 달라졌다. Suspense로 데이터를 "일시 중단(suspend)"시키는 방식이 편리하지만, 브라우저의 실제 네트워크 지연을 자동으로 에러로 바꾸지는 않는다.
 - fetch의 타임아웃은 기본 제공되지 않아서 AbortController를 직접 사용해야 했다.
@@ -31,7 +28,6 @@ image:
 - Timeout + AbortController: 요청을 일정 시간 이후 취소하고, 취소 시점에 명확히 오류로 전환시켜 Error Boundary로 핸들링하게 함.
 
 ![Suspense와 Error Boundary의 흐름을 단순히 보여주는 개념 그림](/assets/img/posts/blog/react-suspense-error-boundary-timeout-pattern/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 간단 실패 예시 (문제 상황)
 
@@ -176,12 +172,12 @@ app.listen(4000);
 | Suspense + ErrorBoundary + Timeout | 스피너→오류 표기 | AbortEvent, HTTP 상태, 사용자 재시도 흐름 | 타임아웃 값 조정, 재시도 전략 |
 | 수동 fetch(useEffect)              | 복잡한 로딩 상태 | 상태 관리 복잡성, 메모리 누수             | custom hook으로 추상화        |
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 
 - Suspense가 "모든 비동기"를 자동으로 해결해줄 것 같았는데, 실제로는 Promise가 끝나지 않으면 Error Boundary로 넘어오지 않아 별도 타임아웃 관리가 필요했다.
 - AbortController가 브라우저와 node fetch 구현에 따라 동작이 조금씩 달라서, polyfill 필요 여부를 확인해야 했다.
 
-실무에서는 이렇게 확인하면 좋겠다 (우선순위)
+운영 전 확인할 부분 (우선순위)
 
 1. 서비스의 p50/p95 응답 시간 확인 (예: p95 > 2000ms이면 타임아웃 긴급 검토).
 2. Sentry/애플리케이션 로그에서 "AbortError" 또는 fetch 관련 에러를 필터링.
@@ -190,20 +186,19 @@ app.listen(4000);
 5. 테스트: 로컬 지연 서버(위 예제)로 재현 후 재시도 동작, 메모리 누수 확인.
 
 ![타임아웃 발생 후 재시도 흐름을 단순히 보여주는 그림](/assets/img/posts/blog/react-suspense-error-boundary-timeout-pattern/image-2.webp)
-이미지 출처: AI 생성 이미지
 
-### Q&A (자주 묻는 질문)
+## 독자가 헷갈리기 쉬운 부분
 
-Q: 타임아웃 값은 어떻게 정하나요?  
+Q: 타임아웃 값은 어떻게 정하나요?
 A: 기본값으로 2000~5000ms 범위를 많이 쓰지만, **서비스의 p95 응답시간**, 사용자 기대(대화형인지, 배치성인지), 네트워크 환경을 기준으로 정하세요. 예: p95가 800ms이면 timeout 2000ms가 합리적일 수 있습니다.
 
-Q: AbortController는 어디서 생성해야 하나요?  
+Q: AbortController는 어디서 생성해야 하나요?
 A: 요청 단위로 생성하는 게 안전합니다. 여러 요청을 한 번에 취소해야 한다면 상위 로직에서 여러 controller를 묶어 관리할 수 있습니다. 공유 시 의도치 않은 취소가 발생하지 않도록 주의해야 합니다.
 
-Q: Error Boundary로 모든 오류를 처리할 수 있나요?  
+Q: Error Boundary로 모든 오류를 처리할 수 있나요?
 A: 렌더/라이프사이클에서 발생하는 예외는 잡지만, Promise가 끝나지 않거나 외부 이벤트는 직접 예외로 만들지 않으면 잡히지 않습니다. 그래서 타임아웃으로 강제로 에러를 발생시키는 패턴이 필요합니다.
 
-Q: 재시도 정책은 어떻게 세우나요?  
+Q: 재시도 정책은 어떻게 세우나요?
 A: 간단한 정수 기반(최대 2회) 또는 지수 백오프를 권장합니다. 다음을 고려하세요: idempotency, 서버 비용, 사용자 혼란.
 
 ## 코드 예시: 실패 예시와 수정 예시를 나란히 보여주기 (요약)
@@ -211,25 +206,7 @@ A: 간단한 정수 기반(최대 2회) 또는 지수 백오프를 권장합니�
 - 실패: Suspense만 사용 → 무한 스피너
 - 수정: fetchWithTimeout + wrapPromise + ErrorBoundary
 
-실무 체크리스트
-
-- [ ] React 버전 확인: React >= 18.0.0 (확인 명령: package.json 또는 npm ls react)
-- [ ] 브라우저/환경에서 AbortController 지원 여부(폴리필 필요 시 명시)
-- [ ] p50/p95 응답시간 확인(예: Prometheus, Datadog)
-- [ ] 타임아웃 값 설정(권장 시작값: 2000~5000ms) 및 A/B 테스트 계획
-- [ ] Error Boundary에 사용자용 메시지 및 재시도 UX 구현
-- [ ] 로그/에러 수집: AbortError, HTTP status, 사용자 재시도 이벤트를 수집
-- [ ] 재현 스크립트 준비: 로컬 delay 서버(node/express)로 테스트 (server.js 예시)
-- [ ] 모니터링: 네트워크 abort 비율, 재시도 성공률, p95 개선 여부 확인
-- 재현 명령 예시:
-  - 서버 실행: node server.js
-  - 브라우저에서 페이지 열기 또는 curl로 확인: curl -v http://localhost:4000/api/user (지연 관찰)
-- 공식 문서 확인 경로:
-  - React Suspense: https://reactjs.org/docs/concurrent-mode-suspense.html
-  - Error Boundaries: https://reactjs.org/docs/error-boundaries.html
-  - AbortController: https://developer.mozilla.org/en-US/docs/Web/API/AbortController
-
-마무리(무작정 요약 대신)
+(무작정 요약 대신)
 
 - 이 주제에서 먼저 확인할 것: 현재 p95 응답시간과 사용자에게 보여지는 최대 허용 로딩 시간(예: 2~5초).
 - 언제 다른 선택지가 나은가: 데이터가 작고 빠르며 실패 시 자동 재시도가 불필요하면 Suspense 단독도 괜찮지만, 네트워크 불안정성이 있거나 사용자에게 명확한 피드백이 필요하면 **타임아웃 + Error Boundary** 조합을 권한다.

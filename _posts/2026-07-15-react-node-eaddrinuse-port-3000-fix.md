@@ -1,4 +1,4 @@
----
+﻿---
 title: "React/Node.js 실행 오류 listen EADDRINUSE address already in use 3000 해결 방법"
 description: "React나 Node.js 개발 서버에서 listen EADDRINUSE address already in use 3000 오류가 날 때 포트 점유 프로세스를 찾고 정리하는 방법을 정리했습니다."
 slug: "react-node-eaddrinuse-port-3000-fix"
@@ -10,7 +10,7 @@ image:
   alt: "React/Node.js 실행 오류 listen EADDRINUSE address already in use 3000 해결 방법 썸네일"
 ---
 
-React나 Node.js 개발 서버에서 `listen EADDRINUSE: address already in use :::3000` 오류가 나면 대부분 이미 같은 포트를 쓰는 프로세스가 있다는 뜻입니다. 이 글은 포트를 확인하고 안전하게 정리하는 순서를 정리합니다.
+React나 Node.js 개발 서버에서 `listen EADDRINUSE: address already in use :::3000` 오류가 나면 대부분 이미 같은 포트를 쓰는 프로세스가 있다는 뜻입니다. 이 문서는 포트를 확인하고 안전하게 정리하는 순서를 정리합니다.
 
 React나 Node.js 개발 서버 실행 중 `listen EADDRINUSE: address already in use :::3000` 에러가 날 때 포트를 확인하고 정리하는 방법
 
@@ -26,7 +26,7 @@ node:events:491
 Error: listen EADDRINUSE: address already in use :::3000
 ```
 
-처음 이 메시지를 봤을 때는 Node.js 자체가 깨진 것처럼 느껴졌는데, 공부해보니 대부분은 "이미 3000번 포트를 쓰고 있는 프로세스가 있다"는 뜻이었습니다. 그래서 이번 글에서는 무작정 재부팅하기 전에 확인할 수 있는 순서를 정리해보겠습니다.
+처음 이 메시지를 봤을 때는 Node.js 자체가 깨진 것처럼 느껴졌는데, 공부해보니 대부분은 "이미 3000번 포트를 쓰고 있는 프로세스가 있다"는 뜻이었습니다. 그래서 여기서는 무작정 재부팅하기 전에 확인할 수 있는 순서를 정리해보겠습니다.
 
 ## 에러 의미 먼저 보기
 
@@ -43,14 +43,13 @@ Error: listen EADDRINUSE: address already in use :::3000
 - 테스트 서버나 Storybook 같은 도구가 같은 포트를 사용한다.
 - Windows에서 WSL, Docker Desktop, 로컬 Node가 포트를 같이 쓰고 있다.
 
-## 공부하면서 알게 된 점
+## 확인하며 남긴 메모
 
 포트 충돌은 코드 버그라기보다 실행 환경 문제인 경우가 많았습니다. 물론 서버 코드에서 `app.listen(3000)`을 여러 번 호출하는 실수도 있을 수 있지만, 로컬 개발 중에는 기존 프로세스가 남아 있는 경우가 훨씬 흔했습니다.
 
 또 하나 알게 된 점은 운영체제마다 포트를 확인하는 명령어가 다르다는 것입니다. Windows에서는 `netstat` 또는 PowerShell의 `Get-NetTCPConnection`을 쓰고, macOS/Linux에서는 `lsof`나 `ss`를 많이 씁니다. 그래서 팀 문서에는 OS별 명령어를 함께 적어두는 편이 좋겠다고 느꼈습니다.
 
 ![여러 개발 서버가 하나의 3000번 포트를 두고 충돌하는 모습을 단순하게 표현한 기술 일러스트](/assets/img/posts/blog/react-node-eaddrinuse-port-3000-fix/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 1단계: 어떤 포트가 충돌했는지 확인
 
@@ -236,9 +235,8 @@ mock-server: 4010
 이런 규칙이 없으면 새로 합류한 사람이 매번 같은 에러를 만날 수 있습니다.
 
 ![포트 확인, PID 조회, 프로세스 종료, 재실행으로 이어지는 문제 해결 흐름도](/assets/img/posts/blog/react-node-eaddrinuse-port-3000-fix/image-2.webp)
-이미지 출처: AI 생성 이미지
 
-## 처음에는 헷갈렸던 부분
+## 처음 확인할 때 막히는 부분
 
 저는 처음에 `node:events:491 throw er`라는 줄 때문에 Node.js 이벤트 처리 코드에 문제가 있다고 생각했습니다. 하지만 실제 원인은 그 아래 `EADDRINUSE`였습니다. 에러 로그는 위에서부터 읽는 것도 중요하지만, Node.js에서는 마지막에 있는 `code`, `errno`, `syscall`, `address`, `port`가 더 직접적인 단서가 되는 경우가 많았습니다.
 
@@ -253,7 +251,7 @@ port: 3000
 
 즉, "listen 하려던 3000번 포트가 이미 사용 중"이라고 해석하면 됩니다.
 
-## 실무에서는 이렇게 확인하면 좋겠다
+## 운영 전 확인할 부분
 
 실무에서는 포트 충돌을 단순히 프로세스 종료로만 끝내지 않고, 왜 남았는지까지 보는 편이 좋겠습니다.
 
@@ -264,17 +262,6 @@ port: 3000
 - CI나 preview 환경에서 동적 포트를 사용하는지
 
 특히 여러 서비스를 동시에 띄우는 모노레포에서는 포트 관리가 꽤 중요합니다. 포트 표를 README에 넣어두면 생각보다 많은 시간을 줄일 수 있습니다.
-
-## 실무 체크리스트
-
-- [ ] 에러 메시지에서 충돌한 포트 번호를 확인했다.
-- [ ] Windows에서는 `Get-NetTCPConnection` 또는 `netstat`로 PID를 찾았다.
-- [ ] macOS/Linux에서는 `lsof` 또는 `ss`로 PID를 찾았다.
-- [ ] 해당 PID가 종료해도 되는 개발 프로세스인지 확인했다.
-- [ ] Docker 컨테이너가 같은 포트를 쓰고 있지 않은지 확인했다.
-- [ ] 가능한 경우 `Ctrl + C`로 정상 종료한 뒤, 필요할 때만 강제 종료했다.
-- [ ] 기존 프로세스를 종료할 수 없으면 새 서버 포트를 변경했다.
-- [ ] 팀 문서나 `package.json`에 서비스별 포트 규칙을 정리했다.
 
 ## 참고 자료
 

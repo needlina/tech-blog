@@ -1,4 +1,4 @@
----
+﻿---
 title: "GraphQL Subscription 계약 테스트로 서비스 간 이벤트 정합성 검증하기"
 description: "서비스 A가 GraphQL Subscription으로 이벤트를 발행하고 서비스 B가 이를 소비할 때 체크해야 할 스키마, 페이로드 필드, 순서, 중복 처리, 타임아웃·재시도 정책을 계약 테스트·메시지 시뮬레이션·통합 해니슨으로 검증하는 방법과 실무 확인 명령·검증 절차"
 slug: "graphql-subscription-contract-testing-for-event-consistency"
@@ -9,21 +9,17 @@ image:
   path: /assets/img/posts/blog/graphql-subscription-contract-testing-for-event-consistency/preview.png
   alt: "Subscription 컨트랙트 테스트 썸네일"
 ---
-
-서비스 A가 발행한 GraphQL Subscription 이벤트를 서비스 B가 실시간으로 소비할 때, **스키마(필드/타입)**, **페이로드 값**, **순서성**, **중복/아이덤포턴시**, **타임아웃·재시도 정책**을 계약 수준에서 확인하는 게 핵심이며, 이를 위해 스키마 검증·메시지 기반 계약(consumer-driven)·로컬 통합(harness) 테스트를 병행하는 실무 확인 포인트를 먼저 요약합니다.
-
-공부하면서 알게 된 점
+확인하며 남긴 메모
 - GraphQL Subscription은 "쿼리/뮤테이션"과 달리 실시간 스트리밍 특성을 갖기 때문에 스키마 일치만으로는 부족하고 타임아웃·중복·정렬(ordering) 같은 런타임 속성도 계약에 포함해야 한다는 점을 알게 됐습니다.
 - 단순 SDL(introspection) 검증은 payload 필드의 실제 값과 전송 타이밍, 에러 재전송 동작까지 보장하지 못한다는 사실이 실무에서 큰 문제로 이어질 수 있었습니다.
 
 ![GraphQL Subscription 흐름 일러스트](/assets/img/posts/blog/graphql-subscription-contract-testing-for-event-consistency/image-1.webp)
-이미지 출처: AI 생성 이미지
 
-처음에는 헷갈렸던 부분
+처음 확인할 때 막히는 부분
 - 서브스크립션도 HTTP처럼 스키마만 체크하면 되지 않을까 생각했는데, 실제로는 WebSocket 연결 수립, 초기 응답(ack), 이벤트 페이로드 형식, 연결 끊김 후 재구독 정책 등 여러 단계가 있었습니다.
 - Pact 같은 메시지 계약 도구가 REST/메시지 큐와는 달리 Subscription 스트리밍에 바로 적용되기 어려워 보였는데, 메시지 단위(비동기 메시지) 계약으로 접근하면 사용 가능한 패턴이 있다는 점을 알게 됐습니다.
 
-실무에서는 이렇게 확인하면 좋겠다
+운영 전 확인할 부분
 - **스키마 검증**: producer의 SDL을 consumer가 정기적으로 받아 비교.
 - **메시지 샘플 계약**: 핵심 이벤트 유형별로 최소 3가지 정상/오류 케이스(정상, 필드 누락, 타입 불일치)를 정의하고 CI에서 시뮬레이션 실행.
 - **통합 해니슨**: Docker Compose/Testcontainers로 producer + broker + consumer를 띄워 실제 WebSocket 연결과 이벤트 흐름을 테스트(버전: Node 18.x, graphql-ws 5.x 권장).
@@ -136,7 +132,6 @@ WebSocket 직접 연결 확인(수동)
 - 재시도·중복 정책은 계약서에 숫자(예: maxRetries=3, dedupWindow=10s)로 명시하여 테스트 자동화에 사용.
 
 ![GraphQL 서비스 간 계약 테스트 구성도](/assets/img/posts/blog/graphql-subscription-contract-testing-for-event-consistency/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 실무에서 확인할 포인트(체크리스트 형태)
 - SDL 버전(semver)과 마지막 변경 시각 확인
@@ -176,8 +171,7 @@ const resolvers = {
 - CI 스크립트: .github/workflows/ci.yml (subscription 테스트 job 포함 권장)
 - Docker Compose: docker/docker-compose.yml (services: producer:4000, consumer:5000, redis:6379)
 
-Q&A
-## 자주 묻는 질문
+## 마지막으로 확인할 질문
 
 Q: Subscription 이벤트 순서(ordering)를 보장해야 할까요?
 A: 순서 보장이 필요하면 **프로토콜 또는 브로커가 순서를 보장하는지**, 그리고 재연결 시 resume/offset을 지원하는지를 먼저 확인하세요. 확인 명령: 브로커 로그에서 message.sequence 확인 또는 consumer가 수신한 sequence를 테스트로 검증하세요.
@@ -205,14 +199,13 @@ A: 1) consumer 로그(수신/파싱 오류) 2) broker 로그(전송/큐잉 상�
 검증 경로(공식 문서)
 - GraphQL Subscriptions 개념: https://graphql.org/blog/subscriptions-in-graphql-and-relay/
 - graphql-ws 사용법: https://github.com/enisdenjo/graphql-ws
-- Pact 메시지 가이드: https://docs.pact.io/
+- Pact 메시지 기준: https://docs.pact.io/
 
 중요한 주의 사항
 - **테스트 플래키를 무작정 timeout 늘려 해결하지 마세요**. 타임아웃 증가는 문제를 숨길 수 있습니다. 먼저 원인(브로커 처리량, 네트워크, backpressure)을 분석하는 게 좋습니다.
 - 이벤트 계약은 **스키마 + 런타임 규약**(ex: dedupWindow=10s)을 함께 관리해야 합니다.
 
 
-실무 체크리스트
 1. SDL(스키마) 최신화: producer SDL을 저장하고 consumer가 CI에서 비교하도록 설정
    - 확인 명령: curl http://producer:4000/graphql -d '{"query":"{ __schema { types { name } } }"}'
 2. 메시지 샘플 등록: 정상 2개, 오류 1개, 필드 누락 1개
@@ -224,6 +217,6 @@ A: 1) consumer 로그(수신/파싱 오류) 2) broker 로그(전송/큐잉 상�
 6. 로그 확인 포인트: producer publish time, broker queue depth, consumer receive time
 7. 계약 변경 프로세스: 스키마 변경 시 consumer와 사전 협의/마이그레이션 기간 명시
 
-마무리(무작정 요약 대신 행동 우선)
-- 이 주제에서 먼저 확인해야 할 것: **producer가 내보내는 실제 페이로드(샘플)와 연결 시나리오(handshake/ack/reconnect)**.  
+(무작정 요약 대신 행동 우선)
+- 이 주제에서 먼저 확인해야 할 것: **producer가 내보내는 실제 페이로드(샘플)와 연결 시나리오(handshake/ack/reconnect)**.
 - 다른 선택지가 나을 때: 스키마만 자주 바뀌고 런타임 특성이 중요하지 않다면 Schema-only 검증으로 빠르게 자동화하고, 반대로 실시간 성능·중복·정합성이 더 중요하면 통합 해니슨과 메시지 계약 병행을 추천합니다.

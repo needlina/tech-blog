@@ -1,5 +1,5 @@
----
-title: "Kubernetes 1.36 업데이트 후 Kubelet 메모리 누수 의심 증상 해결 가이드"
+﻿---
+title: "Kubernetes 1.36 업데이트 후 Kubelet 메모리 누수 의심 증상 해결 기준"
 description: "Kubernetes 1.36 환경에서 kubelet 메모리 증가나 cgroup 관련 로그가 보일 때 버전, 런타임, 노드 상태를 순서대로 확인하는 방법을 정리했습니다."
 slug: "kubernetes-136-kubelet-memory-leak-guide"
 date: 2026-07-15 11:00:00 +0900
@@ -7,16 +7,13 @@ categories: [DevOps, Kubernetes]
 tags: ["kubernetes", "kubelet", "memory-leak", "장애대응", "devops"]
 image:
   path: /assets/img/posts/blog/kubernetes-136-kubelet-memory-leak-guide/preview.png
-  alt: "Kubernetes 1.36 업데이트 후 Kubelet 메모리 누수 의심 증상 해결 가이드 썸네일"
+  alt: "Kubernetes 1.36 업데이트 후 Kubelet 메모리 누수 의심 증상 해결 기준 썸네일"
 ---
-
-Kubernetes 1.36 환경에서 kubelet 메모리 사용량이 계속 늘거나 cgroup 관련 로그가 보인다면 단정하기 전에 버전, 런타임, 노드 상태를 나눠 확인해야 합니다. 이 글은 의심 증상을 좁혀 가는 점검 순서를 정리합니다.
-
 Kubernetes 1.36 환경에서 kubelet 메모리 사용량이 계속 증가하거나 `failed to release memory charge` 같은 cgroup 관련 메시지가 보일 때 확인하는 순서
 
 Kubernetes 클러스터를 운영하다 보면 애플리케이션 Pod의 OOMKilled보다 더 헷갈리는 상황이 있습니다. Pod는 눈에 띄게 죽지 않았는데 노드 메모리가 계속 올라가고, kubelet 프로세스의 RSS가 점점 커지거나, 시스템 로그에 cgroup 메모리 관련 메시지가 남는 경우입니다.
 
-이번 글은 Kubernetes 1.36 업데이트 이후 `kubelet cgroup memory leak: failed to release memory charge` 또는 `Kubelet memory usage keeps increasing without OOM` 같은 키워드로 원인을 찾는 상황을 기준으로 정리했습니다. 다만 이 문구 하나만으로 "Kubernetes 1.36의 확정 버그다"라고 단정하기는 조심스럽습니다. 실제 운영에서는 kubelet, container runtime, Linux kernel, cgroup v1/v2, CSI/CNI, 노드의 systemd 설정이 함께 영향을 줄 수 있기 때문입니다.
+이 문서는 Kubernetes 1.36 업데이트 이후 `kubelet cgroup memory leak: failed to release memory charge` 또는 `Kubelet memory usage keeps increasing without OOM` 같은 키워드로 원인을 찾는 상황을 기준으로 정리했습니다. 다만 이 문구 하나만으로 "Kubernetes 1.36의 확정 버그다"라고 단정하기는 조심스럽습니다. 실제 운영에서는 kubelet, container runtime, Linux kernel, cgroup v1/v2, CSI/CNI, 노드의 systemd 설정이 함께 영향을 줄 수 있기 때문입니다.
 
 공식 릴리스 페이지 기준으로 2026년 7월 현재 Kubernetes 1.36은 지원 중인 최신 minor 브랜치이고, 최신 패치 릴리스는 1.36.2입니다. 따라서 먼저 현재 클러스터가 정확히 어떤 패치 버전인지 확인하는 것부터 시작하는 편이 좋겠습니다.
 
@@ -33,7 +30,7 @@ Kubernetes 클러스터를 운영하다 보면 애플리케이션 Pod의 OOMKill
 
 처음에는 "kubelet 메모리 누수"라고만 생각하기 쉬운데, 실제로는 kubelet이 직접 잡고 있는 메모리인지, 커널 cgroup 메타데이터가 정리되지 않는 것인지, runtime이나 CSI 프로세스가 잡고 있는 것인지 구분해야 합니다.
 
-## 공부하면서 알게 된 점
+## 확인하며 남긴 메모
 
 Kubernetes 노드에서 kubelet은 단순히 Pod를 실행하는 프로세스가 아니라 노드 상태 보고, Pod 상태 동기화, 볼륨 마운트, 컨테이너 runtime 호출, cgroup 관리, eviction 판단까지 여러 일을 합니다. 그래서 kubelet 메모리가 늘어났다고 해서 원인이 항상 kubelet 코드 한 군데에 있는 것은 아닌 것 같습니다.
 
@@ -42,7 +39,6 @@ Kubernetes 노드에서 kubelet은 단순히 Pod를 실행하는 프로세스가
 또 하나 헷갈렸던 부분은 "OOM이 없는데 왜 메모리 문제인가"였습니다. OOMKilled는 컨테이너 또는 노드가 명확한 한계에 도달했을 때 나타나는 결과입니다. 그 전 단계에서는 kubelet RSS 증가, slab/cache 증가, cgroup 계층 잔류, systemd slice 누적 같은 형태로 먼저 보일 수 있습니다.
 
 ![kubelet, container runtime, cgroup, Pod 사이의 관계를 단순한 계층 구조로 보여주는 기술 일러스트](/assets/img/posts/blog/kubernetes-136-kubelet-memory-leak-guide/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 1단계: 버전과 노드 범위 확인
 
@@ -138,7 +134,7 @@ kubectl get pods -A --field-selector spec.nodeName=<node-name>
 
 ## 4단계: cgroup 잔여 흔적 확인
 
-cgroup v2 환경에서는 보통 `/sys/fs/cgroup` 아래에서 계층을 볼 수 있습니다.
+cgroup v2 환경에서는 보통 `/sys/fs/cgroup` 본문에서 계층을 볼 수 있습니다.
 
 ```bash
 mount | grep cgroup
@@ -207,7 +203,6 @@ sudo reboot
 다만 이 방법은 원인을 제거하는 것이 아니라 일시적으로 상태를 비우는 조치입니다. 같은 워크로드가 다시 올라가면 재발할 수 있습니다. 그래서 재시작 전에 로그, 버전, 메모리 그래프, cgroup 경로 샘플을 남겨두는 편이 좋습니다.
 
 ![노드 메모리 사용량 그래프와 점검 단계가 함께 배치된 장애 대응 흐름 일러스트](/assets/img/posts/blog/kubernetes-136-kubelet-memory-leak-guide/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 ## 7단계: 재발 방지를 위한 운영 점검
 
@@ -229,23 +224,11 @@ containerd config dump | grep -i systemd
 
 환경마다 명령어와 설정 위치가 다를 수 있으니, 배포 도구(kubeadm, EKS, GKE, AKS, Rancher 등)의 권장 설정을 같이 확인해야 합니다.
 
-## 처음에는 헷갈렸던 부분
+## 처음 확인할 때 막히는 부분
 
 저는 이런 이슈를 볼 때 "Pod 메모리 limit을 늘리면 해결되지 않을까"라고 생각하기 쉬웠습니다. 그런데 kubelet 자체 또는 노드 cgroup 계층 문제가 원인이라면 애플리케이션 Pod limit만 조정해도 해결되지 않을 수 있습니다.
 
 또 "노드 메모리 cache가 늘어난 것"과 "정말 누수"를 구분하는 것도 중요했습니다. Linux는 남는 메모리를 cache로 쓰기 때문에 `free -m`에서 used가 높게 보여도 실제로는 회수 가능한 메모리일 수 있습니다. 그래서 `MemAvailable`, kubelet RSS, slab, cgroup 디렉터리 잔류, 이벤트를 같이 봐야 합니다.
-
-## 실무 체크리스트
-
-- [ ] Kubernetes와 kubelet 패치 버전을 확인했다.
-- [ ] 증상이 전체 노드인지 특정 노드 풀인지 구분했다.
-- [ ] kubelet RSS가 시간에 따라 계속 증가하는지 그래프로 확인했다.
-- [ ] kubelet, containerd, kernel 로그에서 cgroup과 memory 관련 메시지를 확인했다.
-- [ ] Pod 생성/삭제가 많은 워크로드가 같은 시간대에 있었는지 확인했다.
-- [ ] cgroup v1/v2와 cgroup driver 설정을 확인했다.
-- [ ] 임시 조치 전 로그와 메트릭을 저장했다.
-- [ ] cordon/drain 후 kubelet 재시작 또는 노드 교체로 완화할 수 있는지 검토했다.
-- [ ] 최신 Kubernetes 패치, 노드 이미지, container runtime 패치 여부를 확인했다.
 
 ## 참고 자료
 
