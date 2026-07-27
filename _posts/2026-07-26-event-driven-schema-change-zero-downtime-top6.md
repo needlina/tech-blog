@@ -92,7 +92,6 @@ public Event upcast(OldEvent e) {
 확인: 업캐스터 로그, 변환 실패 카운터, Sentry/에러 트래킹의 stacktrace.
 
 ![이벤트 업캐스터 흐름 다이어그램](/assets/img/posts/blog/event-driven-schema-change-zero-downtime-top6/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 5) 온라인 DB 변경 패턴(실무 절차)
 
@@ -135,7 +134,6 @@ ALTER TABLE orders ALTER COLUMN status SET NOT NULL;
 - CI에서 계약 테스트 통과 여부.
 
 ![이벤트 기반 시스템 일러스트](/assets/img/posts/blog/event-driven-schema-change-zero-downtime-top6/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 ## 전략 선택 기준 표
 

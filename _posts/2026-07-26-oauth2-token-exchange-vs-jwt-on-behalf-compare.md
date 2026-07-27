@@ -164,7 +164,6 @@ Q: 토큰 교환 시 토큰 유통기한을 어떻게 제한하나?
 A: IdP 측 설정(토큰 매핑 룰)에서 issued_token_lifetime을 조정하거나 교환 시 scope를 좁혀 제한한다.
 
 ![토큰 교환과 OBO 흐름 단순 비교 다이어그램](/assets/img/posts/blog/oauth2-token-exchange-vs-jwt-on-behalf-compare/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 함께 보면 좋은 글
 
@@ -184,6 +183,5 @@ A: IdP 측 설정(토큰 매핑 룰)에서 issued_token_lifetime을 조정하거
 - 롤백 전에 사용자 영향 범위(토큰 유효 기간, 세션 수) 확인 및 커뮤니케이션 준비.
 
 ![curl로 토큰 엔드포인트 기본 요청 실행해 응답 확인 일러스트](/assets/img/posts/blog/oauth2-token-exchange-vs-jwt-on-behalf-compare/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 마지막으로 내가 먼저 볼 로그는 IdP의 토큰 발급 로그와 서비스의 auth.log다. 처리가 꼬였을 때는 먼저 grant_type과 subject_token 값이 정확히 전달됐는지 curl로 재현하고, JWT의 exp와 aud, scope를 디코드해서 확인하라. 권한 모델 변경이 잦다면 Token Exchange로 정책 중심 설계를 고려하고, 이미 IdP 통합이 깊다면 OBO로 먼저 가서 운영 부담을 줄일 수 있다.

@@ -142,7 +142,6 @@ image:
 ---
 
 ![로그와 세션 흐름을 단순화한 다이어그램](/assets/img/posts/blog/concurrent-login-session-throttling-top7/image-1.webp)
-이미지 출처: AI 생성 이미지
 
 ## 코드/설정 예시(실패 예시 vs 수정 예시)
 
@@ -194,7 +193,6 @@ limit_req zone=login_zone burst=50 nodelay;
 ---
 
 ![Redis와 Rate Limit을 적용한 아키텍처 일러스트](/assets/img/posts/blog/concurrent-login-session-throttling-top7/image-2.webp)
-이미지 출처: AI 생성 이미지
 
 ---
 

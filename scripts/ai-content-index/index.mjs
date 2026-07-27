@@ -131,6 +131,14 @@ async function loadPhraseConfig() {
       "재현",
       "문서 기준",
       "기준일"
+    ],
+    bannedPhrases: [
+      "이미지 출처: AI 생성 이미지",
+      "AI 생성 이미지",
+      "AI가 작성",
+      "인공지능이 작성",
+      "자동 생성된 글",
+      "자동 생성 이미지"
     ]
   };
 
@@ -301,7 +309,7 @@ function analyzePost(post, comparePosts, phraseConfig) {
     originality: clamp(100 - riskScores.styleRepetition)
   };
   const massProduction = decideMassProductionRisk(scores.aiUsage, metrics.maxSimilarity);
-  const publishDecision = decidePublishDecision(scores, massProduction);
+  const publishDecision = decidePublishDecision(scores, massProduction, metrics);
   const findings = buildFindings(scores, metrics, massProduction);
   const recommendations = buildRecommendations(scores, metrics, massProduction);
 
@@ -327,6 +335,7 @@ function collectMetrics(post, comparePosts, phraseConfig) {
   const genericPhraseCount = countPhrases(plainText, phraseConfig.genericPhrases);
   const experienceSignalCount = countPhrases(plainText, phraseConfig.experienceSignals);
   const verificationSignalCount = countPhrases(plainText, phraseConfig.verificationSignals);
+  const bannedPhraseCount = countPhrases(plainText, phraseConfig.bannedPhrases ?? []);
   const similarities = comparePosts.map((other) => ({
     file: other.file,
     slug: other.slug,
@@ -357,6 +366,7 @@ function collectMetrics(post, comparePosts, phraseConfig) {
     genericPhraseCount,
     experienceSignalCount,
     verificationSignalCount,
+    bannedPhraseCount,
     maxSimilarity: round(mostSimilar?.score ?? 0, 3),
     maxHeadingSimilarity: round(Math.max(...similarities.map((item) => item.headingScore), 0), 3),
     mostSimilarPost: mostSimilar?.slug ?? null
@@ -400,8 +410,8 @@ function decideMassProductionRisk(aiUsageScore, maxSimilarity) {
   return "low";
 }
 
-function decidePublishDecision(scores, massProduction) {
-  if (scores.aiUsage >= blockThreshold || massProduction === "critical") {
+function decidePublishDecision(scores, massProduction, metrics) {
+  if (metrics.bannedPhraseCount > 0 || scores.aiUsage >= blockThreshold || massProduction === "critical") {
     return "block";
   }
 
@@ -417,6 +427,10 @@ function buildFindings(scores, metrics, massProduction) {
 
   if (scores.aiUsage >= warnThreshold) {
     findings.push("AI-like writing risk is above the warning threshold.");
+  }
+
+  if (metrics.bannedPhraseCount > 0) {
+    findings.push("Explicit AI-generation disclosure or automated-content wording is present in the post body.");
   }
 
   if (scores.experience < minExperienceScore) {
@@ -459,6 +473,10 @@ function buildRecommendations(scores, metrics, massProduction) {
 
   if (metrics.genericPhraseCount >= 5) {
     recommendations.push("Replace generic wrap-up phrases with topic-specific conclusions and next actions.");
+  }
+
+  if (metrics.bannedPhraseCount > 0) {
+    recommendations.push("Remove explicit AI-generation wording from the published post body and keep image provenance out of article copy.");
   }
 
   if (massProduction !== "low") {
