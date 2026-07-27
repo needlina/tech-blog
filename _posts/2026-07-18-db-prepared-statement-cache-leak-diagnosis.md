@@ -161,4 +161,4 @@ A: 해당 세션에 접속해 `DEALLOCATE ALL;` 을 실행하거나, 세션을 �
 - psql에서의 `pg_stat_activity`, `pg_prepared_statements` 조회는 진단의 첫걸음입니다.
 - 드라이버 문서에서 prepared 관련 설정을 꼭 찾아보세요. (JDBC: prepareThreshold, node-postgres: named queries 등)
 
-Prepared Statement 캐시 누수는 코드·드라이버·풀러가 얽혀 발생하는 경우가 많아 한 번에 해결하기 어렵습니다. 위에서 적은 단계(뷰 확인 → 드라이버 설정 확인 → 임시 해제 → 코드 변경 → 재검증)를 차근차근 따라가면 원인 파악과 안전한 해결에 도움이 될 것 같습니다.
+Prepared Statement 캐시 누수는 코드·드라이버·풀러가 얽혀 발생하는 경우가 많아 한 번에 해결하기 어렵습니다. 위에서 적은 단계(뷰 확인 → 드라이버 설정 확인 → 임시 해제 → 코드 변경 → 재검증)를 차근차근 보면 원인 파악과 안전한 해결에 도움이 될 것 같습니다.

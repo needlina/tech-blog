@@ -132,7 +132,7 @@ Kubernetes에서 보안 관련 정책이나 런타임 보안 설정(특히 PodSe
 운영에서 유의할 점과 권장하는 접근
 
 - 변경 전: 변경을 적용하기 전에 테스트 네임스페이스에서 동일한 설정을 먼저 확인하세요. 운영 네임스페이스에 곧바로 엄격한 정책을 적용하면 서비스가 중단될 수 있습니다.
-- 점진적 적용: PodSecurity의 enforce를 restricted로 바로 변경하기보다 먼저 audit/warn 레벨로 설정해서 어떤 Pod가 차단될지 로그로 확인하는 것이 안전합니다.
+- 점진적 적용: PodSecurity의 enforce를 restricted로 바로 변경하기보다 먼저 audit/warn 레벨로 설정해서 어떤 Pod가 차단될지 로그로 확인하는 게 안전합니다.
   - 예: kubectl label --overwrite ns my-namespace pod-security.kubernetes.io/audit=restricted
 - 롤백 계획 수립: 정책으로 인해 배포가 실패할 경우를 대비해 네임스페이스 라벨을 되돌릴 수 있는 권한과 절차를 준비하세요.
 - 문서화: 네임스페이스별로 어떤 PodSecurity 레벨을 적용하는지 문서화하면 추적이 쉬워집니다.

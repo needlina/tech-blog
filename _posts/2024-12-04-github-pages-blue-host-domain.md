@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "GitHub Pages에 Bluehost 도메인 연결하기"
 description: "[Blog] Github 블로그 Domain 설정 (Feat. Bluehost) Github 블로그를 도메인 구입 후 적용해보았습니다. 블루호스트라는 서비스를 이용했고요, 매년 자동결제로 진행하고 있습니다"
@@ -60,7 +60,7 @@ Github 블로그를 도메인 구입 후 적용해보았습니다.
 ## 다시 세팅...
 
 그럼 이제 다시 원점으로 돌아와서 확인을 해봐야겠죠.
-도메인과 Github Pages간의 연결이 끊어진 느낌이 들어서 확인한 바로는
+도메인과 Github Pages간의 연결이 끊어진 것 같아 설정을 다시 보니
 GithubPage주소가 아닌 IP주소가 박혀있네요,
 이유는 모르겠습니다만, 호스팅 서비스가 해제되면서 뭔가 정보가 날아간걸까요?
 아직도 미스터리..
