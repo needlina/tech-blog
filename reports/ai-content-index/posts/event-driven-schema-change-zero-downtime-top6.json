@@ -1,0 +1,40 @@
+{
+  "file": "_posts/2026-07-26-event-driven-schema-change-zero-downtime-top6.md",
+  "slug": "event-driven-schema-change-zero-downtime-top6",
+  "title": "Event-driven 아키텍처에서 스키마 변경을 무중단 적용하는 전략 Top 6",
+  "analyzedAt": "2026-07-27T16:05:21.605Z",
+  "scores": {
+    "aiUsage": 2,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1347,
+    "sentenceCount": 77,
+    "headingCount": 17,
+    "codeBlockCount": 4,
+    "linkCount": 5,
+    "versionMentionCount": 0,
+    "filePathMentionCount": 19,
+    "commandCount": 4,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 17,
+    "verificationSignalCount": 18,
+    "bannedPhraseCount": 0,
+    "maxSimilarity": 0.068,
+    "maxHeadingSimilarity": 0.114,
+    "mostSimilarPost": "postgresql-chunked-jsonb-update-safe"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}

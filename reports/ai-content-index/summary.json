@@ -1,6 +1,6 @@
 {
-  "analyzedAt": "2026-07-24T10:35:37.268Z",
-  "mode": "report",
+  "analyzedAt": "2026-07-27T16:05:21.623Z",
+  "mode": "block",
   "thresholds": {
     "warn": 61,
     "block": 81,
@@ -14,37 +14,15 @@
   "errors": [],
   "posts": [
     {
-      "file": "_drafts/2026-07-24-ci-docker-build-reproducible-artifact-checksum.md",
-      "slug": "ci-docker-build-reproducible-artifact-checksum",
-      "title": "CI에서 Docker 빌드 산출물 체크섬 재현: 실무 패턴과 점검 가이드",
+      "file": "_posts/2026-07-26-oauth2-token-exchange-vs-jwt-on-behalf-compare.md",
+      "slug": "oauth2-token-exchange-vs-jwt-on-behalf-compare",
+      "title": "OAuth2 Token Exchange vs JWT On-Behalf: 보안·운영 선택 기준 정리",
       "scores": {
-        "aiUsage": 16,
-        "experience": 31,
-        "specificity": 100,
-        "verification": 100,
-        "originality": 92
-      },
-      "risk": {
-        "massProduction": "low",
-        "publishDecision": "pass"
-      },
-      "findings": [
-        "No major quality risks were detected by the rule-based checker."
-      ],
-      "recommendations": [
-        "Add a short first-person review section with the actual environment, what failed first, and what changed after fixing it."
-      ]
-    },
-    {
-      "file": "_drafts/2026-07-24-frontend-form-autosave-concurrent-edit-merge-pattern.md",
-      "slug": "frontend-form-autosave-concurrent-edit-merge-pattern",
-      "title": "프론트엔드 폼 자동저장 동시편집: 클라이언트-서버 병합 패턴 정리",
-      "scores": {
-        "aiUsage": 9,
+        "aiUsage": 3,
         "experience": 100,
         "specificity": 100,
         "verification": 100,
-        "originality": 95
+        "originality": 91
       },
       "risk": {
         "massProduction": "low",
@@ -56,15 +34,35 @@
       "recommendations": []
     },
     {
-      "file": "_drafts/2026-07-24-linux-livepatch-verify-and-rollback-workflow.md",
-      "slug": "linux-livepatch-verify-and-rollback-workflow",
-      "title": "Linux Livepatch 적용 전 검증과 안전한 롤백 워크플로우",
+      "file": "_posts/2026-07-26-event-driven-schema-change-zero-downtime-top6.md",
+      "slug": "event-driven-schema-change-zero-downtime-top6",
+      "title": "Event-driven 아키텍처에서 스키마 변경을 무중단 적용하는 전략 Top 6",
       "scores": {
-        "aiUsage": 11,
+        "aiUsage": 2,
         "experience": 100,
         "specificity": 100,
         "verification": 100,
-        "originality": 94
+        "originality": 93
+      },
+      "risk": {
+        "massProduction": "low",
+        "publishDecision": "pass"
+      },
+      "findings": [
+        "No major quality risks were detected by the rule-based checker."
+      ],
+      "recommendations": []
+    },
+    {
+      "file": "_posts/2026-07-26-concurrent-login-session-throttling-top7.md",
+      "slug": "concurrent-login-session-throttling-top7",
+      "title": "대량 동시 로그인에서 세션 폭주 방지: 실무 패턴 Top 7",
+      "scores": {
+        "aiUsage": 2,
+        "experience": 100,
+        "specificity": 100,
+        "verification": 100,
+        "originality": 93
       },
       "risk": {
         "massProduction": "low",

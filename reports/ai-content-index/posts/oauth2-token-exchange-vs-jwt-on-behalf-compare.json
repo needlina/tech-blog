@@ -1,0 +1,40 @@
+{
+  "file": "_posts/2026-07-26-oauth2-token-exchange-vs-jwt-on-behalf-compare.md",
+  "slug": "oauth2-token-exchange-vs-jwt-on-behalf-compare",
+  "title": "OAuth2 Token Exchange vs JWT On-Behalf: 보안·운영 선택 기준 정리",
+  "analyzedAt": "2026-07-27T16:05:21.591Z",
+  "scores": {
+    "aiUsage": 3,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 91
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1061,
+    "sentenceCount": 68,
+    "headingCount": 10,
+    "codeBlockCount": 5,
+    "linkCount": 5,
+    "versionMentionCount": 3,
+    "filePathMentionCount": 28,
+    "commandCount": 8,
+    "numberWithUnitCount": 0,
+    "errorMessageCount": 0,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 18,
+    "verificationSignalCount": 12,
+    "bannedPhraseCount": 0,
+    "maxSimilarity": 0.088,
+    "maxHeadingSimilarity": 0.14,
+    "mostSimilarPost": "jwt-on-behalf-backend-delegation-without-client-secret"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}

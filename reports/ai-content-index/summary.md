@@ -1,6 +1,6 @@
 # AI Content Index Summary
 
-- Mode: report
+- Mode: block
 - Analyzed posts: 3
 - PASS: 3
 - WARN: 0
@@ -8,36 +8,36 @@
 
 ## Posts
 
-### PASS CI에서 Docker 빌드 산출물 체크섬 재현: 실무 패턴과 점검 가이드
+### PASS OAuth2 Token Exchange vs JWT On-Behalf: 보안·운영 선택 기준 정리
 
-- File: `_drafts/2026-07-24-ci-docker-build-reproducible-artifact-checksum.md`
-- AI Usage: 16
-- Experience: 31
-- Specificity: 100
-- Verification: 100
-- Originality: 92
-
-- No major quality risks were detected by the rule-based checker.
-
-### PASS 프론트엔드 폼 자동저장 동시편집: 클라이언트-서버 병합 패턴 정리
-
-- File: `_drafts/2026-07-24-frontend-form-autosave-concurrent-edit-merge-pattern.md`
-- AI Usage: 9
+- File: `_posts/2026-07-26-oauth2-token-exchange-vs-jwt-on-behalf-compare.md`
+- AI Usage: 3
 - Experience: 100
 - Specificity: 100
 - Verification: 100
-- Originality: 95
+- Originality: 91
 
 - No major quality risks were detected by the rule-based checker.
 
-### PASS Linux Livepatch 적용 전 검증과 안전한 롤백 워크플로우
+### PASS Event-driven 아키텍처에서 스키마 변경을 무중단 적용하는 전략 Top 6
 
-- File: `_drafts/2026-07-24-linux-livepatch-verify-and-rollback-workflow.md`
-- AI Usage: 11
+- File: `_posts/2026-07-26-event-driven-schema-change-zero-downtime-top6.md`
+- AI Usage: 2
 - Experience: 100
 - Specificity: 100
 - Verification: 100
-- Originality: 94
+- Originality: 93
+
+- No major quality risks were detected by the rule-based checker.
+
+### PASS 대량 동시 로그인에서 세션 폭주 방지: 실무 패턴 Top 7
+
+- File: `_posts/2026-07-26-concurrent-login-session-throttling-top7.md`
+- AI Usage: 2
+- Experience: 100
+- Specificity: 100
+- Verification: 100
+- Originality: 93
 
 - No major quality risks were detected by the rule-based checker.
 

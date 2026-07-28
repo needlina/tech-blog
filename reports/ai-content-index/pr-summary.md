@@ -1,42 +1,42 @@
 ### AI Content Index
 
-- Mode: `report`
+- Mode: `block`
 - Result: pass=3, warn=0, block=0
-- Full report: `reports/ai-content-index/summary.md`
+- Detailed report files were generated during the workflow and intentionally left out of the PR diff.
 
-#### PASS CI에서 Docker 빌드 산출물 체크섬 재현: 실무 패턴과 점검 가이드
-
-| Score | Value |
-| --- | ---: |
-| AI Usage | 16 |
-| Experience | 31 |
-| Specificity | 100 |
-| Verification | 100 |
-| Originality | 92 |
-
-- Add a short first-person review section with the actual environment, what failed first, and what changed after fixing it.
-
-#### PASS 프론트엔드 폼 자동저장 동시편집: 클라이언트-서버 병합 패턴 정리
+#### PASS OAuth2 Token Exchange vs JWT On-Behalf: 보안·운영 선택 기준 정리
 
 | Score | Value |
 | --- | ---: |
-| AI Usage | 9 |
+| AI Usage | 3 |
 | Experience | 100 |
 | Specificity | 100 |
 | Verification | 100 |
-| Originality | 95 |
+| Originality | 91 |
 
 
 
-#### PASS Linux Livepatch 적용 전 검증과 안전한 롤백 워크플로우
+#### PASS Event-driven 아키텍처에서 스키마 변경을 무중단 적용하는 전략 Top 6
 
 | Score | Value |
 | --- | ---: |
-| AI Usage | 11 |
+| AI Usage | 2 |
 | Experience | 100 |
 | Specificity | 100 |
 | Verification | 100 |
-| Originality | 94 |
+| Originality | 93 |
+
+
+
+#### PASS 대량 동시 로그인에서 세션 폭주 방지: 실무 패턴 Top 7
+
+| Score | Value |
+| --- | ---: |
+| AI Usage | 2 |
+| Experience | 100 |
+| Specificity | 100 |
+| Verification | 100 |
+| Originality | 93 |
 
 
 

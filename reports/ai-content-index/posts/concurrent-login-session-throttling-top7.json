@@ -1,0 +1,40 @@
+{
+  "file": "_posts/2026-07-26-concurrent-login-session-throttling-top7.md",
+  "slug": "concurrent-login-session-throttling-top7",
+  "title": "대량 동시 로그인에서 세션 폭주 방지: 실무 패턴 Top 7",
+  "analyzedAt": "2026-07-27T16:05:21.619Z",
+  "scores": {
+    "aiUsage": 2,
+    "experience": 100,
+    "specificity": 100,
+    "verification": 100,
+    "originality": 93
+  },
+  "risk": {
+    "massProduction": "low",
+    "publishDecision": "pass"
+  },
+  "metrics": {
+    "wordCount": 1268,
+    "sentenceCount": 70,
+    "headingCount": 10,
+    "codeBlockCount": 6,
+    "linkCount": 5,
+    "versionMentionCount": 0,
+    "filePathMentionCount": 36,
+    "commandCount": 1,
+    "numberWithUnitCount": 1,
+    "errorMessageCount": 1,
+    "genericPhraseCount": 0,
+    "experienceSignalCount": 20,
+    "verificationSignalCount": 18,
+    "bannedPhraseCount": 0,
+    "maxSimilarity": 0.07,
+    "maxHeadingSimilarity": 0.14,
+    "mostSimilarPost": "jwt-key-rotation-stepwise-invalidation-procedure"
+  },
+  "findings": [
+    "No major quality risks were detected by the rule-based checker."
+  ],
+  "recommendations": []
+}
