@@ -5,20 +5,24 @@ theme: jekyll-theme-chirpy
 lang: ko-KR
 timezone: Asia/Seoul
 
-title: Henjini Tech
-tagline: React · TypeScript · Frontend Architecture
+title: Dev Notes
+tagline: 개발 공부와 실무 기록
 
 description: >-
-  React, TypeScript, Node.js, 프론트엔드 아키텍처와 개발 생산성을 다루는 Henjini의 기술 블로그입니다.
+  AI, 프론트엔드, 백엔드, 블로그 운영을 공부하며 정리한 개발 지식과 문제 해결 기록을 공유하는 기술 블로그입니다.
 
 seo_keywords:
-  - React
-  - TypeScript
-  - JavaScript
-  - Node.js
-  - Frontend Architecture
-  - DevOps
+  - AI
+  - Frontend
+  - Backend
+  - 프론트엔드
+  - 백엔드
+  - 개발 지식
   - 개발 블로그
+  - 개발 공부
+  - 문제 해결
+  - 기술 블로그
+  - 블로그 운영
 
 url: "https://tech.henjini.com"
 baseurl: ""
@@ -34,7 +38,6 @@ social:
   email: hyunjin.lee.2341@outlook.com
   links:
     - https://tech.henjini.com
-    - https://github.com/needlina
     - https://henjini.com
 
 webmaster_verifications:
